@@ -1,0 +1,685 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,ES6,ECMAScript 5," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="let과 constlet은 많은 부분에서 var를 대채할 것으로 기대된다. let은 var와 달리 변수의 스코프를 블록 또는 표현식 단위로 제한한다. 자바스크립트의 변수범위와 호이스팅에서 설명했던것과 완전 반대로 작동한다.
+잘못된 예제. (블럭-수준 범위로 오해할 경우)12345678var name = &quot;Richard&quot;;// 아래의 if문은 name변수에">
+<meta property="og:type" content="article">
+<meta property="og:title" content="안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.">
+<meta property="og:url" content="http://chanlee.github.io/2016/08/14/hello-es6-world-part-1/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="let과 constlet은 많은 부분에서 var를 대채할 것으로 기대된다. let은 var와 달리 변수의 스코프를 블록 또는 표현식 단위로 제한한다. 자바스크립트의 변수범위와 호이스팅에서 설명했던것과 완전 반대로 작동한다.
+잘못된 예제. (블럭-수준 범위로 오해할 경우)12345678var name = &quot;Richard&quot;;// 아래의 if문은 name변수에">
+<meta property="og:image" content="http://moduscreate.com/wp-content/uploads/2016/05/ES6-arrow-functions-react-native-4.jpg">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.">
+<meta name="twitter:description" content="let과 constlet은 많은 부분에서 var를 대채할 것으로 기대된다. let은 var와 달리 변수의 스코프를 블록 또는 표현식 단위로 제한한다. 자바스크립트의 변수범위와 호이스팅에서 설명했던것과 완전 반대로 작동한다.
+잘못된 예제. (블럭-수준 범위로 오해할 경우)12345678var name = &quot;Richard&quot;;// 아래의 if문은 name변수에">
+<meta name="twitter:image" content="http://moduscreate.com/wp-content/uploads/2016/05/ES6-arrow-functions-react-native-4.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/08/14/hello-es6-world-part-1/"/>
+
+
+  <title> 안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터. | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-14T18:07:29+09:00" content="2016-08-14">
+              2016-08-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/14/hello-es6-world-part-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/14/hello-es6-world-part-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="let과-const"><a href="#let과-const" class="headerlink" title="let과 const"></a>let과 const</h2><p>let은 많은 부분에서 var를 대채할 것으로 기대된다. let은 var와 달리 변수의 스코프를 블록 또는 표현식 단위로 제한한다. <a href="http://chanlee.github.io/2013/12/10/javascript-variable-scope-and-hoisting/">자바스크립트의 변수범위와 호이스팅</a>에서 설명했던것과 완전 반대로 작동한다.</p>
+<p><em>잘못된 예제. (블럭-수준 범위로 오해할 경우)</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</div><div class="line"><span class="comment">// 아래의 if문은 name변수에 대한 지역-범위를 생성하지 않습니다.</span></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     name = <span class="string">"Jack"</span>;</div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 전역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 여전히 전역변수이며 if문에서 변경되었습니다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Jack</span></div></pre></td></tr></table></figure></p>
+<p>ES5에서 변수의 범위를 이렇게 설명했었다. var로 선언된 변수는 함수내에서 전역범위를 가지므로 위와 같이 작동한다. 하지만, if문내의 name을 let으로 선언할 경우는 바깥의 name과 내부의 name은 다른 스코프를 가지게 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     <span class="keyword">let</span> name = <span class="string">"Jack"</span>; <span class="comment">// name은 if문의 지역범위를 가진다.</span></div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 지역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 if문에서 변경되지 않았다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Richard</span></div></pre></td></tr></table></figure></p>
+<p>만일, 다음과 같이 let의 위치가 바뀌면 어떻게 될까?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> name = <span class="string">"Richard"</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     name = <span class="string">"Jack"</span>; <span class="comment">// name은 함수의 지역범위를 가진다.</span></div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 전역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 if문에서 변경되었다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Jack</span></div></pre></td></tr></table></figure></p>
+<p>이 경우에 let은 var와 동일하게 사용된다. name이 블록 스코프를 가지기 위해서는 if문 내에서 선언되어야 한다.</p>
+<p>const는 상수처럼 작동(Immutable)한다. 가급적, 상수 선언은 대문자로 쓰도록 하는게 좋겠다. 또한, 함수선언과 같은 경우에 var보다 const를 사용하는 편이 낫다. 즉, let과 const를 적절히 쓰면 메모리도 아끼고, 디버깅도 좀 더 수월해진다.</p>
+<p>앞길이 구만리인데 고작 let, const 로 한페이지를 채워버렸다. 하지만, 사소한것도 확실히 알고 넘어가야 한다. 버그는 늘 사소한데서 생겨나고 그런게 찾기는 드럽게 힘들기 마련이다.(T.T)</p>
+<h2 id="화살표-함수와-this"><a href="#화살표-함수와-this" class="headerlink" title="화살표 함수와 this"></a>화살표 함수와 this</h2><p>ES5에서 가장 헷갈리는것이 바로 this의 범위이다. 클로저가 생성한 컨텍스트로 인해 this가 this가 아닌 상황이 발생하여 “that = this, self = this”와 같은 패턴을 사용해야만 했다.</p>
+<p><img src="http://moduscreate.com/wp-content/uploads/2016/05/ES6-arrow-functions-react-native-4.jpg" alt="Arrow vs. Prototype"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> self = <span class="keyword">this</span></div><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  self.sendData()</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>또는 “.bind(this)”를 사용해 this를 현재 컨텍스트와 수동으로 바인딩하기도 했었다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.sendData()</div><div class="line">&#125;.bind(<span class="keyword">this</span>))</div></pre></td></tr></table></figure></p>
+<p>화살표 함수를 사용하면 이러한 번거로움을 해소할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function">(<span class="params">event</span>) =&gt;</span>&#123;</div><div class="line">  <span class="keyword">this</span>.sendData()</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>화살표 함수는 함수 표현식을 간략하게 표기하도록도 해주지만 this의 범위를 함수를 감싸는 코드와 동일하게 유지해줌으로써 기존의 클로저로 인한 번거로움을 많이 해소해 준다.</p>
+<h2 id="파라미터"><a href="#파라미터" class="headerlink" title="파라미터"></a>파라미터</h2><p>ES5에서 arguments를 대신해 “…”식을 지원한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> myFunc = <span class="function">(<span class="params">...params</span>) =&gt;</span> &#123;</div><div class="line">     <span class="built_in">console</span>.log(params.length + <span class="string">' argument(s)'</span>);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// execute it</span></div><div class="line">myFunc(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</div><div class="line"><span class="comment">// 3 arguments;</span></div></pre></td></tr></table></figure></p>
+<p>params는 자바스크립트에 내장된 arguments와 같다. 즉, 기존 코드라면 “params.length”는 “arguments.length”와 동일하다. 나은점은, “arguments”가 아닌 “params”와 같이 이름을 붙일수 있다는것과 믹스인형태로 사용할 수 있다는 점이다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> drink = <span class="function"><span class="keyword">function</span>(<span class="params">requiredParam , ...maybe</span>) </span>&#123;</div><div class="line">      <span class="comment">//</span></div><div class="line"> &#125;</div><div class="line"> drink(<span class="string">'coffee'</span>);</div><div class="line"> drink(<span class="string">'coffee'</span> , <span class="string">'sugar'</span>);</div><div class="line"> drink(<span class="string">'coffee'</span> , <span class="string">'sugar'</span> , <span class="string">'milk'</span>);</div></pre></td></tr></table></figure></p>
+<p>또한, 원하는 파라미터에 기본값을 줄 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> drink = <span class="function">(<span class="params">typeOfDrink = <span class="string">'coffee'</span> , ...maybe</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">const</span> eat = <span class="function">(<span class="params">food , todo=<span class="string">'wash hand'</span> </span>) =&gt;</span> &#123;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>위외 같은 코드를 ES5에서는 통상 아래와 같은 패턴으로 코딩을 하게된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> drink = <span class="function"><span class="keyword">function</span>(<span class="params">typeOfDrink</span>) </span>&#123;</div><div class="line">      typeOfDrink = typeOfDrink || <span class="string">'coffee'</span>;</div><div class="line">      <span class="keyword">if</span> (<span class="built_in">arguments</span>.length &gt; <span class="number">2</span>) &#123;</div><div class="line">          <span class="comment">// ... loop whatever</span></div><div class="line">      &#125;</div><div class="line"> &#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="and"><a href="#and" class="headerlink" title="and"></a>and</h2><p>꼭 필요하다 싶은것들만 묶어서 한편으로 간단하게 쓰려고 했는데 주절주절 쓰다보니 길어졌다. 아직 클래스도 남았고, 제너레이터, Map/Set, 디스터럭처링등 다룰게 많아서 또 시리즈로 가야겠다. See ya!</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+          
+            <a href="/tags/ES6/" rel="tag">#ES6</a>
+          
+            <a href="/tags/ECMAScript-5/" rel="tag">#ECMAScript 5</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/10/anatomy-of-a-riot-framework-part-6/" rel="next" title="Riot 프레임워크 알아보기. (6/6) Router">
+                <i class="fa fa-chevron-left"></i> Riot 프레임워크 알아보기. (6/6) Router
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/14/hello-es6-world-part-2/" rel="prev" title="안녕 ES6. (2/4) 클래스와 모듈">
+                안녕 ES6. (2/4) 클래스와 모듈 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#let과-const"><span class="nav-number">1.</span> <span class="nav-text">let과 const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#화살표-함수와-this"><span class="nav-number">2.</span> <span class="nav-text">화살표 함수와 this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#파라미터"><span class="nav-number">3.</span> <span class="nav-text">파라미터</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#and"><span class="nav-number">4.</span> <span class="nav-text">and</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/08/14/hello-es6-world-part-1/';
+      var disqus_title = "안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.";
+      var disqus_url = 'http://chanlee.github.io/2016/08/14/hello-es6-world-part-1/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,710 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux,Cron," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.
+
+Quartz에서 SimpleTrigger와 CronTri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quartz CronTrigger로 알아보는 Cron 표현식">
+<meta property="og:url" content="http://chanlee.github.io/2014/01/18/cron-expression-with-quartz-cron-trigger/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.
+
+Quartz에서 SimpleTrigger와 CronTri">
+<meta property="og:image" content="http://chanlee.github.io/assets/chuleta-crontab1.png">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Quartz CronTrigger로 알아보는 Cron 표현식">
+<meta name="twitter:description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.
+
+Quartz에서 SimpleTrigger와 CronTri">
+<meta name="twitter:image" content="http://chanlee.github.io/assets/chuleta-crontab1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2014/01/18/cron-expression-with-quartz-cron-trigger/"/>
+
+
+  <title> Quartz CronTrigger로 알아보는 Cron 표현식 | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Quartz CronTrigger로 알아보는 Cron 표현식
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2014-01-18T17:18:34+09:00" content="2014-01-18">
+              2014-01-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/18/cron-expression-with-quartz-cron-trigger/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/18/cron-expression-with-quartz-cron-trigger/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.</p>
+<p><img src="/assets/chuleta-crontab1.png" alt="crontab"></p>
+<h3 id="Quartz에서-SimpleTrigger와-CronTrigger"><a href="#Quartz에서-SimpleTrigger와-CronTrigger" class="headerlink" title="Quartz에서 SimpleTrigger와 CronTrigger"></a>Quartz에서 SimpleTrigger와 CronTrigger</h3><p>만약에, 작업(Job) 실행이 달력 개념을 기반으로 반복된다면 정확한 간격(Interval)을 사용하는 SimpleTrigger보다 CronTrigger가 더 유용하게 사용될 수 있습니다.<br>CronTrigger는 “매일 금요일 정오”, 또는 “매 주말 오전 9시”, “1월 한달간 매주 월요일, 수요일, 금요일 오전 9시에서 10시 사이 5분 간격”과 같이 스케줄을 설정할 수 있습니다.<br>물론, SimpleTrigger처럼 CronTrigger도 스케줄이 적용될 시작 시간과 만료 시간을 설정할수 있습니다.</p>
+<h3 id="Cron-표현식-Expression"><a href="#Cron-표현식-Expression" class="headerlink" title="Cron 표현식(Expression)"></a>Cron 표현식(Expression)</h3><p>Cron표현식은 CronTrigger 인스턴스를 설정하는데 사용됩니다. Cron표현식은 7개의 단위 표현식으로 구성된 문자열 입니다. 각 단위는 스케줄을 세분화 하여 상세하게 기술합니다. 이 단위 표현식은 공백으로 구분됩니다.</p>
+<ol>
+<li>초(Seconds)</li>
+<li>분(Minutes)</li>
+<li>시(Hours)</li>
+<li>일(Day-of-Month)</li>
+<li>월(Months)</li>
+<li>요일(Days-of-Week)</li>
+<li>연도(Year) - optional</li>
+</ol>
+<p>이들을 조합한 Cron표현식은 “0 0 12 ? * WEB”와 같이 표현됩니다. 이것은 “매주 수요일 정오”를 의미 합니다. (연도는 생략)</p>
+<p>각 단위 표현식은 범위나 목록을 가질 수 있습니다. 예를들어, 앞의 예제에서 수요일(WED)은 “MON-FRI”, “MON,WED,FRI” 또는 “MON-WED,SAT”와 같이 대채될 수 있습니다.</p>
+<p>와일드카드 문자는 이 필드에서 가능한 “매번”을 표현합니다. 그러므로, 앞의 예제에서 “월(Month)”필드의 ‘’표시는 단순히 “매월”을 의미합니다. 요일(Day-of-Week)필드에 ‘’는 “한주동안 매일”을 의미합니다.</p>
+<p>모든 필드는 검증할 수 있는 값의 집합으로 구성됩니다. 값은 명확하게 표현해야 합니다. 분과 초는 0에서 59사이의 숫자여야 하고, 시간은 0에서 23사이의 숫자여야 합니다. 일(Day-of-Month) 필드는 1-31사이의 어떤 숫자나 사용할 수 있습니다.</p>
+<p>월(Months)는 숫자 0에서 11, 또는 물자열 JAN, FEB, MAR, APR, MAY, JUN. JUL, AUG, SEP, OCT, NOV, 그리고 DEC를 사용할 수 있습니다. 요일(Days-of-Week)은 1과 7(1=일요일)사이의 숫자를 사용하거나, 문자열 SUN, MON, TUE, WED, THU, FRI, 그리고, SAT를 사용할 수 있습니다.</p>
+<p>“/” 문자는 값의 증가 표현에 사용될 수 있습니다. 예를들어, 분(Minutes) 필드에 ‘0/15’ 를 사용한다면, 이것은 “0분 부터 시작하여 (시간의) 매 15분 마다”를 의미합니다. 만약, 분(Minutes) 필드에 ‘3/20’을 사용한다면, “3분부터 시작하여 매 20분 마다”를 의미하므로, ‘3,23,43’을 분 필드에 나열한것과 같습니다. 미묘하게 주목할 점은 “/35”의 경우 “매 35분 마다”를 의미하지 않는다는 것입니다. 이것은, “0분부터 시작하여 매 35분 마다”이므로, 달리 표현하면 ‘0,35’를 나열한 것과 같습니다.</p>
+<p>“?”문자는 일(day-of-month)와 요일(day-of-week) 필드에서만 허용됩니다. 이것은 “설정 값 없음”에 사용됩니다. “?”문자는 두 필드(일, 요일)중 하나만 설정할 경우에 나머지 필드에 유용하게 사용됩니다. 다음 섹션의 예제를 보면 이해가 쉬울 것입니다.</p>
+<p>“L”문자는 일(day-of-month)과 요일(day-of-week) 필드에서만 허용됩니다. 이 문자는 “마지막(last)”의 첫글자에서 따왔습니다. 하지만, 두 필드에서 조금 다른 의미로 해석됩니다. 예를들어, “L”이 일(day-of-month) 필드에서 사용되었을 경우 “이달의 마지막 날”을 의미합니다. 1월이면 31일이 되고, 2월은 (윤년이 아닌경우)28일이 됩니다. 요일(day-of-week) 필드에서 사용될 경우에는 단순히 “7” 또는 “SAT”를 의미합니다. 하지만, “L”이 특정값의 뒤에 올경우, 이것은 “이달의 마지막 x요일”이 됩니다. 예를들어, “6L” 또는 “FRIL”은 “이달의 마지막 금요일”을 의미합니다. 또한, 마지막 날에서 특정 기간(offset)을 설정할 수도 있습니다. “L-3”과 같이 설정하면 “(이달의 마지막일로부터)3일전부터 마지막날 까지”의 기간을 의미합니다. “L”옵션을 사용할때, 값의 목록이나 범위를 명확히 하지 않을 경우 예상밖의 결과를 낳을 수 있으므로 주의가 필요합니다.</p>
+<p>“W”는 주어진 날로부터 가장 가까운 평일(월요일~금요일)을 가르킵니다. 만일, “15W”라는 값을 일(day-of-month)필드에 설정하면, “이달의 15번째날에서 가장 가까운 평일”을 의미합니다.<br>“#”은 “이달의 n번째 X요일”을 가르킵니다. 예를들어, “6#3” 또는 “FRI#3”을 요일(day-of-week) 필드에 설정할 경우 이것은 “이달의 세번째 금요일”을 의미 합니다.</p>
+<p>이제 몇가지 표현식 예제를 통해 확실히 의미를 파악하도록 하겠습니다.</p>
+<h3 id="Cron-표현식-예제"><a href="#Cron-표현식-예제" class="headerlink" title="Cron 표현식 예제"></a>Cron 표현식 예제</h3><p>*매 5분 마다 실행</p>
+<blockquote>
+<p>“0 0/5 <em> </em> * ?”</p>
+</blockquote>
+<p>*10초뒤 5분마다 실행. (10:00:10 am, 10:05:10 am, …)</p>
+<blockquote>
+<p>“10 0/5 <em> </em> * ?”</p>
+</blockquote>
+<p>*매주 수요일과 금요일 10:30, 11:30, 12:30, 13:30 에 실행</p>
+<blockquote>
+<p>“0 30 10-13 ? * WED,FRI”</p>
+</blockquote>
+<p>*매월 5일, 20일 오전 8시부터 오전 10시 사이에 30분 간격으로 실행. 이 트리거는 10:00 am에는 실행이 되지 않고, 8:00, 8:30, 9:00, 9:30 에만 실행 된다.</p>
+<blockquote>
+<p>“0 0/30 8-9 5,20 * ?”</p>
+</blockquote>
+<p>어떤 스케줄링 작업은 너무 복잡한 트리거 표현식을 요구하기도 합니다. 이럴 경우에는 단순히 두개의 트리거로 나누어 작업을 등록하길 권장 합니다.</p>
+<p>참고 페이지 : <a href="http://www.quartz-scheduler.org/documentation/quartz-2.2.x/tutorials/tutorial-lesson-06" target="_blank" rel="external">Quartz Framework. Lesson 6: Cron Trigger</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Cron/" rel="tag">#Cron</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/01/11/understand-javascript-iife/" rel="next" title="Javascript IIFE 이해하기">
+                <i class="fa fa-chevron-left"></i> Javascript IIFE 이해하기
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/14/Introduce-Swift-Optional/" rel="prev" title="스위프트 옵셔널 이해하기">
+                스위프트 옵셔널 이해하기 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Quartz에서-SimpleTrigger와-CronTrigger"><span class="nav-number">1.</span> <span class="nav-text">Quartz에서 SimpleTrigger와 CronTrigger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cron-표현식-Expression"><span class="nav-number">2.</span> <span class="nav-text">Cron 표현식(Expression)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cron-표현식-예제"><span class="nav-number">3.</span> <span class="nav-text">Cron 표현식 예제</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2014/01/18/cron-expression-with-quartz-cron-trigger/';
+      var disqus_title = "Quartz CronTrigger로 알아보는 Cron 표현식";
+      var disqus_url = 'http://chanlee.github.io/2014/01/18/cron-expression-with-quartz-cron-trigger/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

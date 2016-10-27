@@ -1,0 +1,677 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,ES6,ECMAScript 5," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="for .. of 구문for … in 구문이 객체의 모든 속성을 순회하는것과 달리, for … of는 배열뿐만 아니라 Map, Set등의 컬렉션을 순회할때도 데이터만 순회하여 일반적으로 원하는 결과를 얻어낼 수 있다. 이런, for … of 구문이 작동하는 배경에는 Iterator 프로토콜이 존재한다.
+Iterator이터레이터 프로토콜은 객체내에서 값의 순">
+<meta property="og:type" content="article">
+<meta property="og:title" content="안녕 ES6. (4/4) Iterator와 Generator">
+<meta property="og:url" content="http://chanlee.github.io/2016/08/15/hello-es6-part-4/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="for .. of 구문for … in 구문이 객체의 모든 속성을 순회하는것과 달리, for … of는 배열뿐만 아니라 Map, Set등의 컬렉션을 순회할때도 데이터만 순회하여 일반적으로 원하는 결과를 얻어낼 수 있다. 이런, for … of 구문이 작동하는 배경에는 Iterator 프로토콜이 존재한다.
+Iterator이터레이터 프로토콜은 객체내에서 값의 순">
+<meta property="og:image" content="http://exploringjs.com/es6/images/iteration----iteration_protocol.jpg">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="안녕 ES6. (4/4) Iterator와 Generator">
+<meta name="twitter:description" content="for .. of 구문for … in 구문이 객체의 모든 속성을 순회하는것과 달리, for … of는 배열뿐만 아니라 Map, Set등의 컬렉션을 순회할때도 데이터만 순회하여 일반적으로 원하는 결과를 얻어낼 수 있다. 이런, for … of 구문이 작동하는 배경에는 Iterator 프로토콜이 존재한다.
+Iterator이터레이터 프로토콜은 객체내에서 값의 순">
+<meta name="twitter:image" content="http://exploringjs.com/es6/images/iteration----iteration_protocol.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/08/15/hello-es6-part-4/"/>
+
+
+  <title> 안녕 ES6. (4/4) Iterator와 Generator | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                안녕 ES6. (4/4) Iterator와 Generator
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-15T18:07:26+09:00" content="2016-08-15">
+              2016-08-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/15/hello-es6-part-4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/15/hello-es6-part-4/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="for-of-구문"><a href="#for-of-구문" class="headerlink" title="for .. of 구문"></a>for .. of 구문</h2><p>for … in 구문이 객체의 모든 속성을 순회하는것과 달리, for … of는 배열뿐만 아니라 Map, Set등의 컬렉션을 순회할때도 데이터만 순회하여 일반적으로 원하는 결과를 얻어낼 수 있다. 이런, for … of 구문이 작동하는 배경에는 Iterator 프로토콜이 존재한다.</p>
+<h2 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h2><p>이터레이터 프로토콜은 객체내에서 값의 순서를 결정하고, 이것을 순회(Iterable)할 수 있도록 한다. 이것은, [Symbol.iterator()]함수를 구현하는것에 따라 결정된다. 앞서 언급했던 배열이나 Map, Set과 같은 컬렉션 객체들은 이미 Iterable객체이기 때문에 별도의 추가 구현없이 for … of 구문으로 순회가 가능한 것이다.</p>
+<p><img src="http://exploringjs.com/es6/images/iteration----iteration_protocol.jpg" alt="Iterator"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> table = &#123;</div><div class="line">  [<span class="built_in">Symbol</span>.iterator]: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> index: <span class="number">0</span>,</div><div class="line">    <span class="attr">next</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(<span class="keyword">this</span>).sort()</div><div class="line"></div><div class="line">      <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">value</span>: keys[index], <span class="attr">done</span>: index++ &gt;= keys.length</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">of</span> table) &#123;</div><div class="line">  <span class="built_in">console</span>.log(key + <span class="string">' = '</span> + table[key]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>이처럼, next()는 value와 done을 리턴하고 done이 true이면 순회를 종료한다.</p>
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><p>제너레이터는 일반적인 함수가 한번 실행에 한번의 리턴을 하는것과 달리, 여러번의 리턴을 허용한다. Go의 고루틴과 사용 및 동작이 매우 비슷하다. 아래 예제를 보자.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">list</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> item <span class="keyword">of</span> value) &#123;</div><div class="line">    <span class="keyword">yield</span> item;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> value <span class="keyword">of</span> list([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])) &#123;</div><div class="line">  <span class="built_in">console</span>.log(value);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> iterator = list([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> iterator.next); <span class="comment">// function</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> iterator[<span class="built_in">Symbol</span>.iterator]); <span class="comment">// function</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(iterator.next().value); <span class="comment">// 1</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> value <span class="keyword">of</span> iterator) &#123;</div><div class="line">  <span class="built_in">console</span>.log(value); <span class="comment">// 2, 3</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>제너레이터함수는 함수명에 “*”를 붙여 생성한다. 그리고, 함수내에서 yield문을 사용한곳에서 실행을 멈추고 값을 리턴한다. 예제에서 알수 있듯이 사실 제너레이터는 이터레이터를 기반으로 작동하는 함수이다. 제너레이터를 잘 활용하면 비동기 코드로 인한 콜백문제를 쉽게 리팩토링하고, 코드를 깔끔하게 관리할 수 있다.<br>이 사실을 염두해두고 앞서 Iterator로 만들었던 예제를 다시 작성해 보겠다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> table = &#123;</div><div class="line">  [<span class="built_in">Symbol</span>.iterator]: <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(<span class="keyword">this</span>).sort();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> item <span class="keyword">of</span> keys) &#123;</div><div class="line">      <span class="keyword">yield</span> item;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="and"><a href="#and" class="headerlink" title="and"></a>and</h2><p>Iterator와 Generator는 매우 획기적이고 중요한 개념이다. 다음 링크에 상세하게 잘 설명되어 있으니 이 글에서 다루지 않은 많은것들을 참고하기 바란다.</p>
+<p><a href="http://hacks.mozilla.or.kr/2015/08/es6-in-depth-iterators-and-the-for-of-loop/" target="_blank" rel="external">ES6 In Depth: 이터레이터(iterator)와 for-of 루프 구문</a><br><a href="http://hacks.mozilla.or.kr/2015/08/es6-in-depth-generators/" target="_blank" rel="external">ES6 In Depth: 제너레이터(Generator)</a><br><a href="http://hacks.mozilla.or.kr/2016/02/es6-in-depth-generators-continued/" target="_blank" rel="external">ES6 In Depth: 제너레이터 (이어서)</a></p>
+<p>이외에도 ES6의 상세한 기능들이 잘 설명되어 있으니 여기서 다루지 않았던 내용들은 <a href="http://hacks.mozilla.or.kr/category/es6-in-depth/" target="_blank" rel="external">ES6 In Depth series</a>에서 참고할 수 있다.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+          
+            <a href="/tags/ES6/" rel="tag">#ES6</a>
+          
+            <a href="/tags/ECMAScript-5/" rel="tag">#ECMAScript 5</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/15/hello-es6-part-3/" rel="next" title="안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet">
+                <i class="fa fa-chevron-left"></i> 안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/18/what-is-the-rollup-js/" rel="prev" title="차세대 JS모듈 번들러 - RollupJS 소개">
+                차세대 JS모듈 번들러 - RollupJS 소개 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#for-of-구문"><span class="nav-number">1.</span> <span class="nav-text">for .. of 구문</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterator"><span class="nav-number">2.</span> <span class="nav-text">Iterator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generator"><span class="nav-number">3.</span> <span class="nav-text">Generator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#and"><span class="nav-number">4.</span> <span class="nav-text">and</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/08/15/hello-es6-part-4/';
+      var disqus_title = "안녕 ES6. (4/4) Iterator와 Generator";
+      var disqus_url = 'http://chanlee.github.io/2016/08/15/hello-es6-part-4/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="IOS,Swift,Grammar,Fundamental," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="옵셔널 개요Swift에서 변수를 선언할때는 기본적으로 옵셔널이 아닌(non-optional)값을 지정해야 한다. 다시말해, 변수에는 반드시 nil 이 아닌(non-nil) 값을 할당 해야만 한다. 만일, 옵셔널이 아닌 변수에 nil 을 설정하려 하면 컴파일러는 nil값을 할당 할 수 없다고 오류를 발생시킬 것이다.
+12var message: String =">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스위프트 옵셔널 이해하기">
+<meta property="og:url" content="http://chanlee.github.io/2015/06/14/Introduce-Swift-Optional/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="옵셔널 개요Swift에서 변수를 선언할때는 기본적으로 옵셔널이 아닌(non-optional)값을 지정해야 한다. 다시말해, 변수에는 반드시 nil 이 아닌(non-nil) 값을 할당 해야만 한다. 만일, 옵셔널이 아닌 변수에 nil 을 설정하려 하면 컴파일러는 nil값을 할당 할 수 없다고 오류를 발생시킬 것이다.
+12var message: String =">
+<meta property="og:image" content="http://chanlee.github.io/assets/nullpointer-cartoon.jpg">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="스위프트 옵셔널 이해하기">
+<meta name="twitter:description" content="옵셔널 개요Swift에서 변수를 선언할때는 기본적으로 옵셔널이 아닌(non-optional)값을 지정해야 한다. 다시말해, 변수에는 반드시 nil 이 아닌(non-nil) 값을 할당 해야만 한다. 만일, 옵셔널이 아닌 변수에 nil 을 설정하려 하면 컴파일러는 nil값을 할당 할 수 없다고 오류를 발생시킬 것이다.
+12var message: String =">
+<meta name="twitter:image" content="http://chanlee.github.io/assets/nullpointer-cartoon.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2015/06/14/Introduce-Swift-Optional/"/>
+
+
+  <title> 스위프트 옵셔널 이해하기 | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                스위프트 옵셔널 이해하기
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2015-06-14T01:46:29+09:00" content="2015-06-14">
+              2015-06-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/IOS/" itemprop="url" rel="index">
+                    <span itemprop="name">IOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/14/Introduce-Swift-Optional/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/14/Introduce-Swift-Optional/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="옵셔널-개요"><a href="#옵셔널-개요" class="headerlink" title="옵셔널 개요"></a>옵셔널 개요</h3><p>Swift에서 변수를 선언할때는 기본적으로 옵셔널이 아닌(non-optional)값을 지정해야 한다. 다시말해, 변수에는 반드시 nil 이 아닌(non-nil) 값을 할당 해야만 한다. 만일, 옵셔널이 아닌 변수에 nil 을 설정하려 하면 컴파일러는 nil값을 할당 할 수 없다고 오류를 발생시킬 것이다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> message: <span class="type">String</span> = <span class="string">"Swift is awesome!"</span> <span class="comment">// OK</span></div><div class="line">message = <span class="literal">nil</span> <span class="comment">// compile-time error</span></div></pre></td></tr></table></figure>
+<p>클래스에서 속성을 선언할 때에도 마챦가지 이다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Messenger</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> message1: <span class="type">String</span> = <span class="string">"Swift is awesome!"</span> <span class="comment">// OK</span></div><div class="line">    <span class="keyword">var</span> message2: <span class="type">String</span> <span class="comment">// compile-time error</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>하지만, Objective-C 에서는 아래와 같이 nil을 설정해도 에러가 발생하지 않는다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="type">NSString</span> *message = @<span class="string">"Objective-C will never die!"</span>;</div><div class="line">message = <span class="literal">nil</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Messenger</span> </span>&#123;</div><div class="line">    <span class="type">NSString</span> *message1 = @<span class="string">"Objective will never die!"</span>;</div><div class="line">    <span class="type">NSString</span> *message2;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>하지만, 이것은 스위프트에서 초기값 없이 속성 또는 변수를 선언할수 없다는 것을 의미하지 않는다. 스위프트는 옵셔널 타입을 사용해 값의 부재를 알릴 수 있다. 즉,  “?” 오퍼레이터를 타입선언 뒤에 추가하면 된다. 아래 예를 참고하라.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Messenger</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> message1: <span class="type">String</span> = <span class="string">"Swift is awesome!"</span> <span class="comment">// OK</span></div><div class="line">    <span class="keyword">var</span> message2: <span class="type">String</span>? <span class="comment">// OK</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="왜-옵셔널-Optionals-인가"><a href="#왜-옵셔널-Optionals-인가" class="headerlink" title="왜 옵셔널(Optionals) 인가?"></a>왜 옵셔널(Optionals) 인가?</h3><p>스위프트는 애플의 주장대로 타입-세이프한 언어라는것을 보여주는 사례중 하나이다. 앞서본 예제와 같이 옵셔널은 런타임시에 발생할 수 있는 에러들을 컴파일시에 체크할 수 있도록 한다. 옵셔널의 장점을 더 잘 이해할 수 있도록 아래의 Objective-C 메소드를 살펴 보자.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="type">NSString</span> *)findStockCode:(<span class="type">NSString</span> *)company &#123;</div><div class="line">    <span class="keyword">if</span> ([company isEqualToString:@<span class="string">"Apple"</span>]) &#123;</div><div class="line">        <span class="keyword">return</span> @<span class="string">"AAPL"</span>;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([company isEqualToString:@<span class="string">"Google"</span>]) &#123;</div><div class="line">        <span class="keyword">return</span> @<span class="string">"GOOG"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>findStockCode 메소드는 Apple과 Google의 주식코드를 리턴하고, 그 외의 경우에는 nil을 리턴한다. 이 메소드는 아래와 같이 호출될 수 있다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="type">NSString</span> *stockCode = [<span class="keyword">self</span> findStockCode:@<span class="string">"Facebook"</span>]; <span class="comment">// nil is returned</span></div><div class="line"><span class="type">NSString</span> *text = @<span class="string">"Stock Code - "</span>;</div><div class="line"><span class="type">NSString</span> *message = [text stringByAppendingString:stockCode]; <span class="comment">// runtime error</span></div><div class="line"><span class="type">NSLog</span>(@<span class="string">"%@"</span>, message);</div></pre></td></tr></table></figure>
+<p>이 코드는 문제없이 컴파일이 되겠지만 실행했을때는 런타임 오류를 발생하게 된다. 이 코드를 스위프트로 작성하면 아래와 같이 되며, 컴파일시에 오류를 발견할 수 있게 된다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">findStockCode</span><span class="params">(company: String)</span></span> -&gt; <span class="type">String</span>? &#123;</div><div class="line">   <span class="keyword">if</span> (company == <span class="string">"Apple"</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="string">"AAPL"</span></div><div class="line">   &#125; <span class="keyword">else</span> <span class="keyword">if</span> (company == <span class="string">"Google"</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="string">"GOOG"</span></div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> stockCode:<span class="type">String</span>? = findStockCode(<span class="string">"Facebook"</span>)</div><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">let</span> message = text + stockCode  <span class="comment">// compile-time error</span></div><div class="line"><span class="built_in">println</span>(message)</div></pre></td></tr></table></figure>
+<p>stockCode는 문자열 또는 nil값일 수 있다. 옵셔널 문자열인 String?은 업랩(Unwrapped)되지 않았으므로, 이것을 수정할 수 있도록 에러를 발생한다. 이렇게 컴파일시에 nil 체크를 수행함으로써 잠재적인 에러를 탐지할 수 있다는것이 옵셔널의 장점이다.</p>
+<p><img src="/assets/nullpointer-cartoon.jpg" alt="null pointer exception"></p>
+<h3 id="옵셔널-꺼내기-Unwrapping-Optionals"><a href="#옵셔널-꺼내기-Unwrapping-Optionals" class="headerlink" title="옵셔널 꺼내기(Unwrapping Optionals)"></a>옵셔널 꺼내기(Unwrapping Optionals)</h3><p>위의 코드가 컴파일 될 수 있도록 하려면 아래와 같이 수정하면 된다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> stockCode:<span class="type">String</span>? = findStockCode(<span class="string">"Facebook"</span>)</div><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">if</span> stockCode &#123;</div><div class="line">    <span class="keyword">let</span> message = text + stockCode!</div><div class="line">    <span class="built_in">println</span>(message)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>스위프트에서 느낌표는 강제 언래핑(Unwrapping)을 할때 사용된다. if문으로 stockCode에 값이 있다는것을 확인했으므로, 위와 같이 옵셔널 변수에 !를 붙여 값을 꺼낼 수 있다.</p>
+<p>하지만, 아래와 같이 stockCode에 대해 nil-체크를 하지 않고 Unwrapping을 하게되면 런타임 오류를 만나게 될것이다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> stockCode:<span class="type">String</span>? = findStockCode(<span class="string">"Facebook"</span>)</div><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">let</span> message = text + stockCode!  <span class="comment">// runtime error</span></div></pre></td></tr></table></figure>
+<h3 id="옵셔널-바인딩"><a href="#옵셔널-바인딩" class="headerlink" title="옵셔널 바인딩"></a>옵셔널 바인딩</h3><p>강제 언래핑(Forced Unwrapping)은 다른 언어에서 null-체크를 하는것과 그리 다르지 않다. 또한, 잠재적으로 런타임 오류를 발생시킬 수 있다. 옵셔널 바인딩은 옵셔널이 값을 가지고 있는지 아닌지를 체크하고, 값이 있을 경우 그것을 꺼내어 임시로 특정 상수(또는 변수)에 값을 보관하는 방법을 말한다.</p>
+<p>예제보다 이것을 더 쉽게 설명할 수 없으므로, 바로 앞에 사용했던 코드를 옵셔널 바인딩을 적용하여 변경해 보겠다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> stockCode:<span class="type">String</span>? = findStockCode(<span class="string">"Facebook"</span>)</div><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> tempStockCode = stockCode &#123;</div><div class="line">    <span class="keyword">let</span> message = text + tempStockCode</div><div class="line">    <span class="built_in">println</span>(message)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>“if let”(또는 if var 도 사용 가능) 구문은 두가지 의미를 내포하고 있다. 쉽게말해, “만일 stockCode가 값을 가지고 있다면, 이것을 꺼내서 (1)tempStockCode에 값을 대입하고, (2) 조건문 블록을 실행하라” 는 것을 의미 한다. 그렇지 않다면 조건문은 실행되지 않는다.<br>tempStockCode는 새로운 상수이므로 끝에 느낌표(!)를 사용할 필요가 없다.</p>
+<p>위 코드는 아래와 같이 좀 더 축약 하여 코딩할 수 있다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">var</span> stockCode = findStockCode(<span class="string">"Apple"</span>) &#123;</div><div class="line">    <span class="keyword">let</span> message = text + stockCode</div><div class="line">    <span class="built_in">println</span>(message)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>이 코드에서 stockCode 는 옵셔널이 아니란점에 주목하기 바란다.</p>
+<h3 id="옵셔널-체이닝"><a href="#옵셔널-체이닝" class="headerlink" title="옵셔널 체이닝"></a>옵셔널 체이닝</h3><p>옵셔널 체이닝을 설명하기 전에 이전의 예제 소스를 아래와 같이 수정하겠다. 우리는 code와 price라는 옵셔널 속성을 가진 Stock 이라는 클래스를 새로 만들고, findStockCode 함수는 문자열 대신 Stock클래스를 리턴 하도록 수정할 것이다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stock</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> code: <span class="type">String</span>?</div><div class="line">    <span class="keyword">var</span> price: <span class="type">Double</span>?</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">findStockCode</span><span class="params">(company: String)</span></span> -&gt; <span class="type">Stock</span>? &#123;</div><div class="line">    <span class="keyword">if</span> (company == <span class="string">"Apple"</span>) &#123;</div><div class="line">        <span class="keyword">let</span> aapl: <span class="type">Stock</span> = <span class="type">Stock</span>()</div><div class="line">        aapl.code = <span class="string">"AAPL"</span></div><div class="line">        aapl.price = <span class="number">90.32</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> aapl</div><div class="line"></div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (company == <span class="string">"Google"</span>) &#123;</div><div class="line">        <span class="keyword">let</span> goog: <span class="type">Stock</span> = <span class="type">Stock</span>()</div><div class="line">        goog.code = <span class="string">"GOOG"</span></div><div class="line">        goog.price = <span class="number">556.36</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> goog</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>아래 코드는 주식코드를 찾고, 100주를 사는데 필요한 금액을 출력한다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> stock = findStockCode(<span class="string">"Apple"</span>) &#123;</div><div class="line">    <span class="keyword">if</span> <span class="keyword">let</span> sharePrice = stock.price &#123;</div><div class="line">        <span class="keyword">let</span> totalCost = sharePrice * <span class="number">100</span></div><div class="line">        <span class="built_in">println</span>(totalCost)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>findStockCode()의 반환값은 옵셔널이므로, 옵셔널 바인등을 사용해 nul-체크를 하고 stock의 price 역시 옵셔널 이므로 다시 한번 if let~ 문을 사용하였다.</p>
+<p>위 코드는 에러를 발생시키지 않지만, 중첩된 “if set” 문을 사용하는 대신 옵셔널 체이닝을 사용해 더 간단히 할 수 있다. 옵셔널 체인은 “?.” 오퍼레이터를 사용해 다수의 옵셔널을 체인으로 묶을 수 있다. 아래 코드는 옵셔널 체인을 사용해 수정한 코드이다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> sharePrice = findStockCode(<span class="string">"Apple"</span>)?.price &#123;</div><div class="line">    <span class="keyword">let</span> totalCost = sharePrice * <span class="number">100</span></div><div class="line">    <span class="built_in">println</span>(totalCost)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>이제 코드가 더욱 간결해 졌다. 옵셔널 체인에 관한 더 다양한 예제는 애플의 <a href="https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_312" target="_blank" rel="external">스위프트 가이드</a> 문서에서 찾을 수 있다.</p>
+<h3 id="스위프트와-오브젝티브-C의-상호-운용성"><a href="#스위프트와-오브젝티브-C의-상호-운용성" class="headerlink" title="스위프트와 오브젝티브-C의 상호 운용성"></a>스위프트와 오브젝티브-C의 상호 운용성</h3><p>스위프트는 Objective-C의 API들과 잘 상호 작용하도록 설계되었다. UIKit이나 다른 프레임워크의 API들과 상호작용이 필요한 부분에서도 쉽게 옵셔널들을 만날 수 있다. 다음 코드는 테이블뷰를 구현할때 마주칠수 있는 옵셔널의 예이다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">numberOfSectionsInTableView</span><span class="params">(tableView: UITableView?)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">     <span class="comment">// Return the number of sections.</span></div><div class="line">     <span class="keyword">return</span> <span class="number">1</span></div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView?, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">     <span class="comment">// Return the number of rows in the section.</span></div><div class="line">     <span class="keyword">return</span> recipes.<span class="built_in">count</span></div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!)</span></span> -&gt; <span class="type">UITableViewCell</span>! &#123;</div><div class="line">     <span class="keyword">let</span> cell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"Cell"</span>, forIndexPath: indexPath) <span class="keyword">as</span> <span class="type">UITableViewCell</span></div><div class="line"></div><div class="line">     cell.textLabel.text = recipes[indexPath.row]</div><div class="line"></div><div class="line">     <span class="keyword">return</span> cell</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>ps. 원문중 번역이 생략되거나 축약한 부분도 있습니다.<br>더 자세한 부분은 아래의 원문과 애플의 스위프트 공식 문서를 참고하시기 바랍니다.</p>
+<p><a href="http://www.appcoda.com/beginners-guide-optionals-swift/" target="_blank" rel="external">원문 : A Beginner’s Guide to Optionals in Swift</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IOS/" rel="tag">#IOS</a>
+          
+            <a href="/tags/Swift/" rel="tag">#Swift</a>
+          
+            <a href="/tags/Grammar/" rel="tag">#Grammar</a>
+          
+            <a href="/tags/Fundamental/" rel="tag">#Fundamental</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/01/18/cron-expression-with-quartz-cron-trigger/" rel="next" title="Quartz CronTrigger로 알아보는 Cron 표현식">
+                <i class="fa fa-chevron-left"></i> Quartz CronTrigger로 알아보는 Cron 표현식
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/21/golang-template-package/" rel="prev" title="Go 패키지 시리즈 1 템플릿 사용하기">
+                Go 패키지 시리즈 1 템플릿 사용하기 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#옵셔널-개요"><span class="nav-number">1.</span> <span class="nav-text">옵셔널 개요</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#왜-옵셔널-Optionals-인가"><span class="nav-number">2.</span> <span class="nav-text">왜 옵셔널(Optionals) 인가?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#옵셔널-꺼내기-Unwrapping-Optionals"><span class="nav-number">3.</span> <span class="nav-text">옵셔널 꺼내기(Unwrapping Optionals)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#옵셔널-바인딩"><span class="nav-number">4.</span> <span class="nav-text">옵셔널 바인딩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#옵셔널-체이닝"><span class="nav-number">5.</span> <span class="nav-text">옵셔널 체이닝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#스위프트와-오브젝티브-C의-상호-운용성"><span class="nav-number">6.</span> <span class="nav-text">스위프트와 오브젝티브-C의 상호 운용성</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2015/06/14/Introduce-Swift-Optional/';
+      var disqus_title = "스위프트 옵셔널 이해하기";
+      var disqus_url = 'http://chanlee.github.io/2015/06/14/Introduce-Swift-Optional/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

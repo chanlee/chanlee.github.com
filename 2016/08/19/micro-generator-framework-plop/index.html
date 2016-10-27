@@ -1,0 +1,689 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,Library," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="개요plopjs는 yeoman과 같은 템플릿을 기반으로한 scaffolding generator 프레임워크 이다. plopjs는 inquirer.js를 기반으로 사용자의 입력을 처리하고, handlebar 템플릿을 이용해 파일을 생성한다.
+설치plop을 사용하기 위해서는 CLI를 설치하고, 프로젝트에 plop을 devDependencies에 추가해야 한다">
+<meta property="og:type" content="article">
+<meta property="og:title" content="작고 유용한 마이크로 제너레이터 - plop">
+<meta property="og:url" content="http://chanlee.github.io/2016/08/19/micro-generator-framework-plop/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="개요plopjs는 yeoman과 같은 템플릿을 기반으로한 scaffolding generator 프레임워크 이다. plopjs는 inquirer.js를 기반으로 사용자의 입력을 처리하고, handlebar 템플릿을 이용해 파일을 생성한다.
+설치plop을 사용하기 위해서는 CLI를 설치하고, 프로젝트에 plop을 devDependencies에 추가해야 한다">
+<meta property="og:image" content="https://camo.githubusercontent.com/6a0ff76ac81bc9a3098a59bdf116484971223d79/687474703a2f2f692e696d6775722e636f6d2f70656e55466b722e676966">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="작고 유용한 마이크로 제너레이터 - plop">
+<meta name="twitter:description" content="개요plopjs는 yeoman과 같은 템플릿을 기반으로한 scaffolding generator 프레임워크 이다. plopjs는 inquirer.js를 기반으로 사용자의 입력을 처리하고, handlebar 템플릿을 이용해 파일을 생성한다.
+설치plop을 사용하기 위해서는 CLI를 설치하고, 프로젝트에 plop을 devDependencies에 추가해야 한다">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/6a0ff76ac81bc9a3098a59bdf116484971223d79/687474703a2f2f692e696d6775722e636f6d2f70656e55466b722e676966">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/08/19/micro-generator-framework-plop/"/>
+
+
+  <title> 작고 유용한 마이크로 제너레이터 - plop | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                작고 유용한 마이크로 제너레이터 - plop
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-19T00:38:54+09:00" content="2016-08-19">
+              2016-08-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/19/micro-generator-framework-plop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/19/micro-generator-framework-plop/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://camo.githubusercontent.com/6a0ff76ac81bc9a3098a59bdf116484971223d79/687474703a2f2f692e696d6775722e636f6d2f70656e55466b722e676966" alt="screenshot"></p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p><a href="https://github.com/amwmedia/plop" target="_blank" rel="external">plopjs</a>는 <a href="http://yeoman.io/" target="_blank" rel="external">yeoman</a>과 같은 템플릿을 기반으로한 scaffolding generator 프레임워크 이다. plopjs는 <a href="https://github.com/SBoudrias/Inquirer.js/" target="_blank" rel="external">inquirer.js</a>를 기반으로 사용자의 입력을 처리하고, <a href="https://github.com/wycats/handlebars.js/" target="_blank" rel="external">handlebar</a> 템플릿을 이용해 파일을 생성한다.</p>
+<h2 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h2><p>plop을 사용하기 위해서는 CLI를 설치하고, 프로젝트에 plop을 devDependencies에 추가해야 한다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g plop</div><div class="line">npm install --save-dev plop</div></pre></td></tr></table></figure></p>
+<p>그리고, 기본적인 plopfile.js 설정 파일을 프로젝트 루트 디렉토리에 생성한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">plop</span>) </span>&#123;</div><div class="line">    <span class="comment">// create your generators here</span></div><div class="line">    plop.setGenerator(<span class="string">'basics'</span>, &#123;</div><div class="line">        <span class="attr">description</span>: <span class="string">'this is a skeleton plopfile'</span>,</div><div class="line">        <span class="attr">prompts</span>: [],</div><div class="line">        <span class="attr">actions</span>: []</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>이것이 가장 기본적인 형태의 설정파일이다. prompt는 사용자의 입력이고, action은 그에 따른 결과라고 볼 수 있다. prompt는 input, confirm, list, checkbox, rawlist, password를 지원하고 action은 단지 add와 modify만 지원한다.</p>
+<h2 id="사용"><a href="#사용" class="headerlink" title="사용"></a>사용</h2><p>riot tag를 생성하는 plopfile.js 를 만들어 보자.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">plop</span>) </span>&#123;</div><div class="line">     <span class="comment">/**</span></div><div class="line">      * tag generator</div><div class="line">      */</div><div class="line">     plop.setGenerator(<span class="string">'tag'</span>, &#123;</div><div class="line">         <span class="attr">description</span>: <span class="string">'tag generator'</span>,</div><div class="line">         <span class="attr">prompts</span>: [&#123;</div><div class="line">              <span class="attr">type</span>: <span class="string">'input'</span>,</div><div class="line">              <span class="attr">name</span>: <span class="string">'name'</span>,</div><div class="line">              <span class="attr">message</span>: <span class="string">'What is the name of the new tag'</span>,</div><div class="line">              <span class="attr">validate</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">                 <span class="keyword">if</span> ((<span class="regexp">/.+/</span>).test(value)) &#123; <span class="keyword">return</span> <span class="literal">true</span>; &#125;</div><div class="line">                 <span class="keyword">return</span> <span class="string">'name is required'</span>;</div><div class="line">             &#125;</div><div class="line">         &#125;],</div><div class="line">         <span class="attr">actions</span>: [&#123;</div><div class="line">             <span class="attr">type</span>: <span class="string">'add'</span>,</div><div class="line">             <span class="attr">path</span>: <span class="string">'src/app/components/&#123;&#123;dashCase name&#125;&#125;.tag'</span>,</div><div class="line">             <span class="attr">templateFile</span>: <span class="string">'templates/tag.txt'</span></div><div class="line">        &#125;]</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>templates/tag.txt에 템플릿을 작성한다.<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;&#123;&#123;name&#125;&#125;&gt;</div><div class="line">	&lt;span&gt;&#123;&#123;name&#125;&#125; tag&lt;/span&gt;</div><div class="line">	&lt;script type="es6"&gt;</div><div class="line">		// your JS code</div><div class="line">	&lt;/script&gt;</div><div class="line">	&#123;&#123;#isStateless type&#125;&#125;</div><div class="line">	&lt;style&gt;</div><div class="line">		/* your styling */</div><div class="line">	&lt;/style&gt;</div><div class="line">	&#123;&#123;/isStateless&#125;&#125;</div><div class="line">&lt;/&#123;&#123;name&#125;&#125;&gt;</div></pre></td></tr></table></figure></p>
+<p>이제, plop을 실행하면 아래와 같이 tag 생성자를 선택할 수 있다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ plop</div><div class="line"> ? [PLOP] Please choose a generator. (Use arrow keys)</div><div class="line"> &gt; tag - tag generator</div></pre></td></tr></table></figure></p>
+<p>파일명은 입력한 name에 따라 “/src/app/components/“ 아래에 생성된다. 이때, 파일명 생성 규칙은 dash case 형태가 되며 “dash-case.tag”와 같은 형식이 된다. 파일명 패턴은 아래의 형식중 한가지로 지정할 수 있다.</p>
+<pre><code>* camelCase: changeFormatToThis
+* snakeCase: change_format_to_this
+* dashCase/kabobCase: change-format-to-this
+* dotCase: change.format.to.this
+* pathCase: change/format/to/this
+* properCase/pascalCase: ChangeFormatToThis
+* lowerCase: change format to this
+* sentenceCase: Change format to this,
+* constantCase: CHANGE_FORMAT_TO_THIS
+* titleCase: Change Format To This
+* pkg: package.json 파일을 참조.
+</code></pre><p>mocha test spec파일이 필요하면 actions에 추가하면 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"> actions: [&#123;</div><div class="line">        <span class="attr">type</span>: <span class="string">'add'</span>,</div><div class="line">        <span class="attr">path</span>: <span class="string">'src/app/components/&#123;&#123;dashCase name&#125;&#125;.tag'</span>,</div><div class="line">        <span class="attr">templateFile</span>: <span class="string">'templates/tag.txt'</span></div><div class="line">    &#125;,&#123;</div><div class="line">        <span class="attr">type</span>: <span class="string">'add'</span>,</div><div class="line">        <span class="attr">path</span>: <span class="string">'test/app/components/&#123;&#123;dashCase name&#125;&#125;.js'</span>,</div><div class="line">        <span class="attr">templateFile</span>: <span class="string">'templates/tag-test-spec.txt'</span></div><div class="line">    &#125;]</div><div class="line"> ...</div></pre></td></tr></table></figure></p>
+<h2 id="yeoman-vs-plop"><a href="#yeoman-vs-plop" class="headerlink" title="yeoman vs. plop"></a>yeoman vs. plop</h2><p>yeoman은 이미 알려진대로 수많은 generator를 보유하고 있다. plop과 유사하게 sub generator도 제공한다. 하지만, 초기 코드베이스를 시작하기에는 적합할지 모르나, 프로젝트가 리팩토링이 되거나 디렉토리 구조가 변경되는등의 수정사항이 발생했을때, seed project와 sub generator간의 일관성을 유지하기가 어렵다.</p>
+<p>이에반해, plop은 프로젝트내에서 소스파일을 추가하고 관리하는데 중점을 두고 있다. plop은 초기 프로젝트 초기 구축에 사용되는 40시간보다 프로젝트기간내 매일매일의 개발시간을 단축하는것이 더 효과적이라고 믿기 때문이다.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+          
+            <a href="/tags/Library/" rel="tag">#Library</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/18/what-is-the-rollup-js/" rel="next" title="차세대 JS모듈 번들러 - RollupJS 소개">
+                <i class="fa fa-chevron-left"></i> 차세대 JS모듈 번들러 - RollupJS 소개
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/27/introduction-to-data-binding/" rel="prev" title="Xamarin.Forms 데이터 바인딩 1/3">
+                Xamarin.Forms 데이터 바인딩 1/3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#개요"><span class="nav-number">1.</span> <span class="nav-text">개요</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#설치"><span class="nav-number">2.</span> <span class="nav-text">설치</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#사용"><span class="nav-number">3.</span> <span class="nav-text">사용</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yeoman-vs-plop"><span class="nav-number">4.</span> <span class="nav-text">yeoman vs. plop</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/08/19/micro-generator-framework-plop/';
+      var disqus_title = "작고 유용한 마이크로 제너레이터 - plop";
+      var disqus_url = 'http://chanlee.github.io/2016/08/19/micro-generator-framework-plop/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

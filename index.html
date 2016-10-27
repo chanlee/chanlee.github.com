@@ -1,0 +1,1854 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="chanlee, programming, mobile, arduino, ios, android, xamarin, linux" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Computing and Programming issues">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Programming Note">
+<meta property="og:url" content="http://chanlee.github.io/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="Computing and Programming issues">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Programming Note">
+<meta name="twitter:description" content="Computing and Programming issues">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/"/>
+
+
+  <title> Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/27/introduction-to-data-binding/" itemprop="url">
+                  Xamarin.Forms 데이터 바인딩 1/3
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-10-27T21:23:04+09:00" content="2016-10-27">
+              2016-10-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Xamarin/" itemprop="url" rel="index">
+                    <span itemprop="name">Xamarin</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/27/introduction-to-data-binding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/27/introduction-to-data-binding/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="데이터-바인딩-소개"><a href="#데이터-바인딩-소개" class="headerlink" title="데이터 바인딩 소개"></a>데이터 바인딩 소개</h1><p>데이터 바인딩은 자동으로 유저 인터페이스와 데이터를 동기화 시켜주는 기술이다. 이것은 앱이 UI를 표현하고 데이터와 상호 작용하는것을 단순하게 해준다.</p>
+<h2 id="데이터-바인딩-기초"><a href="#데이터-바인딩-기초" class="headerlink" title="데이터 바인딩 기초"></a>데이터 바인딩 기초</h2><p>데이터 바인딩은 두개의 객체를 연결한다. 하나는 소스, 다른 한쪽은 타깃이 된다. 소스객체는 데이터를 제공하고 타깃객체는 소비(표현)한다. 예를들어 <a href="https://developer.xamarin.com/api/type/Xamarin.Forms.Label/" target="_blank" rel="external">Label</a>의 Text속성은 소스객체의 문자열 속성과 바인드된다.<br><img src="https://blog.xamarin.com/wp-content/uploads/2016/01/data-binding@2x1.png" alt="바인딩 개념도"></p>
+<p>이런한 데이터 바인딩의 가장 큰 장점은 뷰와 데이터간의 동기화에 관해 신경쓰지 않아도 된다는 것이다. 소스객체에 변화가 생기면 바인딩 프레임워크에 의해 자동으로 타깃객체에 반영되고, 그 반대도 마챦가지 이다.</p>
+<p>데이터 바인딩을 하기 위해서는:</p>
+<ol>
+<li>타깃객체의 <a href="https://developer.xamarin.com/api/property/Xamarin.Forms.BindableObject.BindingContext/" target="_blank" rel="external">BindingContext</a> 속성이 반드시 소스객체를 가르켜야 한다.</li>
+<li>XAML에서 이것은 <a href="https://developer.xamarin.com/api/type/Xamarin.Forms.Xaml.BindingExtension/" target="_blank" rel="external">Binding</a>마크업을 사용해 설정할 수 있다.</li>
+</ol>
+<p>다음 코드는, <a href="https://github.com/davidbritch/xamarin-forms/tree/master/DataBinding101" target="_blank" rel="external">accompanying sample</a>의 일부이다.<br>HomagePage.xaml.cs<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public partial class HomePage : ContentPage</div><div class="line">&#123;</div><div class="line">	public HomePage ()</div><div class="line">	&#123;</div><div class="line">		InitializeComponent ();</div><div class="line">		BindingContext = new DetailsViewModel ();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>코드에서 먼저 바인딩될 소스객체(DetailsViewModel)을 바인딩 하였다. 이제, XAML에서 이것을 Binding마크업을 이용하여 UI와 연결만 해주면 된다.</p>
+<p>HomePage.xaml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ContentPage</span> <span class="attr">xmlns</span>=<span class="string">"http://xamarin.com/schemas/2014/forms"</span> <span class="attr">xmlns:x</span>=<span class="string">"http://schemas.microsoft.com/winfx/2009/xaml"</span> <span class="attr">x:Class</span>=<span class="string">"DataBinding101.HomePage"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Padding</span>=<span class="string">"0,20,0,0"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Data Binding 101 Demo"</span> <span class="attr">FontAttributes</span>=<span class="string">"Bold"</span> <span class="attr">HorizontalOptions</span>=<span class="string">"Center"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Forename:"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Entry</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding Forename, Mode=TwoWay&#125;"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Surname:"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Entry</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding Surname, Mode=TwoWay&#125;"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Padding</span>=<span class="string">"0,20,0,0"</span> <span class="attr">Orientation</span>=<span class="string">"Horizontal"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Your forename is:"</span> /&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding Forename&#125;"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Orientation</span>=<span class="string">"Horizontal"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Your surname is:"</span> /&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding Surname&#125;"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ContentPage</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>BindingContext는 특수한 속성으로 모든 페이지 클래스에 상속된다. BindingContext에 관한 추가적인 설명은 <a href="http://developer.xamarin.com/guides/xamarin-forms/user-interface/xaml-basics/data_bindings_to_mvvm/" target="_blank" rel="external">Form Data Bindings to MVVM</a>을 참고하자.</p>
+<p><a href="https://developer.xamarin.com/api/type/Xamarin.Forms.Xaml.BindingExtension/" target="_blank" rel="external">Binding</a> 마크업은 <a href="https://developer.xamarin.com/api/property/Xamarin.Forms.Xaml.BindingExtension.Path/" target="_blank" rel="external">Path</a>와 <a href="https://developer.xamarin.com/api/property/Xamarin.Forms.Xaml.BindingExtension.Mode/" target="_blank" rel="external">Mode</a>속성을 가진다. Path는 바인딩 하고자 하는 원본객체의 속성명 가리키며, BInding마크업의 첫번째 요소로 사용할 경우 생략이 가능하다.<br><a href="https://developer.xamarin.com/api/property/Xamarin.Forms.Xaml.BindingExtension.Mode/" target="_blank" rel="external">Mode</a>속성은 속성값의 변화가 영향을 줄 방향에 대해 설정한다.</p>
+<ul>
+<li>OneWay 바인딩은 소스에서 타깃으로만 변경사항이 반영된다.</li>
+<li>TwoWay 바인딩은 양방향으로 적용된다. 즉, 소스와 타깃객체가 항상 동기화 된다.</li>
+<li>OnwWayToSource 바인딩은 타깃에서 소스로만 변경사항이 반영된다. 주로, 읽기전용의 바인딩 속성에 사용된다.</li>
+</ul>
+<p>Mode값은 생략할 경우 OneWay가 기본이다.</p>
+<h2 id="속성-변경-알림"><a href="#속성-변경-알림" class="headerlink" title="속성 변경 알림"></a>속성 변경 알림</h2><p>기본적으로, 타깃객체는 데이터 바인딩이 생성된 초기에만 소스객체의 값을 전달 받는다. UI가 데이터 소스와 동기화 되려면, 소스 객체에 수정이 생겼음을 타깃객체에 알려주어야 한다. 이 메커니즘은 INotifyPropertyChanged 인터페이스에 의해 제공된다. 이 인터페이스를 구현하면 어떤 데이터 컨트롤간에든 속성값의 변화를 알려줄 수 있다. 아래 코드든, 앞서 사용된 예제에서 사용한 DetailViewModel 의 소스코드 이다.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">public class DetailsViewModel : INotifyPropertyChanged</div><div class="line">&#123;</div><div class="line">	string forename, surname;</div><div class="line"></div><div class="line">	public string Forename &#123;</div><div class="line">		get &#123;</div><div class="line">			return forename;</div><div class="line">		&#125;</div><div class="line">		set &#123;</div><div class="line">			if (forename != value) &#123;</div><div class="line">				forename = value;</div><div class="line">				OnPropertyChanged (&quot;Forename&quot;);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public string Surname &#123;</div><div class="line">		get &#123;</div><div class="line">			return surname;</div><div class="line">		&#125;</div><div class="line">		set &#123;</div><div class="line">			if (surname != value) &#123;</div><div class="line">				surname = value;</div><div class="line">				OnPropertyChanged (&quot;Surname&quot;);</div><div class="line">			&#125;		</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public event PropertyChangedEventHandler PropertyChanged;</div><div class="line"></div><div class="line">	protected virtual void OnPropertyChanged (string propertyName)</div><div class="line">	&#123;</div><div class="line">		var changed = PropertyChanged;</div><div class="line">		if (changed != null) &#123;</div><div class="line">			PropertyChanged (this, new PropertyChangedEventArgs (propertyName));</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>이 클래스는 Forename과 Surname속성이 변경될때마다 PropertyChanged이벤트를 발생시킨다. 즉, 사용자 이름이 입력될 경우 두개의 Label에 이름도 바로 반영이 된다.<br><img src="https://blog.xamarin.com/wp-content/uploads/2016/01/data-binding-101-screenshots.png" alt="데모"></p>
+<h2 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h2><p>데이터 바인딩은 Xamarin.Forms 앱이 데이터를 표현하고 다루는 기본적인 기술이다. 더 자세한 설명은  <a href="http://developer.xamarin.com/guides/xamarin-forms/user-interface/xaml-basics/data_binding_basics/" target="_blank" rel="external">Data Binging Basics</a>와 <a href="http://developer.xamarin.com/guides/xamarin-forms/user-interface/xaml-basics/data_bindings_to_mvvm/" target="_blank" rel="external">Form Data Bindngs to MVVM</a>에서 상세히 설명하고 있다.<br>다음에는, 컨트롤간의 데이터 바인딩과 데이터 변환과 같은 기술에 대해 다루어 보겠다.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/19/micro-generator-framework-plop/" itemprop="url">
+                  작고 유용한 마이크로 제너레이터 - plop
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-19T00:38:54+09:00" content="2016-08-19">
+              2016-08-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/19/micro-generator-framework-plop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/19/micro-generator-framework-plop/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://camo.githubusercontent.com/6a0ff76ac81bc9a3098a59bdf116484971223d79/687474703a2f2f692e696d6775722e636f6d2f70656e55466b722e676966" alt="screenshot"></p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p><a href="https://github.com/amwmedia/plop" target="_blank" rel="external">plopjs</a>는 <a href="http://yeoman.io/" target="_blank" rel="external">yeoman</a>과 같은 템플릿을 기반으로한 scaffolding generator 프레임워크 이다. plopjs는 <a href="https://github.com/SBoudrias/Inquirer.js/" target="_blank" rel="external">inquirer.js</a>를 기반으로 사용자의 입력을 처리하고, <a href="https://github.com/wycats/handlebars.js/" target="_blank" rel="external">handlebar</a> 템플릿을 이용해 파일을 생성한다.</p>
+<h2 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h2><p>plop을 사용하기 위해서는 CLI를 설치하고, 프로젝트에 plop을 devDependencies에 추가해야 한다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g plop</div><div class="line">npm install --save-dev plop</div></pre></td></tr></table></figure></p>
+<p>그리고, 기본적인 plopfile.js 설정 파일을 프로젝트 루트 디렉토리에 생성한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">plop</span>) </span>&#123;</div><div class="line">    <span class="comment">// create your generators here</span></div><div class="line">    plop.setGenerator(<span class="string">'basics'</span>, &#123;</div><div class="line">        <span class="attr">description</span>: <span class="string">'this is a skeleton plopfile'</span>,</div><div class="line">        <span class="attr">prompts</span>: [],</div><div class="line">        <span class="attr">actions</span>: []</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>이것이 가장 기본적인 형태의 설정파일이다. prompt는 사용자의 입력이고, action은 그에 따른 결과라고 볼 수 있다. prompt는 input, confirm, list, checkbox, rawlist, password를 지원하고 action은 단지 add와 modify만 지원한다.</p>
+<h2 id="사용"><a href="#사용" class="headerlink" title="사용"></a>사용</h2><p>riot tag를 생성하는 plopfile.js 를 만들어 보자.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">plop</span>) </span>&#123;</div><div class="line">     <span class="comment">/**</span></div><div class="line">      * tag generator</div><div class="line">      */</div><div class="line">     plop.setGenerator(<span class="string">'tag'</span>, &#123;</div><div class="line">         <span class="attr">description</span>: <span class="string">'tag generator'</span>,</div><div class="line">         <span class="attr">prompts</span>: [&#123;</div><div class="line">              <span class="attr">type</span>: <span class="string">'input'</span>,</div><div class="line">              <span class="attr">name</span>: <span class="string">'name'</span>,</div><div class="line">              <span class="attr">message</span>: <span class="string">'What is the name of the new tag'</span>,</div><div class="line">              <span class="attr">validate</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">                 <span class="keyword">if</span> ((<span class="regexp">/.+/</span>).test(value)) &#123; <span class="keyword">return</span> <span class="literal">true</span>; &#125;</div><div class="line">                 <span class="keyword">return</span> <span class="string">'name is required'</span>;</div><div class="line">             &#125;</div><div class="line">         &#125;],</div><div class="line">         <span class="attr">actions</span>: [&#123;</div><div class="line">             <span class="attr">type</span>: <span class="string">'add'</span>,</div><div class="line">             <span class="attr">path</span>: <span class="string">'src/app/components/&#123;&#123;dashCase name&#125;&#125;.tag'</span>,</div><div class="line">             <span class="attr">templateFile</span>: <span class="string">'templates/tag.txt'</span></div><div class="line">        &#125;]</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>templates/tag.txt에 템플릿을 작성한다.<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;&#123;&#123;name&#125;&#125;&gt;</div><div class="line">	&lt;span&gt;&#123;&#123;name&#125;&#125; tag&lt;/span&gt;</div><div class="line">	&lt;script type="es6"&gt;</div><div class="line">		// your JS code</div><div class="line">	&lt;/script&gt;</div><div class="line">	&#123;&#123;#isStateless type&#125;&#125;</div><div class="line">	&lt;style&gt;</div><div class="line">		/* your styling */</div><div class="line">	&lt;/style&gt;</div><div class="line">	&#123;&#123;/isStateless&#125;&#125;</div><div class="line">&lt;/&#123;&#123;name&#125;&#125;&gt;</div></pre></td></tr></table></figure></p>
+<p>이제, plop을 실행하면 아래와 같이 tag 생성자를 선택할 수 있다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ plop</div><div class="line"> ? [PLOP] Please choose a generator. (Use arrow keys)</div><div class="line"> &gt; tag - tag generator</div></pre></td></tr></table></figure></p>
+<p>파일명은 입력한 name에 따라 “/src/app/components/“ 아래에 생성된다. 이때, 파일명 생성 규칙은 dash case 형태가 되며 “dash-case.tag”와 같은 형식이 된다. 파일명 패턴은 아래의 형식중 한가지로 지정할 수 있다.</p>
+<pre><code>* camelCase: changeFormatToThis
+* snakeCase: change_format_to_this
+* dashCase/kabobCase: change-format-to-this
+* dotCase: change.format.to.this
+* pathCase: change/format/to/this
+* properCase/pascalCase: ChangeFormatToThis
+* lowerCase: change format to this
+* sentenceCase: Change format to this,
+* constantCase: CHANGE_FORMAT_TO_THIS
+* titleCase: Change Format To This
+* pkg: package.json 파일을 참조.
+</code></pre><p>mocha test spec파일이 필요하면 actions에 추가하면 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"> actions: [&#123;</div><div class="line">        <span class="attr">type</span>: <span class="string">'add'</span>,</div><div class="line">        <span class="attr">path</span>: <span class="string">'src/app/components/&#123;&#123;dashCase name&#125;&#125;.tag'</span>,</div><div class="line">        <span class="attr">templateFile</span>: <span class="string">'templates/tag.txt'</span></div><div class="line">    &#125;,&#123;</div><div class="line">        <span class="attr">type</span>: <span class="string">'add'</span>,</div><div class="line">        <span class="attr">path</span>: <span class="string">'test/app/components/&#123;&#123;dashCase name&#125;&#125;.js'</span>,</div><div class="line">        <span class="attr">templateFile</span>: <span class="string">'templates/tag-test-spec.txt'</span></div><div class="line">    &#125;]</div><div class="line"> ...</div></pre></td></tr></table></figure></p>
+<h2 id="yeoman-vs-plop"><a href="#yeoman-vs-plop" class="headerlink" title="yeoman vs. plop"></a>yeoman vs. plop</h2><p>yeoman은 이미 알려진대로 수많은 generator를 보유하고 있다. plop과 유사하게 sub generator도 제공한다. 하지만, 초기 코드베이스를 시작하기에는 적합할지 모르나, 프로젝트가 리팩토링이 되거나 디렉토리 구조가 변경되는등의 수정사항이 발생했을때, seed project와 sub generator간의 일관성을 유지하기가 어렵다.</p>
+<p>이에반해, plop은 프로젝트내에서 소스파일을 추가하고 관리하는데 중점을 두고 있다. plop은 초기 프로젝트 초기 구축에 사용되는 40시간보다 프로젝트기간내 매일매일의 개발시간을 단축하는것이 더 효과적이라고 믿기 때문이다.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/18/what-is-the-rollup-js/" itemprop="url">
+                  차세대 JS모듈 번들러 - RollupJS 소개
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-18T21:15:54+09:00" content="2016-08-18">
+              2016-08-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/18/what-is-the-rollup-js/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/18/what-is-the-rollup-js/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="번들러-Bundler"><a href="#번들러-Bundler" class="headerlink" title="번들러(Bundler)"></a>번들러(Bundler)</h2><p>소프트웨어를 개발할때, 라이브러리나 어플리케이션을 작은 조각으로 세분화하고 나누어 작업하는것은 일반화되어 있다. 써드파티 라이브러리를 사용할때는 더욱 그러하다. 하지만, 그 결과로 무수하게 작은 파일들이 생겨나고 이것을 결코 브라우저에게 좋은 소식이 아니다. 결과적으로, 브라우저는 매번 요청을 생성하고 속도는 느려지기 때문이다.</p>
+<p>해결책은 코드를 모듈화하고, 모듈 번들러를 이용해 모든것을 하나의 파일로 만드는것이다. <a href="http://browserify.org/" target="_blank" rel="external">Browserify</a>와 <a href="http://webpack.github.io/" target="_blank" rel="external">Webpack</a>이 대표적인 예이다.</p>
+<p>하지만, 기존의 라이브러리를 번들화 한다고 하여 그 크기가 줄어드는것은 아니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>( <span class="string">'utils'</span> );</div><div class="line"></div><div class="line"><span class="keyword">var</span> query = <span class="string">'Rollup'</span>;</div><div class="line">utils.ajax( <span class="string">'https://api.example.com?search='</span> + query ).then( handleResponse );</div></pre></td></tr></table></figure></p>
+<p>결국, 실제로 사용하지 않는 utils라이브러리를 모두 다운받게 된다.</p>
+<p>ES6 모듈은 이 문제를 해결하였다. 다음과 같은 방법으로 utils를 모두 포함하지 않고, 필요한 ajax함수만 가져온다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; ajax &#125; <span class="keyword">from</span> <span class="string">'utils'</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> query = <span class="string">'Rollup'</span>;</div><div class="line">ajax( <span class="string">'https://api.example.com?search='</span> + query ).then( handleResponse );</div></pre></td></tr></table></figure></p>
+<p><a href="http://rollupjs.org/" target="_blank" rel="external">Rollup은</a> 코드와 종속관계의 라이브러리를 정적으로 분석하고, 최소한의것들만 번들링한다.</p>
+<p><img src="https://coligo.io/javascript-module-bundling-with-rollup/cover.jpg" alt="rollupjs"></p>
+<h2 id="Minifier의-한계"><a href="#Minifier의-한계" class="headerlink" title="Minifier의 한계"></a>Minifier의 한계</h2><p>만일, <a href="https://github.com/mishoo/UglifyJS2" target="_blank" rel="external">UglifyJS</a>와 같은 minifier를 사용하여도, 불필요한 코드를 삭제하긴 한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log( <span class="string">'this function was included!'</span> );</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log( <span class="string">'this function was not'</span> );</div><div class="line">    baz();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">baz</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log( <span class="string">'neither was this'</span> );</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  foo();</div><div class="line">&#125;)();</div></pre></td></tr></table></figure></p>
+<p>minifier는 foo는 호출되지만, bar는 사용되지 않으므로 삭제한다. baz도 마챦가지 이다. 하지만, 정적인 코드분석의 한계로 인해 동적인 형태의 소스코드에 대해서는 무용지물이 된다. 다음과 같은 코드에 대해서는 동일한 작업을 수행하지 못한다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">foo</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log( <span class="string">'this method was included!'</span> );</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">bar</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log( <span class="string">'so was this :-('</span> );</div><div class="line">      <span class="keyword">this</span>.baz();</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">baz</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log( <span class="string">'and this :-('</span> );</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  obj.foo();</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>불행히도, 기존의 모듈들(CommonJS, AMD)은 두번째 형태의 코드를 생산해내므로 최적화가 어렵다. 그래서, 사용되지 않는 코드를 배제하기보다, 사용되는 코드를 포함시키는 방향으로 최적화를 하는것이 낫다. ES6 모듈과 같은 방식으로 한다면 가능하다.</p>
+<h2 id="Rollup과-JSPM-ES6"><a href="#Rollup과-JSPM-ES6" class="headerlink" title="Rollup과 JSPM, ES6"></a>Rollup과 JSPM, ES6</h2><p>이러한 방식을 Tree-shaking이라고 부른다. Rollup은 <a href="https://github.com/rollup/rollup/wiki/Plugins" target="_blank" rel="external">플러그인</a>을 이용해 CommonJS모들을 ES6모듈로 변환하고 번들링한다. 또한, package.json에 jsnext:main 필드를 추가하여 CommonJS또는 UMD버전 대신 ES6버전의 패키지를 만들수도 있다. <a href="https://github.com/rollup/rollup-starter-project" target="_blank" rel="external">rollup-starter-project</a>는 훌륭한 지침이 될것이다.</p>
+<p><a href="http://jspm.io/" target="_blank" rel="external">JSPM</a>은 뛰어난 패키지 매니저이다. 또한, 이것은 내부적으로 Rollup을 이용해 번들링을 하고 있다. JSPM은 어떤 모듈포맷이든지 지원하며 빌드과정도 필요없으므로 어플리케이션을 개발하는데 있어 훌륭한 선택이될 수 있다. 하지만, Rollup은 복잡한 SystemJS포맷을 사용하지 않으므로 라이브러리를 만드는데 있어서는 Rollup을 단독으로 사용하는것이 더 나은 선택일 수 있다.</p>
+<h2 id="HOW-TO"><a href="#HOW-TO" class="headerlink" title="HOW-TO"></a>HOW-TO</h2><p>Rollup은 <a href="https://github.com/rollup/rollup/wiki/JavaScript-API" target="_blank" rel="external">Javascript API</a> 또는 <a href="https://github.com/rollup/rollup/wiki/Command-Line-Interface" target="_blank" rel="external">CLI</a>를 이용할 수 있다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g rollup</div></pre></td></tr></table></figure></p>
+<h3 id="Javascript-API"><a href="#Javascript-API" class="headerlink" title="Javascript API"></a>Javascript API</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rollup = <span class="built_in">require</span>( <span class="string">'rollup'</span> );</div><div class="line"></div><div class="line"><span class="comment">// used to track the cache for subsequent bundles</span></div><div class="line"><span class="keyword">var</span> cache;</div><div class="line"></div><div class="line">rollup.rollup(&#123;</div><div class="line">  <span class="comment">// The bundle's starting point. This file will be</span></div><div class="line">  <span class="comment">// included, along with the minimum necessary code</span></div><div class="line">  <span class="comment">// from its dependencies</span></div><div class="line">  entry: <span class="string">'main.js'</span>,</div><div class="line">  <span class="comment">// If you have a bundle you want to re-use (e.g., when using a watcher to rebuild as files change),</span></div><div class="line">  <span class="comment">// you can tell rollup use a previous bundle as its starting point.</span></div><div class="line">  <span class="comment">// This is entirely optional!</span></div><div class="line">  cache: cache</div><div class="line">&#125;).then( <span class="function"><span class="keyword">function</span> (<span class="params"> bundle </span>) </span>&#123;</div><div class="line">  <span class="comment">// Generate bundle + sourcemap</span></div><div class="line">  <span class="keyword">var</span> result = bundle.generate(&#123;</div><div class="line">    <span class="comment">// output format - 'amd', 'cjs', 'es', 'iife', 'umd'</span></div><div class="line">    format: <span class="string">'cjs'</span></div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  <span class="comment">// Cache our bundle for later use (optional)</span></div><div class="line">  cache = bundle;</div><div class="line"></div><div class="line">  fs.writeFileSync( <span class="string">'bundle.js'</span>, result.code );</div><div class="line"></div><div class="line">  <span class="comment">// Alternatively, let Rollup do it for you</span></div><div class="line">  <span class="comment">// (this returns a promise). This is much</span></div><div class="line">  <span class="comment">// easier if you're generating a sourcemap</span></div><div class="line">  bundle.write(&#123;</div><div class="line">    <span class="attr">format</span>: <span class="string">'cjs'</span>,</div><div class="line">    <span class="attr">dest</span>: <span class="string">'bundle.js'</span></div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>entry가 최소한의 옵션이다. rollup은 bundle과 함께 프로미스를 반환하고, 결과를 처리하면 된다.</p>
+<h3 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h3><p>rollup -h로 사용법을 참고할 수 있다. 대부분의 경우 CLI를 이용하는것이 편리할 것이다. rollup CLI는 -c(–config)옵션으로 설정파일을 지정하여(기본값은 rollup.config.js) 빌드를 수행할 수 있으므로 gulp와 함께 사용하면 편리하다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rollup -c</div></pre></td></tr></table></figure></p>
+<p>설정파일 예제<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// rollup.config.js</span></div><div class="line"><span class="keyword">import</span> buble <span class="keyword">from</span> <span class="string">'rollup-plugin-buble'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">entry</span>: <span class="string">'src/main.js'</span>,</div><div class="line">  <span class="attr">dest</span>: <span class="string">'dist/bundle.js'</span>,</div><div class="line">  <span class="attr">format</span>: <span class="string">'umd'</span>,</div><div class="line">  <span class="attr">plugins</span>: [ buble() ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Rollup은 이미 webpack이나 browserify 못지않게 많은 <a href="https://github.com/rollup/rollup/wiki/Plugins" target="_blank" rel="external">플러그인</a>들이 존재한다. 플러그인을 활용해 번들링전에 코드를 트랜스파일링 하거나, 써드파티 모듈을 찾는데 사용할 수 있다.</p>
+<p>rollup은 es6개발 환경에서 최선의 모듈 번들러가 될것이다. 그리고, 이것을 잘 사용하려면 적절한 플러그인을 사용하여 빌드환경을 구성하는것이 관건이 될것이다.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/15/hello-es6-part-4/" itemprop="url">
+                  안녕 ES6. (4/4) Iterator와 Generator
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-15T18:07:26+09:00" content="2016-08-15">
+              2016-08-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/15/hello-es6-part-4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/15/hello-es6-part-4/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="for-of-구문"><a href="#for-of-구문" class="headerlink" title="for .. of 구문"></a>for .. of 구문</h2><p>for … in 구문이 객체의 모든 속성을 순회하는것과 달리, for … of는 배열뿐만 아니라 Map, Set등의 컬렉션을 순회할때도 데이터만 순회하여 일반적으로 원하는 결과를 얻어낼 수 있다. 이런, for … of 구문이 작동하는 배경에는 Iterator 프로토콜이 존재한다.</p>
+<h2 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h2><p>이터레이터 프로토콜은 객체내에서 값의 순서를 결정하고, 이것을 순회(Iterable)할 수 있도록 한다. 이것은, [Symbol.iterator()]함수를 구현하는것에 따라 결정된다. 앞서 언급했던 배열이나 Map, Set과 같은 컬렉션 객체들은 이미 Iterable객체이기 때문에 별도의 추가 구현없이 for … of 구문으로 순회가 가능한 것이다.</p>
+<p><img src="http://exploringjs.com/es6/images/iteration----iteration_protocol.jpg" alt="Iterator"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> table = &#123;</div><div class="line">  [<span class="built_in">Symbol</span>.iterator]: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> index: <span class="number">0</span>,</div><div class="line">    <span class="attr">next</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(<span class="keyword">this</span>).sort()</div><div class="line"></div><div class="line">      <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">value</span>: keys[index], <span class="attr">done</span>: index++ &gt;= keys.length</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">of</span> table) &#123;</div><div class="line">  <span class="built_in">console</span>.log(key + <span class="string">' = '</span> + table[key]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>이처럼, next()는 value와 done을 리턴하고 done이 true이면 순회를 종료한다.</p>
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><p>제너레이터는 일반적인 함수가 한번 실행에 한번의 리턴을 하는것과 달리, 여러번의 리턴을 허용한다. Go의 고루틴과 사용 및 동작이 매우 비슷하다. 아래 예제를 보자.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">list</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> item <span class="keyword">of</span> value) &#123;</div><div class="line">    <span class="keyword">yield</span> item;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> value <span class="keyword">of</span> list([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])) &#123;</div><div class="line">  <span class="built_in">console</span>.log(value);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> iterator = list([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> iterator.next); <span class="comment">// function</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> iterator[<span class="built_in">Symbol</span>.iterator]); <span class="comment">// function</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(iterator.next().value); <span class="comment">// 1</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> value <span class="keyword">of</span> iterator) &#123;</div><div class="line">  <span class="built_in">console</span>.log(value); <span class="comment">// 2, 3</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>제너레이터함수는 함수명에 “*”를 붙여 생성한다. 그리고, 함수내에서 yield문을 사용한곳에서 실행을 멈추고 값을 리턴한다. 예제에서 알수 있듯이 사실 제너레이터는 이터레이터를 기반으로 작동하는 함수이다. 제너레이터를 잘 활용하면 비동기 코드로 인한 콜백문제를 쉽게 리팩토링하고, 코드를 깔끔하게 관리할 수 있다.<br>이 사실을 염두해두고 앞서 Iterator로 만들었던 예제를 다시 작성해 보겠다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> table = &#123;</div><div class="line">  [<span class="built_in">Symbol</span>.iterator]: <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(<span class="keyword">this</span>).sort();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> item <span class="keyword">of</span> keys) &#123;</div><div class="line">      <span class="keyword">yield</span> item;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="and"><a href="#and" class="headerlink" title="and"></a>and</h2><p>Iterator와 Generator는 매우 획기적이고 중요한 개념이다. 다음 링크에 상세하게 잘 설명되어 있으니 이 글에서 다루지 않은 많은것들을 참고하기 바란다.</p>
+<p><a href="http://hacks.mozilla.or.kr/2015/08/es6-in-depth-iterators-and-the-for-of-loop/" target="_blank" rel="external">ES6 In Depth: 이터레이터(iterator)와 for-of 루프 구문</a><br><a href="http://hacks.mozilla.or.kr/2015/08/es6-in-depth-generators/" target="_blank" rel="external">ES6 In Depth: 제너레이터(Generator)</a><br><a href="http://hacks.mozilla.or.kr/2016/02/es6-in-depth-generators-continued/" target="_blank" rel="external">ES6 In Depth: 제너레이터 (이어서)</a></p>
+<p>이외에도 ES6의 상세한 기능들이 잘 설명되어 있으니 여기서 다루지 않았던 내용들은 <a href="http://hacks.mozilla.or.kr/category/es6-in-depth/" target="_blank" rel="external">ES6 In Depth series</a>에서 참고할 수 있다.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/15/hello-es6-part-3/" itemprop="url">
+                  안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-15T12:44:25+09:00" content="2016-08-15">
+              2016-08-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/15/hello-es6-part-3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/15/hello-es6-part-3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Map-Set"><a href="#Map-Set" class="headerlink" title="Map, Set"></a>Map, Set</h2><p>Map과 Set은 일반적인 알고리즘을 구현하는데 효과적으로 사용될 수 있는 자료구조이다. 가장쉬운 예제를 통해서 Map의 사용법을 살펴보자.</p>
+<p><img src="https://i.ytimg.com/vi/EyEggHAuVgo/maxresdefault.jpg" alt="Map ans Set"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> testMap = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line">testMap.set(<span class="string">'my whatever key'</span>, <span class="string">'my whatever value'</span>);</div><div class="line"><span class="built_in">console</span>.log(testMap.get(<span class="string">'my whatever key'</span>));</div><div class="line"><span class="comment">// can loop</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">of</span> testMap.keys()) &#123;</div><div class="line">     <span class="comment">// key</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> val <span class="keyword">of</span> testMap.values()) &#123;</div><div class="line">     <span class="comment">// values</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// the length of the object</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'length of testMap is '</span> + testMap.size);</div><div class="line"><span class="comment">// key value pair together</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key , val] <span class="keyword">of</span> testMap.entries()) &#123;</div><div class="line">     <span class="comment">// key ==&gt; val</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// or use forEach, the return order is reversed</span></div><div class="line">testMap.forEach(<span class="function">(<span class="params">val , key</span>) =&gt;</span> &#123;</div><div class="line">     <span class="comment">// key ==&gt; val</span></div><div class="line">&#125;);</div><div class="line"><span class="comment">// delete</span></div><div class="line">testMap.delete(<span class="string">'my whatever key'</span>);</div><div class="line"><span class="comment">// dump all</span></div><div class="line">testMap.clear();</div><div class="line"><span class="comment">// check with KEY</span></div><div class="line"><span class="keyword">if</span> (!testMap.has(<span class="string">'my whatever key'</span>)) &#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">'key no longer exists'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>for … of 구문 또는 forEach 구문을 사용해 쉬게 key와 value를 탐색할 수 있다. 만일, Map을 초기화시에 값을 할당하려면 아래와 같이 2중 배열과 같은 형태로 값을 제공할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myMap = <span class="keyword">new</span> <span class="built_in">Map</span>([</div><div class="line">      [<span class="string">'key1'</span> , <span class="string">'value1'</span>],</div><div class="line">      [<span class="string">'key2'</span> , <span class="string">'value2'</span>]</div><div class="line">]);</div></pre></td></tr></table></figure></p>
+<p>반면, Set은 중복을 허용하지 않는 순서가 보장된 값들의 집합이다. 또한, 예제를 보자.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mySet = <span class="keyword">new</span> <span class="built_in">Set</span>();</div><div class="line">mySet.add(<span class="number">1</span>);</div><div class="line">mySet.add(<span class="string">"some text"</span>);</div><div class="line">mySet.add(<span class="string">"foo"</span>);</div><div class="line"></div><div class="line">mySet.has(<span class="number">1</span>); <span class="comment">// true</span></div><div class="line">mySet.delete(<span class="string">"foo"</span>);</div><div class="line">mySet.size; <span class="comment">// 2</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> mySet) <span class="built_in">console</span>.log(item);</div><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="comment">// "some text"</span></div></pre></td></tr></table></figure></p>
+<p>Set은 배열과 유사하게 사용된다. 실제, Set의 배열은 상호 변환이 가능하다. Set은 배열을 생성자로 받을 수 있고, 배열은 Set으로 부터 생성될 수 있다. 이 경우, Set은 중복된 값을 허용하지 않으므로 제거된다. 통상, 배열을 특정요소의 집합으로 많이 사용하였으나 Set은 몇가지 이점을 제공한다.</p>
+<ul>
+<li>중복이 허용되지 않는 경우 배열보다 Set을 사용하는것이 편리하다.</li>
+<li>배열에서는 splice를 사용해 값을 잘라내야하는 반면, Set은 요소의 값으로 삭제하는 기능을 제공한다.</li>
+<li><p>indexOf 메소드로 값을 확인하는것 보다 has 가 더 빠르다. 또한, NaN는 배열에서 indexOf로 찾을 수 없다.</p>
+<h2 id="WeakMap과-WeakSet"><a href="#WeakMap과-WeakSet" class="headerlink" title="WeakMap과 WeakSet"></a>WeakMap과 WeakSet</h2><p>WeakMap은 오브젝트만을 키로 허용하고 임의의 값을 허용한다. WeakSet도 오브젝트만을 요소로 허용한다. 또한, 객체에 대한 참조가 더이상 존재하지 않을경우 가비지 컬렉션의 대상이 된다. 즉, 언제든지 오브젝트가 GC의 대상이 될수 있기 때문에 WeakMap은 키들의 열거형을 지원하지 않는다.</p>
+<p>아래 예제의 접근법은 생성자 함수에 private 데이터를 제공하게 해준다. ‘let age’는 블록스코프를 가지고 외부에서 접근할 수 없는 값이다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> age = <span class="number">20</span>; <span class="comment">// this is private</span></div><div class="line"></div><div class="line">  <span class="keyword">this</span>.name = name; <span class="comment">// this is public</span></div><div class="line"></div><div class="line">  <span class="keyword">this</span>.greet = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// here we can access both name and age</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`name: <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>, age: <span class="subst">$&#123;age&#125;</span>`</span>);</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> joe = <span class="keyword">new</span> Person(<span class="string">'Joe'</span>);</div><div class="line">joe.greet();</div><div class="line"></div><div class="line"><span class="comment">// here we can access name but not age</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>하지만, 이경우 모든 Person인스턴스는 age를 생성하게 되고, 메모리를 낭비하는 결과를 초래한다.</p>
+<p>WeakMap과 WeakSet을 사용하면 이러한 메모리 낭비를 막고 성능을 개선할 수 있다. let을 이용해 private한 WeakMap을 만들고, 이 WeakMap을 이용해 this와 연관된 private데이터를 조회할 수 있다. 이렇게 하면 모든 인스턴스가 하나의 WeakMap을 공유하게 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> Person = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> privateProps = <span class="keyword">new</span> <span class="built_in">WeakMap</span>();</div><div class="line"></div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(name) &#123;</div><div class="line">      <span class="keyword">this</span>.name = name; <span class="comment">// this is public</span></div><div class="line">      privateProps.set(<span class="keyword">this</span>, &#123;<span class="attr">age</span>: <span class="number">20</span>&#125;); <span class="comment">// this is private</span></div><div class="line">    &#125;</div><div class="line">    greet() &#123;</div><div class="line">      <span class="comment">// Here we can access both name and age</span></div><div class="line">      <span class="built_in">console</span>.log(<span class="string">`name: <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>, age: <span class="subst">$&#123;privateProps.get(<span class="keyword">this</span>).age&#125;</span>`</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> Person;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line"><span class="keyword">let</span> joe = <span class="keyword">new</span> Person(<span class="string">'Joe'</span>);</div><div class="line">joe.greet();</div><div class="line"></div><div class="line"><span class="comment">// here we can access joe's name but not age</span></div></pre></td></tr></table></figure></p>
+<p>출처: <a href="http://stackoverflow.com/questions/22156326/private-properties-in-javascript-es6-classes" target="_blank" rel="external">stackoverflow</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/14/hello-es6-world-part-2/" itemprop="url">
+                  안녕 ES6. (2/4) 클래스와 모듈
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-14T23:03:57+09:00" content="2016-08-14">
+              2016-08-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/14/hello-es6-world-part-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/14/hello-es6-world-part-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="클래스"><a href="#클래스" class="headerlink" title="클래스"></a>클래스</h2><p>ES5에서 “class”는 예약어이지만 “class”라는 키워드는 아무것도 하지 않았다. 자바스크립트는 여타의 객체지향 언어들과 달리 프로토타입 체인을 이용해 클래스 인스턴스를 만들수 있도록 했다. 이런 기괴한 문법탓에 수많은 class관련 패키지들이 많이 나오기도 했다. 그래서인지, ES6에는 이러한 요구가 받아들여져 다른 OOP들 처럼 자바스크립트에서도 클래스를 생성하고 생성하는것이 매우 쉬워졌다.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*oELmvtITGOnDdT906zjaUQ.jpeg" alt="confuse"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(name = 'Bob') &#123;</div><div class="line">    <span class="keyword">this</span>._name = name;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  say() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'My name is '</span> + <span class="keyword">this</span>._name;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Admin</span> <span class="keyword">extends</span> <span class="title">User</span> </span>&#123;</div><div class="line">  say() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'Your name is '</span> + <span class="keyword">super</span>.say();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> user = <span class="keyword">new</span> User();</div><div class="line"><span class="built_in">console</span>.log(user.say()); <span class="comment">// My name is Bob</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> adm = <span class="keyword">new</span> Admin(<span class="string">'Alice'</span>);</div><div class="line"><span class="built_in">console</span>.log(adm.say()); <span class="comment">// You name is Alice</span></div></pre></td></tr></table></figure></p>
+<p>이것을 ES5로 구현한다면 아래와 같다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">name</span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>._name = name || <span class="string">'Bob'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">User.prototype = <span class="built_in">Object</span>.create(<span class="literal">null</span>, &#123;</div><div class="line">  <span class="attr">constructor</span>: &#123;</div><div class="line">    <span class="attr">value</span>: User</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="attr">say</span>: &#123;</div><div class="line">    <span class="attr">value</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="string">'My name is '</span> + <span class="keyword">this</span>._name;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Admin</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  User.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Admin.prototype = <span class="built_in">Object</span>.create(User.prototype, &#123;</div><div class="line">  <span class="attr">constructor</span>: &#123;</div><div class="line">    <span class="attr">value</span>: Admin</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="attr">say</span>: &#123;</div><div class="line">    <span class="attr">value</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> superClassPrototype =  <span class="built_in">Object</span>.getPrototypeOf(<span class="keyword">this</span>.constructor.prototype);</div><div class="line">      <span class="keyword">return</span> <span class="string">'Your name is '</span> + superClassPrototype.say.call(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> user = <span class="keyword">new</span> User(<span class="string">'Alice'</span>);</div><div class="line"><span class="built_in">console</span>.log(user.say()); <span class="comment">// My name is Alice</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> admin = <span class="keyword">new</span> Admin(<span class="string">'Bob'</span>);</div><div class="line"><span class="built_in">console</span>.log(admin.say()); <span class="comment">// Your name is Bob</span></div></pre></td></tr></table></figure></p>
+<p>이것을 보면 ES6에서 클래스가 얼마나 사용하기 편리해졌는가를 느낄수 있을것이다. 더이상, 함수를 속성과 마챦가지로 “:”구분자로 선언할 필요가 없다.</p>
+<h2 id="super와-static"><a href="#super와-static" class="headerlink" title="super와 static"></a>super와 static</h2><p>super는 부모클래스를 참조하기 위한 키워드이다. Java에서 super와 같은 기능을 한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>; <span class="comment">// must be in strict mode</span></div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">myClass</span> </span>&#123;</div><div class="line">      <span class="keyword">constructor</span>() &#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">      method1() &#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">      method2() &#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">      <span class="keyword">static</span> returnPredefinedVal() &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">42</span>;</div><div class="line">      &#125;</div><div class="line"> &#125;</div><div class="line"> <span class="comment">// create a child class</span></div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">myChildClass</span> <span class="keyword">extends</span> <span class="title">myClass</span> </span>&#123;</div><div class="line">     <span class="keyword">constructor</span>() &#123;</div><div class="line">         <span class="keyword">super</span>.method1();</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> myClass.returnPredefinedVal();</div></pre></td></tr></table></figure></p>
+<p>myChildClass는 myClass를 상속하고, myClass에서 선언한 method1() 함수를 바로 호출해서 사용할 수 있다. 물론, myChildClass의 인스턴스는 myClass를 상속하므로 myClass의 method1()을 오버라이드할수도 있고, 상속받아 사용할 수도 있다.<br>그리고, returnPredefinedVal() 처럼 정적으로 선언된 함수는 인스턴스를 생성하지 않고 클래스에 바로 접근할 수도 있다. 물론, static 함수는 인스턴스 속성이나 메소드에 접근할 수 없다.</p>
+<h2 id="setter와-getter"><a href="#setter와-getter" class="headerlink" title="setter와 getter"></a>setter와 getter</h2><p>인스턴스의 속성값에 접근하는 방법으로 setter와 getter가 추가되었다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">myClass</span> </span>&#123;</div><div class="line">      <span class="keyword">constructor</span>() &#123;</div><div class="line">          <span class="keyword">this</span>.value = <span class="literal">null</span>;</div><div class="line">      &#125;</div><div class="line">      set setValue(value) &#123;</div><div class="line">           <span class="keyword">this</span>.value = value + <span class="string">' from myClass'</span>;</div><div class="line">      &#125;</div><div class="line">      get getValue() &#123;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>.value + <span class="string">' @datetime ...'</span>;</div><div class="line">      &#125;</div><div class="line"> &#125;</div><div class="line"> <span class="comment">// same like above</span></div><div class="line"> <span class="keyword">var</span> myInstance = <span class="keyword">new</span> myClass();</div><div class="line"> myInstance.setValue = <span class="string">'foo'</span>;</div><div class="line"> myInstance.getValue; <span class="comment">// foo @datetime ...</span></div></pre></td></tr></table></figure></p>
+<p>일반적으로, “myClass.value = ‘bar’;” 와 같이 인스턴스 변수에 바로 접근할 수도 있지만 set/get 메소드는 전달하는값 이외의 처리도 함께할 수 있다. 주의할 점은 “myInstance.setValue(value)” 가 아니라  “myInstance.setValue = value” 와 같이 값을 설정하는것 처럼 보여야 하기 때문이다.</p>
+<h2 id="모듈"><a href="#모듈" class="headerlink" title="모듈"></a>모듈</h2><p>ES5에서는 표준적인 모듈지원이 되지 않았기 때문에 AMD, RequireJS, CommonJS등의 써드파티들이 난무했었다. 일반적으로, NodeJS에서는 CommonJS스타일의 문법이 통용되었기 때문에 브라우저에서도 <a href="http://browserify.org/" target="_blank" rel="external">Browerify</a>가 대세가 되는 추세였다. 역시, 코드를 예로 들어보겠다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// module.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">port</span>: <span class="number">3000</span>,</div><div class="line">    <span class="attr">getAccounts</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>이경우, ES5에서는 require(‘module’) 을 사용해 의존성을 가져올 수 있었다<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> service = <span class="built_in">require</span>(<span class="string">'module'</span>)</div><div class="line"><span class="built_in">console</span>.log(service.port) <span class="comment">// 3000</span></div></pre></td></tr></table></figure></p>
+<p>ES6에서는 export와 import를 사용한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// module.js</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">var</span> port = <span class="number">3000</span></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getAccounts</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>ES6에서는 모듈을 import할때 좀 더 편리한 선택지를 제공한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;port, getAccounts&#125; <span class="keyword">from</span> <span class="string">'module'</span></div><div class="line"><span class="built_in">console</span>.log(port)</div></pre></td></tr></table></figure></p>
+<p>위와 같이 필요한 속성만 가져와 모듈 접두어를 생략하고 사용할 수 있다. 또는, 아래와 같이도 사용할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> * <span class="keyword">as</span> service <span class="keyword">from</span> <span class="string">'module'</span></div><div class="line"><span class="built_in">console</span>.log(service.port) <span class="comment">// 3000</span></div></pre></td></tr></table></figure></p>
+<p>단점이라면, 아직 브라우저들이 ES6 모듈을 지원하지 않는다는 점이다. 그래서, 사실상 브라우저에서 ES6의 모듈기능을 사용하기 위해서는 <a href="http://jspm.io/" target="_blank" rel="external">jspm</a>과 같은 모듈로더를 사용하는편이 좋다.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/14/hello-es6-world-part-1/" itemprop="url">
+                  안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-14T18:07:29+09:00" content="2016-08-14">
+              2016-08-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/14/hello-es6-world-part-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/14/hello-es6-world-part-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="let과-const"><a href="#let과-const" class="headerlink" title="let과 const"></a>let과 const</h2><p>let은 많은 부분에서 var를 대채할 것으로 기대된다. let은 var와 달리 변수의 스코프를 블록 또는 표현식 단위로 제한한다. <a href="http://chanlee.github.io/2013/12/10/javascript-variable-scope-and-hoisting/">자바스크립트의 변수범위와 호이스팅</a>에서 설명했던것과 완전 반대로 작동한다.</p>
+<p><em>잘못된 예제. (블럭-수준 범위로 오해할 경우)</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</div><div class="line"><span class="comment">// 아래의 if문은 name변수에 대한 지역-범위를 생성하지 않습니다.</span></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     name = <span class="string">"Jack"</span>;</div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 전역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 여전히 전역변수이며 if문에서 변경되었습니다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Jack</span></div></pre></td></tr></table></figure></p>
+<p>ES5에서 변수의 범위를 이렇게 설명했었다. var로 선언된 변수는 함수내에서 전역범위를 가지므로 위와 같이 작동한다. 하지만, if문내의 name을 let으로 선언할 경우는 바깥의 name과 내부의 name은 다른 스코프를 가지게 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     <span class="keyword">let</span> name = <span class="string">"Jack"</span>; <span class="comment">// name은 if문의 지역범위를 가진다.</span></div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 지역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 if문에서 변경되지 않았다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Richard</span></div></pre></td></tr></table></figure></p>
+<p>만일, 다음과 같이 let의 위치가 바뀌면 어떻게 될까?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> name = <span class="string">"Richard"</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     name = <span class="string">"Jack"</span>; <span class="comment">// name은 함수의 지역범위를 가진다.</span></div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 전역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 if문에서 변경되었다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Jack</span></div></pre></td></tr></table></figure></p>
+<p>이 경우에 let은 var와 동일하게 사용된다. name이 블록 스코프를 가지기 위해서는 if문 내에서 선언되어야 한다.</p>
+<p>const는 상수처럼 작동(Immutable)한다. 가급적, 상수 선언은 대문자로 쓰도록 하는게 좋겠다. 또한, 함수선언과 같은 경우에 var보다 const를 사용하는 편이 낫다. 즉, let과 const를 적절히 쓰면 메모리도 아끼고, 디버깅도 좀 더 수월해진다.</p>
+<p>앞길이 구만리인데 고작 let, const 로 한페이지를 채워버렸다. 하지만, 사소한것도 확실히 알고 넘어가야 한다. 버그는 늘 사소한데서 생겨나고 그런게 찾기는 드럽게 힘들기 마련이다.(T.T)</p>
+<h2 id="화살표-함수와-this"><a href="#화살표-함수와-this" class="headerlink" title="화살표 함수와 this"></a>화살표 함수와 this</h2><p>ES5에서 가장 헷갈리는것이 바로 this의 범위이다. 클로저가 생성한 컨텍스트로 인해 this가 this가 아닌 상황이 발생하여 “that = this, self = this”와 같은 패턴을 사용해야만 했다.</p>
+<p><img src="http://moduscreate.com/wp-content/uploads/2016/05/ES6-arrow-functions-react-native-4.jpg" alt="Arrow vs. Prototype"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> self = <span class="keyword">this</span></div><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  self.sendData()</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>또는 “.bind(this)”를 사용해 this를 현재 컨텍스트와 수동으로 바인딩하기도 했었다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.sendData()</div><div class="line">&#125;.bind(<span class="keyword">this</span>))</div></pre></td></tr></table></figure></p>
+<p>화살표 함수를 사용하면 이러한 번거로움을 해소할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function">(<span class="params">event</span>) =&gt;</span>&#123;</div><div class="line">  <span class="keyword">this</span>.sendData()</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>화살표 함수는 함수 표현식을 간략하게 표기하도록도 해주지만 this의 범위를 함수를 감싸는 코드와 동일하게 유지해줌으로써 기존의 클로저로 인한 번거로움을 많이 해소해 준다.</p>
+<h2 id="파라미터"><a href="#파라미터" class="headerlink" title="파라미터"></a>파라미터</h2><p>ES5에서 arguments를 대신해 “…”식을 지원한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> myFunc = <span class="function">(<span class="params">...params</span>) =&gt;</span> &#123;</div><div class="line">     <span class="built_in">console</span>.log(params.length + <span class="string">' argument(s)'</span>);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// execute it</span></div><div class="line">myFunc(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</div><div class="line"><span class="comment">// 3 arguments;</span></div></pre></td></tr></table></figure></p>
+<p>params는 자바스크립트에 내장된 arguments와 같다. 즉, 기존 코드라면 “params.length”는 “arguments.length”와 동일하다. 나은점은, “arguments”가 아닌 “params”와 같이 이름을 붙일수 있다는것과 믹스인형태로 사용할 수 있다는 점이다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> drink = <span class="function"><span class="keyword">function</span>(<span class="params">requiredParam , ...maybe</span>) </span>&#123;</div><div class="line">      <span class="comment">//</span></div><div class="line"> &#125;</div><div class="line"> drink(<span class="string">'coffee'</span>);</div><div class="line"> drink(<span class="string">'coffee'</span> , <span class="string">'sugar'</span>);</div><div class="line"> drink(<span class="string">'coffee'</span> , <span class="string">'sugar'</span> , <span class="string">'milk'</span>);</div></pre></td></tr></table></figure></p>
+<p>또한, 원하는 파라미터에 기본값을 줄 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> drink = <span class="function">(<span class="params">typeOfDrink = <span class="string">'coffee'</span> , ...maybe</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">const</span> eat = <span class="function">(<span class="params">food , todo=<span class="string">'wash hand'</span> </span>) =&gt;</span> &#123;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>위외 같은 코드를 ES5에서는 통상 아래와 같은 패턴으로 코딩을 하게된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> drink = <span class="function"><span class="keyword">function</span>(<span class="params">typeOfDrink</span>) </span>&#123;</div><div class="line">      typeOfDrink = typeOfDrink || <span class="string">'coffee'</span>;</div><div class="line">      <span class="keyword">if</span> (<span class="built_in">arguments</span>.length &gt; <span class="number">2</span>) &#123;</div><div class="line">          <span class="comment">// ... loop whatever</span></div><div class="line">      &#125;</div><div class="line"> &#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="and"><a href="#and" class="headerlink" title="and"></a>and</h2><p>꼭 필요하다 싶은것들만 묶어서 한편으로 간단하게 쓰려고 했는데 주절주절 쓰다보니 길어졌다. 아직 클래스도 남았고, 제너레이터, Map/Set, 디스터럭처링등 다룰게 많아서 또 시리즈로 가야겠다. See ya!</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/10/anatomy-of-a-riot-framework-part-6/" itemprop="url">
+                  Riot 프레임워크 알아보기. (6/6) Router
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-10T23:18:45+09:00" content="2016-08-10">
+              2016-08-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/10/anatomy-of-a-riot-framework-part-6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/10/anatomy-of-a-riot-framework-part-6/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="http://jennavuong.ghost.io/content/images/2016/03/Screen-Shot-2016-03-13-at-11-24-57-PM.png" alt="frame"></p>
+<h2 id="기본"><a href="#기본" class="headerlink" title="기본"></a>기본</h2><p>Riot은 라우팅 기능을 포함하고 있다. 우선 간단한 예제를 살펴보자.<br>먼저 index.html 은 아래와 같다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">navigation</span>&gt;</span><span class="tag">&lt;/<span class="name">navigation</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>다음은 app.js 이다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">'navigation.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'home.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'about.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'contact.tag'</span></div><div class="line"></div><div class="line"><span class="comment">// mount navigation tag</span></div><div class="line">riot.mount(<span class="string">'navigation'</span>)</div><div class="line"></div><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">action</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (action) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'about'</span>:</div><div class="line">            <span class="keyword">return</span> riot.mount(<span class="string">'#main'</span>, <span class="string">'about'</span>)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">case</span> <span class="string">'contact'</span>:</div><div class="line">            <span class="keyword">return</span> riot.mount(<span class="string">'#main'</span>, <span class="string">'contact'</span>)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            riot.mount(<span class="string">'#main'</span>, <span class="string">'home'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">rout.route.start(<span class="literal">true</span>)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>&lt;navigation&gt;&lt;/navigation&gt; 태그는 ‘/home’, ‘/about’, ‘/contact’ 링크를 포함하고 있다고 가정. 각, 링크를 클릭하여 메뉴를 이동하면 브라우저 주소창의 URL이 변경될것이다.</p>
+</blockquote>
+</blockquote>
+<p>기본 URL파서는 path부분을 콜백함수의 인자로 받는다. ‘/home’의 경우 ‘action’은 ‘home’이 된다.<br>만일, route를 아래와 같이 정의하고 ‘/users/1234/edit’ 와 같이 URL을 호출한다면 어떻게 될까?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">collection, id, action</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>collection : users<br>id : 1234<br>action : edit</p>
+</blockquote>
+</blockquote>
+<p>와 같이 인자를 받게 된다. 유의할 점은 riot router는 자동으로 실행되지 않기 때문에 반드시 riot.route.start()를 해줘야만 작동한다.(v2.3이후) 이것은, riot과 함께 다른 router도 사용할 수 있음을 의미한다.</p>
+<h2 id="필터"><a href="#필터" class="headerlink" title="필터"></a>필터</h2><p>다른 라우터들 처럼 URL의 앞부분 또는 일부를 고정된 형태로 필터링 할 수 있다. 다음과 같이 정의할 경우 항상 ‘/fruit’에 매칭된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">roit.route(<span class="string">'/fruit'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>와일드카드(*)또한 지원되므로 다음과 같이 정의할수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="string">'/fruit/*'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>/fruit/apple 을 호출할 경우 name = apple 이 된다.</p>
+</blockquote>
+</blockquote>
+<h2 id="활용"><a href="#활용" class="headerlink" title="활용"></a>활용</h2><p>이것은 Riot Router의 기본 URL파서의 행동으로서 URL파서를 커스터마이징 하여 다르게 작동할 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">riot.route.parser(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> raw = path.slice(<span class="number">2</span>).split(<span class="string">'?'</span>),</div><div class="line">      uri = raw[<span class="number">0</span>].split(<span class="string">'/'</span>),</div><div class="line">      qs = raw[<span class="number">1</span>],</div><div class="line">      params = &#123;&#125;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (qs) &#123;</div><div class="line">    qs.split(<span class="string">'&amp;'</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> c = v.split(<span class="string">'='</span>)</div><div class="line">      params[c[<span class="number">0</span>]] = c[<span class="number">1</span>]</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  uri.push(params)</div><div class="line">  <span class="keyword">return</span> uri</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>/users/edit?id=1234를 호출할 경우<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">target, action, params</span>) </span>&#123;</div><div class="line">    <span class="comment">// target = users</span></div><div class="line">    <span class="comment">// action = edit</span></div><div class="line">    <span class="comment">// params = &#123; id: '1234' &#125;</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>추가적인 API 사용법은 <a href="http://riotjs.com/api/route/" target="_blank" rel="external">Route API</a>에서 자세히 볼 수 있다.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/03/anatomy-of-a-riot-framework-part-5/" itemprop="url">
+                  Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-03T01:16:39+09:00" content="2016-08-03">
+              2016-08-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/03/anatomy-of-a-riot-framework-part-5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/03/anatomy-of-a-riot-framework-part-5/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://avatars2.githubusercontent.com/u/2904740?v=3&amp;s=400" alt="emitter"></p>
+<h2 id="Observer-Observable"><a href="#Observer-Observable" class="headerlink" title="Observer? Observable!"></a>Observer? Observable!</h2><p>Riot은 기본적으로 커스텀 태그, 이벤트 시스템(Observable), 라우터의 세가지를 제공한다. 이 세가지는 클라이언트 웹어플리케이션을 개발하는데 있어 필수사항이라고 볼 수 있다. 이 요소들은 주로 다음과 같은 목적을 갖고 있다.</p>
+<ol>
+<li>커스텀 태그는 사용자 인터페이스를 위해</li>
+<li>이벤트는 모듈화를 위해</li>
+<li>라우터는 URL과 뒤로가기 버튼 기능을 위해</li>
+</ol>
+<p>앞서 시리즈에서는 커스텀 태그에 대해 알아보았으니, 오늘은 Observable에 대해 설명할 생각이다.</p>
+<p>Observable은 이벤트를 주고 받기위한 일반적인 수단으로써, 종속적이거나 강하게 결합된 방식없이 모듈화할 수 있도록 돕는다. 이러한 방식은 큰 프로젝트를 다 작고 단순하게 나누고, 프로젝트의 다른 부분에 영향을 주지않고 모듈을 추가, 삭제, 수정하는 작업이 가능하도록 해준다.</p>
+<p>주된 사용패턴으로 어플리케이션의 하나의 코어와 여러개의 확장으로 나누는 것이다. 코어는 어떤 사건이 발생했을때 언제든지 이벤트를 발생시킨다. 사건이라함은 아이템이 추가되거나, 삭제되거나 또는 서버로 부터 무언가를 로딩되는등의 일들을 의미한다.</p>
+<p>이러한 환경에서 코어는 각 확장 모듈들에 대해 알지 못한다. 단지, 확장모듈들이 코어를 바라볼 뿐이므로 코어와 다른 확장모듈에 영향을 주지않고 모듈의 추가, 수정, 삭제가 가능하다. 이러한 방식을 “약한 결합(loose coupling)”이라고 부른다.</p>
+<p>결국, 확장모듈을 쉽게 개발하기 위해서는 코어와 이벤트를 잘 설계하고 유지해야만 한다.</p>
+<h2 id="riot-observable-el"><a href="#riot-observable-el" class="headerlink" title="riot.observable(el)"></a>riot.observable(el)</h2><p>특정 객체가 observable을 지원하도록 만들거나 observable 인스턴스를 만들어 리턴을 하든, Riot에서 Observable 객체를 만들고 사용하는것은 매우 간단하다. <a href="http://riotjs.com/api/observable/" target="_blank" rel="external">Riot 문서의 예제</a>에 있는 샘플 부터 보겠다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// Make Car instances observable</span></div><div class="line">  riot.observable(<span class="keyword">this</span>)</div><div class="line"></div><div class="line">  <span class="comment">// listen to 'start' event</span></div><div class="line">  <span class="keyword">this</span>.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// engine started</span></div><div class="line">  &#125;)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// make a new Car instance</span></div><div class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car()</div><div class="line"></div><div class="line"><span class="comment">// trigger 'start' event</span></div><div class="line">car.trigger(<span class="string">'start'</span>)</div></pre></td></tr></table></figure></p>
+<p>이렇게 car인스턴스를 observable하게 만들수도 있고</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> el = riot.observable(&#123;&#125;)</div><div class="line">el.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// engine started</span></div><div class="line">&#125;)</div><div class="line">el.trigger(<span class="string">'start'</span>)</div></pre></td></tr></table></figure>
+<p>이렇게 빈객체를 가지고도 observable 인스턴스를 손쉽게 만들 수 있다. 이 둘의 차이점은 없다. “.on(…)” 이벤트 핸들러가 포함되어 있나, 아니냐의 차이뿐이다. 물론, 경우에 따라 편리한 방법대로 사용하면 된다.</p>
+<p>이벤트 핸들러는 이벤트와 함께 원하는 파라미터를 콜백 인자로 받을 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// listen to 'start' event and expect extra arguments</span></div><div class="line">el.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">engine_details, is_rainy_day</span>) </span>&#123;</div><div class="line"></div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// trigger start event with extra parameters</span></div><div class="line">el.trigger(<span class="string">'start'</span>, &#123; <span class="attr">fuel</span>: <span class="number">89</span> &#125;, <span class="literal">true</span>)</div></pre></td></tr></table></figure></p>
+<p>engine_details는 { fuel: 89 }가 되고, is_rainy_day는 true이다.</p>
+<p>이벤트명은 간단히 “.”표기법을 이용해 네임스페이스를 구분할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// listen to start and start.honda events</span></div><div class="line">el.on(<span class="string">'start.honda'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// trigger all start events (including start.honda)</span></div><div class="line">el.trigger(<span class="string">'start'</span>)</div><div class="line"></div><div class="line"><span class="comment">// trigger only start.honda events</span></div><div class="line">el.trigger(<span class="string">'start.honda'</span>)</div><div class="line"></div><div class="line"><span class="comment">// remove only honda start events</span></div><div class="line">el.off(<span class="string">'start.honda'</span>)</div><div class="line"></div><div class="line"><span class="comment">// remove all start events (including start.honda)</span></div><div class="line">el.off(<span class="string">'start'</span>)</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/01/anatomy-of-a-riot-framework-part-4/" itemprop="url">
+                  Riot 프레임워크 알아보기. (4/6) 이벤트 처리와 반복문
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-01T22:10:33+09:00" content="2016-08-01">
+              2016-08-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/01/anatomy-of-a-riot-framework-part-4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/01/anatomy-of-a-riot-framework-part-4/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="이벤트-핸들러"><a href="#이벤트-핸들러" class="headerlink" title="이벤트 핸들러"></a>이벤트 핸들러</h2><p>DOM 이벤트에 대한 처리를 하는 함수를 이벤트 핸들러라고 부른다. Riot에서 일반적인 이벤트 핸들러는 다음과 같은 형식으로 처리한다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">login</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">onsubmit</span>=<span class="string">&#123;</span> <span class="attr">submit</span> &#125;&gt;</span></div><div class="line"></div><div class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line">  // this method is called when above form is submitted</div><div class="line">  submit(e) &#123;</div><div class="line"></div><div class="line">  &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">login</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>“on…”으로 시작하는 DOM Event는 모두 동일한 방법으로 적용할 수 있으며 다음과 같이 표현식(expression)을 사용해 이벤트 핸들러를 동적으로 적용할 수도 있다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">onsubmit</span>=<span class="string">&#123;</span> <span class="attr">condition</span> ? <span class="attr">method_a</span> <span class="attr">:</span> <span class="attr">method_b</span> &#125;&gt;</span></div></pre></td></tr></table></figure></p>
+<p>주의할 점은 Riot의 이벤트 핸들러 “e.preventDefault()”을 호출하여 브라우저의 기본 이벤트 전파를 막는것이다. 이것을 허용하려면, 핸들러 함수의 마지막에 true를 리턴하면 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">submit(e) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="조건문"><a href="#조건문" class="headerlink" title="조건문"></a>조건문</h2><p>조건문은 조건에 따라 특정 DOM노드를 보여주거나 숨기는 기능을 제공한다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">if</span>=<span class="string">&#123;</span> <span class="attr">is_premium</span> &#125;&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>This is for premium users only<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>show : 판단값이 true이면 DOM을 보여준다.</li>
+<li>hide : 판단값이 true이면 DOM을 못본다.</li>
+<li>if : 판단값이 true이면 DOM추가, 아니면 제거.</li>
+</ul>
+<h2 id="반복문"><a href="#반복문" class="headerlink" title="반복문"></a>반복문</h2><p><img src="http://i2.wp.com/www.startolearn.com/wp-content/uploads/2015/02/392041_249821241755640_1896494109_n.jpg" alt="loop"></p>
+<p>반복문은 each 속성과 함께 아래와 같이 사용할 수 있다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">todo</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">each</span>=<span class="string">&#123;</span> <span class="attr">items</span> &#125; <span class="attr">class</span>=<span class="string">&#123;</span> <span class="attr">completed:</span> <span class="attr">done</span> &#125;&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">&#123;</span> <span class="attr">done</span> &#125;&gt;</span> &#123; title &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"></div><div class="line">  this.items = [</div><div class="line">    &#123; title: 'First item', done: true &#125;,</div><div class="line">    &#123; title: 'Second item' &#125;,</div><div class="line">    &#123; title: 'Third item' &#125;</div><div class="line">  ]</div><div class="line"><span class="tag">&lt;/<span class="name">todo</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h3 id="컨텍스트-Context"><a href="#컨텍스트-Context" class="headerlink" title="컨텍스트(Context)"></a>컨텍스트(Context)</h3><p>Riot에서 반복문을 사용할때 몇가지 주의할 점이 있다. 가장 중요한것은 각 each 아이템마다 자식 컨텍스트가 생성된다는 것이다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">todo</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">each</span>=<span class="string">&#123;</span> <span class="attr">items</span> &#125;&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123; title &#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">onclick</span>=<span class="string">&#123;</span> <span class="attr">parent.remove</span> &#125;&gt;</span>Remove<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line">  this.items = [ &#123; title: 'First' &#125;, &#123; title: 'Second' &#125; ]</div><div class="line"></div><div class="line">  remove(event) &#123;</div><div class="line"></div><div class="line">  &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">todo</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>each반복문 내부의 this는 새로운 컨텍스트 이다. 즉, items각 요소가 this이자 todo의 자식 컨텍스트로 생성되었으므로, title에는 직접 접근할 수 있지만 todo태그 인스턴스의 함수는 “parent.” 접두사를 붙여서 호출할 수 있다.</p>
+<h3 id="반복문내에서의-이벤트-핸들러"><a href="#반복문내에서의-이벤트-핸들러" class="headerlink" title="반복문내에서의 이벤트 핸들러"></a>반복문내에서의 이벤트 핸들러</h3><p>위의 remove함수는 이벤트 객체를 통해 각각의 자식 요소들에 접근할 수 있다. event.item를 통해 items의 개별 요소를 참조할 있다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">todo</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">each</span>=<span class="string">&#123;</span> <span class="attr">items</span> &#125;&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123; title &#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">onclick</span>=<span class="string">&#123;</span> <span class="attr">parent.remove</span> &#125;&gt;</span>Remove<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line">  this.items = [ &#123; title: 'First' &#125;, &#123; title: 'Second' &#125; ]</div><div class="line"></div><div class="line">  remove(event) &#123;</div><div class="line"></div><div class="line">    // looped item</div><div class="line">    var item = event.item</div><div class="line"></div><div class="line">    // index on the collection</div><div class="line">    var index = this.items.indexOf(item)</div><div class="line"></div><div class="line">    // remove from collection</div><div class="line">    this.items.splice(index, 1)</div><div class="line">  &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">todo</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>이벤트핸들러가 실행되고 난 후에는 현재 태그 인스턴스가 this.update()를 이용해 화면을 갱신하게 되고, 이것은 반복문내의 자식 인스턴스들로 모두 갱신한다.</p>
+<h2 id="서버사이드-렌더링"><a href="#서버사이드-렌더링" class="headerlink" title="서버사이드 렌더링"></a>서버사이드 렌더링</h2><p>서버측에서 npm으로 riot을 설치한 다음 원하는 태그를 require하고 “riot.render(*.tag)”를 호출하기만 하면 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> riot = <span class="built_in">require</span>(<span class="string">'riot'</span>)</div><div class="line"><span class="keyword">var</span> timer = <span class="built_in">require</span>(<span class="string">'timer.tag'</span>)</div><div class="line"></div><div class="line"><span class="keyword">var</span> html = riot.render(timer, &#123; <span class="attr">start</span>: <span class="number">42</span> &#125;)</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(html) <span class="comment">// &lt;timer&gt;&lt;p&gt;Seconds Elapsed: 42&lt;/p&gt;&lt;/timer&gt;</span></div></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/avanslaars/riot-server-render" target="_blank" rel="external">이곳</a>에서 express+swig+riot을 사용한 간단한 <a href="https://github.com/avanslaars/riot-server-render" target="_blank" rel="external">Server-Side rendering 예제</a>를 볼 수 있다.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = 'index.html';
+      var disqus_title = "";
+      var disqus_url = '';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

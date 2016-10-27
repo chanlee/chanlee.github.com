@@ -1,0 +1,679 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,ES6,ECMAScript 5," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="클래스ES5에서 “class”는 예약어이지만 “class”라는 키워드는 아무것도 하지 않았다. 자바스크립트는 여타의 객체지향 언어들과 달리 프로토타입 체인을 이용해 클래스 인스턴스를 만들수 있도록 했다. 이런 기괴한 문법탓에 수많은 class관련 패키지들이 많이 나오기도 했다. 그래서인지, ES6에는 이러한 요구가 받아들여져 다른 OOP들 처럼 자바스크립트">
+<meta property="og:type" content="article">
+<meta property="og:title" content="안녕 ES6. (2/4) 클래스와 모듈">
+<meta property="og:url" content="http://chanlee.github.io/2016/08/14/hello-es6-world-part-2/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="클래스ES5에서 “class”는 예약어이지만 “class”라는 키워드는 아무것도 하지 않았다. 자바스크립트는 여타의 객체지향 언어들과 달리 프로토타입 체인을 이용해 클래스 인스턴스를 만들수 있도록 했다. 이런 기괴한 문법탓에 수많은 class관련 패키지들이 많이 나오기도 했다. 그래서인지, ES6에는 이러한 요구가 받아들여져 다른 OOP들 처럼 자바스크립트">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*oELmvtITGOnDdT906zjaUQ.jpeg">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="안녕 ES6. (2/4) 클래스와 모듈">
+<meta name="twitter:description" content="클래스ES5에서 “class”는 예약어이지만 “class”라는 키워드는 아무것도 하지 않았다. 자바스크립트는 여타의 객체지향 언어들과 달리 프로토타입 체인을 이용해 클래스 인스턴스를 만들수 있도록 했다. 이런 기괴한 문법탓에 수많은 class관련 패키지들이 많이 나오기도 했다. 그래서인지, ES6에는 이러한 요구가 받아들여져 다른 OOP들 처럼 자바스크립트">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/800/1*oELmvtITGOnDdT906zjaUQ.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/08/14/hello-es6-world-part-2/"/>
+
+
+  <title> 안녕 ES6. (2/4) 클래스와 모듈 | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                안녕 ES6. (2/4) 클래스와 모듈
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-14T23:03:57+09:00" content="2016-08-14">
+              2016-08-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/14/hello-es6-world-part-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/14/hello-es6-world-part-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="클래스"><a href="#클래스" class="headerlink" title="클래스"></a>클래스</h2><p>ES5에서 “class”는 예약어이지만 “class”라는 키워드는 아무것도 하지 않았다. 자바스크립트는 여타의 객체지향 언어들과 달리 프로토타입 체인을 이용해 클래스 인스턴스를 만들수 있도록 했다. 이런 기괴한 문법탓에 수많은 class관련 패키지들이 많이 나오기도 했다. 그래서인지, ES6에는 이러한 요구가 받아들여져 다른 OOP들 처럼 자바스크립트에서도 클래스를 생성하고 생성하는것이 매우 쉬워졌다.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*oELmvtITGOnDdT906zjaUQ.jpeg" alt="confuse"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(name = 'Bob') &#123;</div><div class="line">    <span class="keyword">this</span>._name = name;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  say() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'My name is '</span> + <span class="keyword">this</span>._name;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Admin</span> <span class="keyword">extends</span> <span class="title">User</span> </span>&#123;</div><div class="line">  say() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'Your name is '</span> + <span class="keyword">super</span>.say();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> user = <span class="keyword">new</span> User();</div><div class="line"><span class="built_in">console</span>.log(user.say()); <span class="comment">// My name is Bob</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> adm = <span class="keyword">new</span> Admin(<span class="string">'Alice'</span>);</div><div class="line"><span class="built_in">console</span>.log(adm.say()); <span class="comment">// You name is Alice</span></div></pre></td></tr></table></figure></p>
+<p>이것을 ES5로 구현한다면 아래와 같다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">name</span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>._name = name || <span class="string">'Bob'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">User.prototype = <span class="built_in">Object</span>.create(<span class="literal">null</span>, &#123;</div><div class="line">  <span class="attr">constructor</span>: &#123;</div><div class="line">    <span class="attr">value</span>: User</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="attr">say</span>: &#123;</div><div class="line">    <span class="attr">value</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="string">'My name is '</span> + <span class="keyword">this</span>._name;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Admin</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  User.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Admin.prototype = <span class="built_in">Object</span>.create(User.prototype, &#123;</div><div class="line">  <span class="attr">constructor</span>: &#123;</div><div class="line">    <span class="attr">value</span>: Admin</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="attr">say</span>: &#123;</div><div class="line">    <span class="attr">value</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> superClassPrototype =  <span class="built_in">Object</span>.getPrototypeOf(<span class="keyword">this</span>.constructor.prototype);</div><div class="line">      <span class="keyword">return</span> <span class="string">'Your name is '</span> + superClassPrototype.say.call(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> user = <span class="keyword">new</span> User(<span class="string">'Alice'</span>);</div><div class="line"><span class="built_in">console</span>.log(user.say()); <span class="comment">// My name is Alice</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> admin = <span class="keyword">new</span> Admin(<span class="string">'Bob'</span>);</div><div class="line"><span class="built_in">console</span>.log(admin.say()); <span class="comment">// Your name is Bob</span></div></pre></td></tr></table></figure></p>
+<p>이것을 보면 ES6에서 클래스가 얼마나 사용하기 편리해졌는가를 느낄수 있을것이다. 더이상, 함수를 속성과 마챦가지로 “:”구분자로 선언할 필요가 없다.</p>
+<h2 id="super와-static"><a href="#super와-static" class="headerlink" title="super와 static"></a>super와 static</h2><p>super는 부모클래스를 참조하기 위한 키워드이다. Java에서 super와 같은 기능을 한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>; <span class="comment">// must be in strict mode</span></div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">myClass</span> </span>&#123;</div><div class="line">      <span class="keyword">constructor</span>() &#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">      method1() &#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">      method2() &#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">      <span class="keyword">static</span> returnPredefinedVal() &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">42</span>;</div><div class="line">      &#125;</div><div class="line"> &#125;</div><div class="line"> <span class="comment">// create a child class</span></div><div class="line"> <span class="class"><span class="keyword">class</span> <span class="title">myChildClass</span> <span class="keyword">extends</span> <span class="title">myClass</span> </span>&#123;</div><div class="line">     <span class="keyword">constructor</span>() &#123;</div><div class="line">         <span class="keyword">super</span>.method1();</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> myClass.returnPredefinedVal();</div></pre></td></tr></table></figure></p>
+<p>myChildClass는 myClass를 상속하고, myClass에서 선언한 method1() 함수를 바로 호출해서 사용할 수 있다. 물론, myChildClass의 인스턴스는 myClass를 상속하므로 myClass의 method1()을 오버라이드할수도 있고, 상속받아 사용할 수도 있다.<br>그리고, returnPredefinedVal() 처럼 정적으로 선언된 함수는 인스턴스를 생성하지 않고 클래스에 바로 접근할 수도 있다. 물론, static 함수는 인스턴스 속성이나 메소드에 접근할 수 없다.</p>
+<h2 id="setter와-getter"><a href="#setter와-getter" class="headerlink" title="setter와 getter"></a>setter와 getter</h2><p>인스턴스의 속성값에 접근하는 방법으로 setter와 getter가 추가되었다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">myClass</span> </span>&#123;</div><div class="line">      <span class="keyword">constructor</span>() &#123;</div><div class="line">          <span class="keyword">this</span>.value = <span class="literal">null</span>;</div><div class="line">      &#125;</div><div class="line">      set setValue(value) &#123;</div><div class="line">           <span class="keyword">this</span>.value = value + <span class="string">' from myClass'</span>;</div><div class="line">      &#125;</div><div class="line">      get getValue() &#123;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>.value + <span class="string">' @datetime ...'</span>;</div><div class="line">      &#125;</div><div class="line"> &#125;</div><div class="line"> <span class="comment">// same like above</span></div><div class="line"> <span class="keyword">var</span> myInstance = <span class="keyword">new</span> myClass();</div><div class="line"> myInstance.setValue = <span class="string">'foo'</span>;</div><div class="line"> myInstance.getValue; <span class="comment">// foo @datetime ...</span></div></pre></td></tr></table></figure></p>
+<p>일반적으로, “myClass.value = ‘bar’;” 와 같이 인스턴스 변수에 바로 접근할 수도 있지만 set/get 메소드는 전달하는값 이외의 처리도 함께할 수 있다. 주의할 점은 “myInstance.setValue(value)” 가 아니라  “myInstance.setValue = value” 와 같이 값을 설정하는것 처럼 보여야 하기 때문이다.</p>
+<h2 id="모듈"><a href="#모듈" class="headerlink" title="모듈"></a>모듈</h2><p>ES5에서는 표준적인 모듈지원이 되지 않았기 때문에 AMD, RequireJS, CommonJS등의 써드파티들이 난무했었다. 일반적으로, NodeJS에서는 CommonJS스타일의 문법이 통용되었기 때문에 브라우저에서도 <a href="http://browserify.org/" target="_blank" rel="external">Browerify</a>가 대세가 되는 추세였다. 역시, 코드를 예로 들어보겠다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// module.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">port</span>: <span class="number">3000</span>,</div><div class="line">    <span class="attr">getAccounts</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>이경우, ES5에서는 require(‘module’) 을 사용해 의존성을 가져올 수 있었다<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> service = <span class="built_in">require</span>(<span class="string">'module'</span>)</div><div class="line"><span class="built_in">console</span>.log(service.port) <span class="comment">// 3000</span></div></pre></td></tr></table></figure></p>
+<p>ES6에서는 export와 import를 사용한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// module.js</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">var</span> port = <span class="number">3000</span></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getAccounts</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>ES6에서는 모듈을 import할때 좀 더 편리한 선택지를 제공한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;port, getAccounts&#125; <span class="keyword">from</span> <span class="string">'module'</span></div><div class="line"><span class="built_in">console</span>.log(port)</div></pre></td></tr></table></figure></p>
+<p>위와 같이 필요한 속성만 가져와 모듈 접두어를 생략하고 사용할 수 있다. 또는, 아래와 같이도 사용할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> * <span class="keyword">as</span> service <span class="keyword">from</span> <span class="string">'module'</span></div><div class="line"><span class="built_in">console</span>.log(service.port) <span class="comment">// 3000</span></div></pre></td></tr></table></figure></p>
+<p>단점이라면, 아직 브라우저들이 ES6 모듈을 지원하지 않는다는 점이다. 그래서, 사실상 브라우저에서 ES6의 모듈기능을 사용하기 위해서는 <a href="http://jspm.io/" target="_blank" rel="external">jspm</a>과 같은 모듈로더를 사용하는편이 좋다.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+          
+            <a href="/tags/ES6/" rel="tag">#ES6</a>
+          
+            <a href="/tags/ECMAScript-5/" rel="tag">#ECMAScript 5</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/14/hello-es6-world-part-1/" rel="next" title="안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.">
+                <i class="fa fa-chevron-left"></i> 안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/15/hello-es6-part-3/" rel="prev" title="안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet">
+                안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#클래스"><span class="nav-number">1.</span> <span class="nav-text">클래스</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#super와-static"><span class="nav-number">2.</span> <span class="nav-text">super와 static</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setter와-getter"><span class="nav-number">3.</span> <span class="nav-text">setter와 getter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#모듈"><span class="nav-number">4.</span> <span class="nav-text">모듈</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/08/14/hello-es6-world-part-2/';
+      var disqus_title = "안녕 ES6. (2/4) 클래스와 모듈";
+      var disqus_url = 'http://chanlee.github.io/2016/08/14/hello-es6-world-part-2/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,685 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,ES6,ECMAScript 5," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Map, SetMap과 Set은 일반적인 알고리즘을 구현하는데 효과적으로 사용될 수 있는 자료구조이다. 가장쉬운 예제를 통해서 Map의 사용법을 살펴보자.
+12345678910111213141516171819202122232425262728var testMap = new Map();testMap.set(&apos;my whatever key&apos;, &apos;my whateve">
+<meta property="og:type" content="article">
+<meta property="og:title" content="안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet">
+<meta property="og:url" content="http://chanlee.github.io/2016/08/15/hello-es6-part-3/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="Map, SetMap과 Set은 일반적인 알고리즘을 구현하는데 효과적으로 사용될 수 있는 자료구조이다. 가장쉬운 예제를 통해서 Map의 사용법을 살펴보자.
+12345678910111213141516171819202122232425262728var testMap = new Map();testMap.set(&apos;my whatever key&apos;, &apos;my whateve">
+<meta property="og:image" content="https://i.ytimg.com/vi/EyEggHAuVgo/maxresdefault.jpg">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet">
+<meta name="twitter:description" content="Map, SetMap과 Set은 일반적인 알고리즘을 구현하는데 효과적으로 사용될 수 있는 자료구조이다. 가장쉬운 예제를 통해서 Map의 사용법을 살펴보자.
+12345678910111213141516171819202122232425262728var testMap = new Map();testMap.set(&apos;my whatever key&apos;, &apos;my whateve">
+<meta name="twitter:image" content="https://i.ytimg.com/vi/EyEggHAuVgo/maxresdefault.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/08/15/hello-es6-part-3/"/>
+
+
+  <title> 안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-15T12:44:25+09:00" content="2016-08-15">
+              2016-08-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/15/hello-es6-part-3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/15/hello-es6-part-3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Map-Set"><a href="#Map-Set" class="headerlink" title="Map, Set"></a>Map, Set</h2><p>Map과 Set은 일반적인 알고리즘을 구현하는데 효과적으로 사용될 수 있는 자료구조이다. 가장쉬운 예제를 통해서 Map의 사용법을 살펴보자.</p>
+<p><img src="https://i.ytimg.com/vi/EyEggHAuVgo/maxresdefault.jpg" alt="Map ans Set"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> testMap = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line">testMap.set(<span class="string">'my whatever key'</span>, <span class="string">'my whatever value'</span>);</div><div class="line"><span class="built_in">console</span>.log(testMap.get(<span class="string">'my whatever key'</span>));</div><div class="line"><span class="comment">// can loop</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">of</span> testMap.keys()) &#123;</div><div class="line">     <span class="comment">// key</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> val <span class="keyword">of</span> testMap.values()) &#123;</div><div class="line">     <span class="comment">// values</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// the length of the object</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'length of testMap is '</span> + testMap.size);</div><div class="line"><span class="comment">// key value pair together</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key , val] <span class="keyword">of</span> testMap.entries()) &#123;</div><div class="line">     <span class="comment">// key ==&gt; val</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// or use forEach, the return order is reversed</span></div><div class="line">testMap.forEach(<span class="function">(<span class="params">val , key</span>) =&gt;</span> &#123;</div><div class="line">     <span class="comment">// key ==&gt; val</span></div><div class="line">&#125;);</div><div class="line"><span class="comment">// delete</span></div><div class="line">testMap.delete(<span class="string">'my whatever key'</span>);</div><div class="line"><span class="comment">// dump all</span></div><div class="line">testMap.clear();</div><div class="line"><span class="comment">// check with KEY</span></div><div class="line"><span class="keyword">if</span> (!testMap.has(<span class="string">'my whatever key'</span>)) &#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">'key no longer exists'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>for … of 구문 또는 forEach 구문을 사용해 쉬게 key와 value를 탐색할 수 있다. 만일, Map을 초기화시에 값을 할당하려면 아래와 같이 2중 배열과 같은 형태로 값을 제공할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myMap = <span class="keyword">new</span> <span class="built_in">Map</span>([</div><div class="line">      [<span class="string">'key1'</span> , <span class="string">'value1'</span>],</div><div class="line">      [<span class="string">'key2'</span> , <span class="string">'value2'</span>]</div><div class="line">]);</div></pre></td></tr></table></figure></p>
+<p>반면, Set은 중복을 허용하지 않는 순서가 보장된 값들의 집합이다. 또한, 예제를 보자.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mySet = <span class="keyword">new</span> <span class="built_in">Set</span>();</div><div class="line">mySet.add(<span class="number">1</span>);</div><div class="line">mySet.add(<span class="string">"some text"</span>);</div><div class="line">mySet.add(<span class="string">"foo"</span>);</div><div class="line"></div><div class="line">mySet.has(<span class="number">1</span>); <span class="comment">// true</span></div><div class="line">mySet.delete(<span class="string">"foo"</span>);</div><div class="line">mySet.size; <span class="comment">// 2</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> mySet) <span class="built_in">console</span>.log(item);</div><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="comment">// "some text"</span></div></pre></td></tr></table></figure></p>
+<p>Set은 배열과 유사하게 사용된다. 실제, Set의 배열은 상호 변환이 가능하다. Set은 배열을 생성자로 받을 수 있고, 배열은 Set으로 부터 생성될 수 있다. 이 경우, Set은 중복된 값을 허용하지 않으므로 제거된다. 통상, 배열을 특정요소의 집합으로 많이 사용하였으나 Set은 몇가지 이점을 제공한다.</p>
+<ul>
+<li>중복이 허용되지 않는 경우 배열보다 Set을 사용하는것이 편리하다.</li>
+<li>배열에서는 splice를 사용해 값을 잘라내야하는 반면, Set은 요소의 값으로 삭제하는 기능을 제공한다.</li>
+<li><p>indexOf 메소드로 값을 확인하는것 보다 has 가 더 빠르다. 또한, NaN는 배열에서 indexOf로 찾을 수 없다.</p>
+<h2 id="WeakMap과-WeakSet"><a href="#WeakMap과-WeakSet" class="headerlink" title="WeakMap과 WeakSet"></a>WeakMap과 WeakSet</h2><p>WeakMap은 오브젝트만을 키로 허용하고 임의의 값을 허용한다. WeakSet도 오브젝트만을 요소로 허용한다. 또한, 객체에 대한 참조가 더이상 존재하지 않을경우 가비지 컬렉션의 대상이 된다. 즉, 언제든지 오브젝트가 GC의 대상이 될수 있기 때문에 WeakMap은 키들의 열거형을 지원하지 않는다.</p>
+<p>아래 예제의 접근법은 생성자 함수에 private 데이터를 제공하게 해준다. ‘let age’는 블록스코프를 가지고 외부에서 접근할 수 없는 값이다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> age = <span class="number">20</span>; <span class="comment">// this is private</span></div><div class="line"></div><div class="line">  <span class="keyword">this</span>.name = name; <span class="comment">// this is public</span></div><div class="line"></div><div class="line">  <span class="keyword">this</span>.greet = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// here we can access both name and age</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`name: <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>, age: <span class="subst">$&#123;age&#125;</span>`</span>);</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> joe = <span class="keyword">new</span> Person(<span class="string">'Joe'</span>);</div><div class="line">joe.greet();</div><div class="line"></div><div class="line"><span class="comment">// here we can access name but not age</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>하지만, 이경우 모든 Person인스턴스는 age를 생성하게 되고, 메모리를 낭비하는 결과를 초래한다.</p>
+<p>WeakMap과 WeakSet을 사용하면 이러한 메모리 낭비를 막고 성능을 개선할 수 있다. let을 이용해 private한 WeakMap을 만들고, 이 WeakMap을 이용해 this와 연관된 private데이터를 조회할 수 있다. 이렇게 하면 모든 인스턴스가 하나의 WeakMap을 공유하게 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> Person = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> privateProps = <span class="keyword">new</span> <span class="built_in">WeakMap</span>();</div><div class="line"></div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(name) &#123;</div><div class="line">      <span class="keyword">this</span>.name = name; <span class="comment">// this is public</span></div><div class="line">      privateProps.set(<span class="keyword">this</span>, &#123;<span class="attr">age</span>: <span class="number">20</span>&#125;); <span class="comment">// this is private</span></div><div class="line">    &#125;</div><div class="line">    greet() &#123;</div><div class="line">      <span class="comment">// Here we can access both name and age</span></div><div class="line">      <span class="built_in">console</span>.log(<span class="string">`name: <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>, age: <span class="subst">$&#123;privateProps.get(<span class="keyword">this</span>).age&#125;</span>`</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> Person;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line"><span class="keyword">let</span> joe = <span class="keyword">new</span> Person(<span class="string">'Joe'</span>);</div><div class="line">joe.greet();</div><div class="line"></div><div class="line"><span class="comment">// here we can access joe's name but not age</span></div></pre></td></tr></table></figure></p>
+<p>출처: <a href="http://stackoverflow.com/questions/22156326/private-properties-in-javascript-es6-classes" target="_blank" rel="external">stackoverflow</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+          
+            <a href="/tags/ES6/" rel="tag">#ES6</a>
+          
+            <a href="/tags/ECMAScript-5/" rel="tag">#ECMAScript 5</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/14/hello-es6-world-part-2/" rel="next" title="안녕 ES6. (2/4) 클래스와 모듈">
+                <i class="fa fa-chevron-left"></i> 안녕 ES6. (2/4) 클래스와 모듈
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/15/hello-es6-part-4/" rel="prev" title="안녕 ES6. (4/4) Iterator와 Generator">
+                안녕 ES6. (4/4) Iterator와 Generator <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map-Set"><span class="nav-number">1.</span> <span class="nav-text">Map, Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WeakMap과-WeakSet"><span class="nav-number">2.</span> <span class="nav-text">WeakMap과 WeakSet</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/08/15/hello-es6-part-3/';
+      var disqus_title = "안녕 ES6. (3/4) Map, Set, 그리고 WeakMap, WeakSet";
+      var disqus_url = 'http://chanlee.github.io/2016/08/15/hello-es6-part-3/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

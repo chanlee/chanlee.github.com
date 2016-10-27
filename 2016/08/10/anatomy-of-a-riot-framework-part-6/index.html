@@ -1,0 +1,688 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,Framework," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="기본Riot은 라우팅 기능을 포함하고 있다. 우선 간단한 예제를 살펴보자.먼저 index.html 은 아래와 같다.123456&amp;lt;html&amp;gt;    &amp;lt;body&amp;gt;        &amp;lt;navigation&amp;gt;&amp;lt;/navigation&amp;gt;        &amp;lt;div id=&quot;main&quot;&amp;gt;&amp;lt;/div&amp;gt;    &amp;lt;/body&amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Riot 프레임워크 알아보기. (6/6) Router">
+<meta property="og:url" content="http://chanlee.github.io/2016/08/10/anatomy-of-a-riot-framework-part-6/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="기본Riot은 라우팅 기능을 포함하고 있다. 우선 간단한 예제를 살펴보자.먼저 index.html 은 아래와 같다.123456&amp;lt;html&amp;gt;    &amp;lt;body&amp;gt;        &amp;lt;navigation&amp;gt;&amp;lt;/navigation&amp;gt;        &amp;lt;div id=&quot;main&quot;&amp;gt;&amp;lt;/div&amp;gt;    &amp;lt;/body&amp;g">
+<meta property="og:image" content="http://jennavuong.ghost.io/content/images/2016/03/Screen-Shot-2016-03-13-at-11-24-57-PM.png">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Riot 프레임워크 알아보기. (6/6) Router">
+<meta name="twitter:description" content="기본Riot은 라우팅 기능을 포함하고 있다. 우선 간단한 예제를 살펴보자.먼저 index.html 은 아래와 같다.123456&amp;lt;html&amp;gt;    &amp;lt;body&amp;gt;        &amp;lt;navigation&amp;gt;&amp;lt;/navigation&amp;gt;        &amp;lt;div id=&quot;main&quot;&amp;gt;&amp;lt;/div&amp;gt;    &amp;lt;/body&amp;g">
+<meta name="twitter:image" content="http://jennavuong.ghost.io/content/images/2016/03/Screen-Shot-2016-03-13-at-11-24-57-PM.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/08/10/anatomy-of-a-riot-framework-part-6/"/>
+
+
+  <title> Riot 프레임워크 알아보기. (6/6) Router | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Riot 프레임워크 알아보기. (6/6) Router
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-10T23:18:45+09:00" content="2016-08-10">
+              2016-08-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/10/anatomy-of-a-riot-framework-part-6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/10/anatomy-of-a-riot-framework-part-6/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://jennavuong.ghost.io/content/images/2016/03/Screen-Shot-2016-03-13-at-11-24-57-PM.png" alt="frame"></p>
+<h2 id="기본"><a href="#기본" class="headerlink" title="기본"></a>기본</h2><p>Riot은 라우팅 기능을 포함하고 있다. 우선 간단한 예제를 살펴보자.<br>먼저 index.html 은 아래와 같다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">navigation</span>&gt;</span><span class="tag">&lt;/<span class="name">navigation</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>다음은 app.js 이다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">'navigation.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'home.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'about.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'contact.tag'</span></div><div class="line"></div><div class="line"><span class="comment">// mount navigation tag</span></div><div class="line">riot.mount(<span class="string">'navigation'</span>)</div><div class="line"></div><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">action</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (action) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'about'</span>:</div><div class="line">            <span class="keyword">return</span> riot.mount(<span class="string">'#main'</span>, <span class="string">'about'</span>)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">case</span> <span class="string">'contact'</span>:</div><div class="line">            <span class="keyword">return</span> riot.mount(<span class="string">'#main'</span>, <span class="string">'contact'</span>)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            riot.mount(<span class="string">'#main'</span>, <span class="string">'home'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">rout.route.start(<span class="literal">true</span>)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>&lt;navigation&gt;&lt;/navigation&gt; 태그는 ‘/home’, ‘/about’, ‘/contact’ 링크를 포함하고 있다고 가정. 각, 링크를 클릭하여 메뉴를 이동하면 브라우저 주소창의 URL이 변경될것이다.</p>
+</blockquote>
+</blockquote>
+<p>기본 URL파서는 path부분을 콜백함수의 인자로 받는다. ‘/home’의 경우 ‘action’은 ‘home’이 된다.<br>만일, route를 아래와 같이 정의하고 ‘/users/1234/edit’ 와 같이 URL을 호출한다면 어떻게 될까?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">collection, id, action</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>collection : users<br>id : 1234<br>action : edit</p>
+</blockquote>
+</blockquote>
+<p>와 같이 인자를 받게 된다. 유의할 점은 riot router는 자동으로 실행되지 않기 때문에 반드시 riot.route.start()를 해줘야만 작동한다.(v2.3이후) 이것은, riot과 함께 다른 router도 사용할 수 있음을 의미한다.</p>
+<h2 id="필터"><a href="#필터" class="headerlink" title="필터"></a>필터</h2><p>다른 라우터들 처럼 URL의 앞부분 또는 일부를 고정된 형태로 필터링 할 수 있다. 다음과 같이 정의할 경우 항상 ‘/fruit’에 매칭된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">roit.route(<span class="string">'/fruit'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>와일드카드(*)또한 지원되므로 다음과 같이 정의할수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="string">'/fruit/*'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>/fruit/apple 을 호출할 경우 name = apple 이 된다.</p>
+</blockquote>
+</blockquote>
+<h2 id="활용"><a href="#활용" class="headerlink" title="활용"></a>활용</h2><p>이것은 Riot Router의 기본 URL파서의 행동으로서 URL파서를 커스터마이징 하여 다르게 작동할 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">riot.route.parser(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> raw = path.slice(<span class="number">2</span>).split(<span class="string">'?'</span>),</div><div class="line">      uri = raw[<span class="number">0</span>].split(<span class="string">'/'</span>),</div><div class="line">      qs = raw[<span class="number">1</span>],</div><div class="line">      params = &#123;&#125;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (qs) &#123;</div><div class="line">    qs.split(<span class="string">'&amp;'</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> c = v.split(<span class="string">'='</span>)</div><div class="line">      params[c[<span class="number">0</span>]] = c[<span class="number">1</span>]</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  uri.push(params)</div><div class="line">  <span class="keyword">return</span> uri</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>/users/edit?id=1234를 호출할 경우<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">target, action, params</span>) </span>&#123;</div><div class="line">    <span class="comment">// target = users</span></div><div class="line">    <span class="comment">// action = edit</span></div><div class="line">    <span class="comment">// params = &#123; id: '1234' &#125;</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>추가적인 API 사용법은 <a href="http://riotjs.com/api/route/" target="_blank" rel="external">Route API</a>에서 자세히 볼 수 있다.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+          
+            <a href="/tags/Framework/" rel="tag">#Framework</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/03/anatomy-of-a-riot-framework-part-5/" rel="next" title="Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable)">
+                <i class="fa fa-chevron-left"></i> Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/14/hello-es6-world-part-1/" rel="prev" title="안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.">
+                안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터. <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#기본"><span class="nav-number">1.</span> <span class="nav-text">기본</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#필터"><span class="nav-number">2.</span> <span class="nav-text">필터</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#활용"><span class="nav-number">3.</span> <span class="nav-text">활용</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/08/10/anatomy-of-a-riot-framework-part-6/';
+      var disqus_title = "Riot 프레임워크 알아보기. (6/6) Router";
+      var disqus_url = 'http://chanlee.github.io/2016/08/10/anatomy-of-a-riot-framework-part-6/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,Library,ES6,Bundler," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="번들러(Bundler)소프트웨어를 개발할때, 라이브러리나 어플리케이션을 작은 조각으로 세분화하고 나누어 작업하는것은 일반화되어 있다. 써드파티 라이브러리를 사용할때는 더욱 그러하다. 하지만, 그 결과로 무수하게 작은 파일들이 생겨나고 이것을 결코 브라우저에게 좋은 소식이 아니다. 결과적으로, 브라우저는 매번 요청을 생성하고 속도는 느려지기 때문이다.
+해결책">
+<meta property="og:type" content="article">
+<meta property="og:title" content="차세대 JS모듈 번들러 - RollupJS 소개">
+<meta property="og:url" content="http://chanlee.github.io/2016/08/18/what-is-the-rollup-js/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="번들러(Bundler)소프트웨어를 개발할때, 라이브러리나 어플리케이션을 작은 조각으로 세분화하고 나누어 작업하는것은 일반화되어 있다. 써드파티 라이브러리를 사용할때는 더욱 그러하다. 하지만, 그 결과로 무수하게 작은 파일들이 생겨나고 이것을 결코 브라우저에게 좋은 소식이 아니다. 결과적으로, 브라우저는 매번 요청을 생성하고 속도는 느려지기 때문이다.
+해결책">
+<meta property="og:image" content="https://coligo.io/javascript-module-bundling-with-rollup/cover.jpg">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="차세대 JS모듈 번들러 - RollupJS 소개">
+<meta name="twitter:description" content="번들러(Bundler)소프트웨어를 개발할때, 라이브러리나 어플리케이션을 작은 조각으로 세분화하고 나누어 작업하는것은 일반화되어 있다. 써드파티 라이브러리를 사용할때는 더욱 그러하다. 하지만, 그 결과로 무수하게 작은 파일들이 생겨나고 이것을 결코 브라우저에게 좋은 소식이 아니다. 결과적으로, 브라우저는 매번 요청을 생성하고 속도는 느려지기 때문이다.
+해결책">
+<meta name="twitter:image" content="https://coligo.io/javascript-module-bundling-with-rollup/cover.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/08/18/what-is-the-rollup-js/"/>
+
+
+  <title> 차세대 JS모듈 번들러 - RollupJS 소개 | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                차세대 JS모듈 번들러 - RollupJS 소개
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-18T21:15:54+09:00" content="2016-08-18">
+              2016-08-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/18/what-is-the-rollup-js/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/18/what-is-the-rollup-js/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="번들러-Bundler"><a href="#번들러-Bundler" class="headerlink" title="번들러(Bundler)"></a>번들러(Bundler)</h2><p>소프트웨어를 개발할때, 라이브러리나 어플리케이션을 작은 조각으로 세분화하고 나누어 작업하는것은 일반화되어 있다. 써드파티 라이브러리를 사용할때는 더욱 그러하다. 하지만, 그 결과로 무수하게 작은 파일들이 생겨나고 이것을 결코 브라우저에게 좋은 소식이 아니다. 결과적으로, 브라우저는 매번 요청을 생성하고 속도는 느려지기 때문이다.</p>
+<p>해결책은 코드를 모듈화하고, 모듈 번들러를 이용해 모든것을 하나의 파일로 만드는것이다. <a href="http://browserify.org/" target="_blank" rel="external">Browserify</a>와 <a href="http://webpack.github.io/" target="_blank" rel="external">Webpack</a>이 대표적인 예이다.</p>
+<p>하지만, 기존의 라이브러리를 번들화 한다고 하여 그 크기가 줄어드는것은 아니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>( <span class="string">'utils'</span> );</div><div class="line"></div><div class="line"><span class="keyword">var</span> query = <span class="string">'Rollup'</span>;</div><div class="line">utils.ajax( <span class="string">'https://api.example.com?search='</span> + query ).then( handleResponse );</div></pre></td></tr></table></figure></p>
+<p>결국, 실제로 사용하지 않는 utils라이브러리를 모두 다운받게 된다.</p>
+<p>ES6 모듈은 이 문제를 해결하였다. 다음과 같은 방법으로 utils를 모두 포함하지 않고, 필요한 ajax함수만 가져온다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; ajax &#125; <span class="keyword">from</span> <span class="string">'utils'</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> query = <span class="string">'Rollup'</span>;</div><div class="line">ajax( <span class="string">'https://api.example.com?search='</span> + query ).then( handleResponse );</div></pre></td></tr></table></figure></p>
+<p><a href="http://rollupjs.org/" target="_blank" rel="external">Rollup은</a> 코드와 종속관계의 라이브러리를 정적으로 분석하고, 최소한의것들만 번들링한다.</p>
+<p><img src="https://coligo.io/javascript-module-bundling-with-rollup/cover.jpg" alt="rollupjs"></p>
+<h2 id="Minifier의-한계"><a href="#Minifier의-한계" class="headerlink" title="Minifier의 한계"></a>Minifier의 한계</h2><p>만일, <a href="https://github.com/mishoo/UglifyJS2" target="_blank" rel="external">UglifyJS</a>와 같은 minifier를 사용하여도, 불필요한 코드를 삭제하긴 한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log( <span class="string">'this function was included!'</span> );</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log( <span class="string">'this function was not'</span> );</div><div class="line">    baz();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">baz</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log( <span class="string">'neither was this'</span> );</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  foo();</div><div class="line">&#125;)();</div></pre></td></tr></table></figure></p>
+<p>minifier는 foo는 호출되지만, bar는 사용되지 않으므로 삭제한다. baz도 마챦가지 이다. 하지만, 정적인 코드분석의 한계로 인해 동적인 형태의 소스코드에 대해서는 무용지물이 된다. 다음과 같은 코드에 대해서는 동일한 작업을 수행하지 못한다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">foo</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log( <span class="string">'this method was included!'</span> );</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">bar</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log( <span class="string">'so was this :-('</span> );</div><div class="line">      <span class="keyword">this</span>.baz();</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">baz</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log( <span class="string">'and this :-('</span> );</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  obj.foo();</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<p>불행히도, 기존의 모듈들(CommonJS, AMD)은 두번째 형태의 코드를 생산해내므로 최적화가 어렵다. 그래서, 사용되지 않는 코드를 배제하기보다, 사용되는 코드를 포함시키는 방향으로 최적화를 하는것이 낫다. ES6 모듈과 같은 방식으로 한다면 가능하다.</p>
+<h2 id="Rollup과-JSPM-ES6"><a href="#Rollup과-JSPM-ES6" class="headerlink" title="Rollup과 JSPM, ES6"></a>Rollup과 JSPM, ES6</h2><p>이러한 방식을 Tree-shaking이라고 부른다. Rollup은 <a href="https://github.com/rollup/rollup/wiki/Plugins" target="_blank" rel="external">플러그인</a>을 이용해 CommonJS모들을 ES6모듈로 변환하고 번들링한다. 또한, package.json에 jsnext:main 필드를 추가하여 CommonJS또는 UMD버전 대신 ES6버전의 패키지를 만들수도 있다. <a href="https://github.com/rollup/rollup-starter-project" target="_blank" rel="external">rollup-starter-project</a>는 훌륭한 지침이 될것이다.</p>
+<p><a href="http://jspm.io/" target="_blank" rel="external">JSPM</a>은 뛰어난 패키지 매니저이다. 또한, 이것은 내부적으로 Rollup을 이용해 번들링을 하고 있다. JSPM은 어떤 모듈포맷이든지 지원하며 빌드과정도 필요없으므로 어플리케이션을 개발하는데 있어 훌륭한 선택이될 수 있다. 하지만, Rollup은 복잡한 SystemJS포맷을 사용하지 않으므로 라이브러리를 만드는데 있어서는 Rollup을 단독으로 사용하는것이 더 나은 선택일 수 있다.</p>
+<h2 id="HOW-TO"><a href="#HOW-TO" class="headerlink" title="HOW-TO"></a>HOW-TO</h2><p>Rollup은 <a href="https://github.com/rollup/rollup/wiki/JavaScript-API" target="_blank" rel="external">Javascript API</a> 또는 <a href="https://github.com/rollup/rollup/wiki/Command-Line-Interface" target="_blank" rel="external">CLI</a>를 이용할 수 있다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g rollup</div></pre></td></tr></table></figure></p>
+<h3 id="Javascript-API"><a href="#Javascript-API" class="headerlink" title="Javascript API"></a>Javascript API</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rollup = <span class="built_in">require</span>( <span class="string">'rollup'</span> );</div><div class="line"></div><div class="line"><span class="comment">// used to track the cache for subsequent bundles</span></div><div class="line"><span class="keyword">var</span> cache;</div><div class="line"></div><div class="line">rollup.rollup(&#123;</div><div class="line">  <span class="comment">// The bundle's starting point. This file will be</span></div><div class="line">  <span class="comment">// included, along with the minimum necessary code</span></div><div class="line">  <span class="comment">// from its dependencies</span></div><div class="line">  entry: <span class="string">'main.js'</span>,</div><div class="line">  <span class="comment">// If you have a bundle you want to re-use (e.g., when using a watcher to rebuild as files change),</span></div><div class="line">  <span class="comment">// you can tell rollup use a previous bundle as its starting point.</span></div><div class="line">  <span class="comment">// This is entirely optional!</span></div><div class="line">  cache: cache</div><div class="line">&#125;).then( <span class="function"><span class="keyword">function</span> (<span class="params"> bundle </span>) </span>&#123;</div><div class="line">  <span class="comment">// Generate bundle + sourcemap</span></div><div class="line">  <span class="keyword">var</span> result = bundle.generate(&#123;</div><div class="line">    <span class="comment">// output format - 'amd', 'cjs', 'es', 'iife', 'umd'</span></div><div class="line">    format: <span class="string">'cjs'</span></div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  <span class="comment">// Cache our bundle for later use (optional)</span></div><div class="line">  cache = bundle;</div><div class="line"></div><div class="line">  fs.writeFileSync( <span class="string">'bundle.js'</span>, result.code );</div><div class="line"></div><div class="line">  <span class="comment">// Alternatively, let Rollup do it for you</span></div><div class="line">  <span class="comment">// (this returns a promise). This is much</span></div><div class="line">  <span class="comment">// easier if you're generating a sourcemap</span></div><div class="line">  bundle.write(&#123;</div><div class="line">    <span class="attr">format</span>: <span class="string">'cjs'</span>,</div><div class="line">    <span class="attr">dest</span>: <span class="string">'bundle.js'</span></div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>entry가 최소한의 옵션이다. rollup은 bundle과 함께 프로미스를 반환하고, 결과를 처리하면 된다.</p>
+<h3 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h3><p>rollup -h로 사용법을 참고할 수 있다. 대부분의 경우 CLI를 이용하는것이 편리할 것이다. rollup CLI는 -c(–config)옵션으로 설정파일을 지정하여(기본값은 rollup.config.js) 빌드를 수행할 수 있으므로 gulp와 함께 사용하면 편리하다.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rollup -c</div></pre></td></tr></table></figure></p>
+<p>설정파일 예제<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// rollup.config.js</span></div><div class="line"><span class="keyword">import</span> buble <span class="keyword">from</span> <span class="string">'rollup-plugin-buble'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">entry</span>: <span class="string">'src/main.js'</span>,</div><div class="line">  <span class="attr">dest</span>: <span class="string">'dist/bundle.js'</span>,</div><div class="line">  <span class="attr">format</span>: <span class="string">'umd'</span>,</div><div class="line">  <span class="attr">plugins</span>: [ buble() ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Rollup은 이미 webpack이나 browserify 못지않게 많은 <a href="https://github.com/rollup/rollup/wiki/Plugins" target="_blank" rel="external">플러그인</a>들이 존재한다. 플러그인을 활용해 번들링전에 코드를 트랜스파일링 하거나, 써드파티 모듈을 찾는데 사용할 수 있다.</p>
+<p>rollup은 es6개발 환경에서 최선의 모듈 번들러가 될것이다. 그리고, 이것을 잘 사용하려면 적절한 플러그인을 사용하여 빌드환경을 구성하는것이 관건이 될것이다.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+          
+            <a href="/tags/Library/" rel="tag">#Library</a>
+          
+            <a href="/tags/ES6/" rel="tag">#ES6</a>
+          
+            <a href="/tags/Bundler/" rel="tag">#Bundler</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/15/hello-es6-part-4/" rel="next" title="안녕 ES6. (4/4) Iterator와 Generator">
+                <i class="fa fa-chevron-left"></i> 안녕 ES6. (4/4) Iterator와 Generator
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/19/micro-generator-framework-plop/" rel="prev" title="작고 유용한 마이크로 제너레이터 - plop">
+                작고 유용한 마이크로 제너레이터 - plop <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#번들러-Bundler"><span class="nav-number">1.</span> <span class="nav-text">번들러(Bundler)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minifier의-한계"><span class="nav-number">2.</span> <span class="nav-text">Minifier의 한계</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rollup과-JSPM-ES6"><span class="nav-number">3.</span> <span class="nav-text">Rollup과 JSPM, ES6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HOW-TO"><span class="nav-number">4.</span> <span class="nav-text">HOW-TO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Javascript-API"><span class="nav-number">4.1.</span> <span class="nav-text">Javascript API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLI"><span class="nav-number">4.2.</span> <span class="nav-text">CLI</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/08/18/what-is-the-rollup-js/';
+      var disqus_title = "차세대 JS모듈 번들러 - RollupJS 소개";
+      var disqus_url = 'http://chanlee.github.io/2016/08/18/what-is-the-rollup-js/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

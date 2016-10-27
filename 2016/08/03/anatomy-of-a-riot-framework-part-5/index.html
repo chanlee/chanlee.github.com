@@ -1,0 +1,694 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,Framework," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Observer? Observable!Riot은 기본적으로 커스텀 태그, 이벤트 시스템(Observable), 라우터의 세가지를 제공한다. 이 세가지는 클라이언트 웹어플리케이션을 개발하는데 있어 필수사항이라고 볼 수 있다. 이 요소들은 주로 다음과 같은 목적을 갖고 있다.
+
+커스텀 태그는 사용자 인터페이스를 위해
+이벤트는 모듈화를 위해
+라우터는 URL과">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable)">
+<meta property="og:url" content="http://chanlee.github.io/2016/08/03/anatomy-of-a-riot-framework-part-5/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="Observer? Observable!Riot은 기본적으로 커스텀 태그, 이벤트 시스템(Observable), 라우터의 세가지를 제공한다. 이 세가지는 클라이언트 웹어플리케이션을 개발하는데 있어 필수사항이라고 볼 수 있다. 이 요소들은 주로 다음과 같은 목적을 갖고 있다.
+
+커스텀 태그는 사용자 인터페이스를 위해
+이벤트는 모듈화를 위해
+라우터는 URL과">
+<meta property="og:image" content="https://avatars2.githubusercontent.com/u/2904740?v=3&s=400">
+<meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable)">
+<meta name="twitter:description" content="Observer? Observable!Riot은 기본적으로 커스텀 태그, 이벤트 시스템(Observable), 라우터의 세가지를 제공한다. 이 세가지는 클라이언트 웹어플리케이션을 개발하는데 있어 필수사항이라고 볼 수 있다. 이 요소들은 주로 다음과 같은 목적을 갖고 있다.
+
+커스텀 태그는 사용자 인터페이스를 위해
+이벤트는 모듈화를 위해
+라우터는 URL과">
+<meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/2904740?v=3&s=400">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/08/03/anatomy-of-a-riot-framework-part-5/"/>
+
+
+  <title> Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable) | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-03T01:16:39+09:00" content="2016-08-03">
+              2016-08-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/03/anatomy-of-a-riot-framework-part-5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/03/anatomy-of-a-riot-framework-part-5/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://avatars2.githubusercontent.com/u/2904740?v=3&amp;s=400" alt="emitter"></p>
+<h2 id="Observer-Observable"><a href="#Observer-Observable" class="headerlink" title="Observer? Observable!"></a>Observer? Observable!</h2><p>Riot은 기본적으로 커스텀 태그, 이벤트 시스템(Observable), 라우터의 세가지를 제공한다. 이 세가지는 클라이언트 웹어플리케이션을 개발하는데 있어 필수사항이라고 볼 수 있다. 이 요소들은 주로 다음과 같은 목적을 갖고 있다.</p>
+<ol>
+<li>커스텀 태그는 사용자 인터페이스를 위해</li>
+<li>이벤트는 모듈화를 위해</li>
+<li>라우터는 URL과 뒤로가기 버튼 기능을 위해</li>
+</ol>
+<p>앞서 시리즈에서는 커스텀 태그에 대해 알아보았으니, 오늘은 Observable에 대해 설명할 생각이다.</p>
+<p>Observable은 이벤트를 주고 받기위한 일반적인 수단으로써, 종속적이거나 강하게 결합된 방식없이 모듈화할 수 있도록 돕는다. 이러한 방식은 큰 프로젝트를 다 작고 단순하게 나누고, 프로젝트의 다른 부분에 영향을 주지않고 모듈을 추가, 삭제, 수정하는 작업이 가능하도록 해준다.</p>
+<p>주된 사용패턴으로 어플리케이션의 하나의 코어와 여러개의 확장으로 나누는 것이다. 코어는 어떤 사건이 발생했을때 언제든지 이벤트를 발생시킨다. 사건이라함은 아이템이 추가되거나, 삭제되거나 또는 서버로 부터 무언가를 로딩되는등의 일들을 의미한다.</p>
+<p>이러한 환경에서 코어는 각 확장 모듈들에 대해 알지 못한다. 단지, 확장모듈들이 코어를 바라볼 뿐이므로 코어와 다른 확장모듈에 영향을 주지않고 모듈의 추가, 수정, 삭제가 가능하다. 이러한 방식을 “약한 결합(loose coupling)”이라고 부른다.</p>
+<p>결국, 확장모듈을 쉽게 개발하기 위해서는 코어와 이벤트를 잘 설계하고 유지해야만 한다.</p>
+<h2 id="riot-observable-el"><a href="#riot-observable-el" class="headerlink" title="riot.observable(el)"></a>riot.observable(el)</h2><p>특정 객체가 observable을 지원하도록 만들거나 observable 인스턴스를 만들어 리턴을 하든, Riot에서 Observable 객체를 만들고 사용하는것은 매우 간단하다. <a href="http://riotjs.com/api/observable/" target="_blank" rel="external">Riot 문서의 예제</a>에 있는 샘플 부터 보겠다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// Make Car instances observable</span></div><div class="line">  riot.observable(<span class="keyword">this</span>)</div><div class="line"></div><div class="line">  <span class="comment">// listen to 'start' event</span></div><div class="line">  <span class="keyword">this</span>.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// engine started</span></div><div class="line">  &#125;)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// make a new Car instance</span></div><div class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car()</div><div class="line"></div><div class="line"><span class="comment">// trigger 'start' event</span></div><div class="line">car.trigger(<span class="string">'start'</span>)</div></pre></td></tr></table></figure></p>
+<p>이렇게 car인스턴스를 observable하게 만들수도 있고</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> el = riot.observable(&#123;&#125;)</div><div class="line">el.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// engine started</span></div><div class="line">&#125;)</div><div class="line">el.trigger(<span class="string">'start'</span>)</div></pre></td></tr></table></figure>
+<p>이렇게 빈객체를 가지고도 observable 인스턴스를 손쉽게 만들 수 있다. 이 둘의 차이점은 없다. “.on(…)” 이벤트 핸들러가 포함되어 있나, 아니냐의 차이뿐이다. 물론, 경우에 따라 편리한 방법대로 사용하면 된다.</p>
+<p>이벤트 핸들러는 이벤트와 함께 원하는 파라미터를 콜백 인자로 받을 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// listen to 'start' event and expect extra arguments</span></div><div class="line">el.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">engine_details, is_rainy_day</span>) </span>&#123;</div><div class="line"></div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// trigger start event with extra parameters</span></div><div class="line">el.trigger(<span class="string">'start'</span>, &#123; <span class="attr">fuel</span>: <span class="number">89</span> &#125;, <span class="literal">true</span>)</div></pre></td></tr></table></figure></p>
+<p>engine_details는 { fuel: 89 }가 되고, is_rainy_day는 true이다.</p>
+<p>이벤트명은 간단히 “.”표기법을 이용해 네임스페이스를 구분할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// listen to start and start.honda events</span></div><div class="line">el.on(<span class="string">'start.honda'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// trigger all start events (including start.honda)</span></div><div class="line">el.trigger(<span class="string">'start'</span>)</div><div class="line"></div><div class="line"><span class="comment">// trigger only start.honda events</span></div><div class="line">el.trigger(<span class="string">'start.honda'</span>)</div><div class="line"></div><div class="line"><span class="comment">// remove only honda start events</span></div><div class="line">el.off(<span class="string">'start.honda'</span>)</div><div class="line"></div><div class="line"><span class="comment">// remove all start events (including start.honda)</span></div><div class="line">el.off(<span class="string">'start'</span>)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+          
+            <a href="/tags/Framework/" rel="tag">#Framework</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/01/anatomy-of-a-riot-framework-part-4/" rel="next" title="Riot 프레임워크 알아보기. (4/6) 이벤트 처리와 반복문">
+                <i class="fa fa-chevron-left"></i> Riot 프레임워크 알아보기. (4/6) 이벤트 처리와 반복문
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/10/anatomy-of-a-riot-framework-part-6/" rel="prev" title="Riot 프레임워크 알아보기. (6/6) Router">
+                Riot 프레임워크 알아보기. (6/6) Router <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Observer-Observable"><span class="nav-number">1.</span> <span class="nav-text">Observer? Observable!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#riot-observable-el"><span class="nav-number">2.</span> <span class="nav-text">riot.observable(el)</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/08/03/anatomy-of-a-riot-framework-part-5/';
+      var disqus_title = "Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable)";
+      var disqus_url = 'http://chanlee.github.io/2016/08/03/anatomy-of-a-riot-framework-part-5/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
