@@ -250,6 +250,161 @@
             
               
                 
+                <a class="post-title-link" href="/2013/12/10/javascript-variable-scope-and-hoisting/" itemprop="url">
+                  자바스크립트의 변수범위와 호이스팅
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2013-12-10T16:17:23+09:00" content="2013-12-10">
+              2013-12-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/12/10/javascript-variable-scope-and-hoisting/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/12/10/javascript-variable-scope-and-hoisting/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>이 글에서, 우리는 자바스크립트 변수의 범위(scope)와 호이스팅(hoisting), 그리고 이 두가지의 특징에 관해 배워보겠습니다.</p>
+<p><img src="/assets/js-scope.jpg" alt="scope image"></p>
+<p>자바스크립트의 변수범위와 호이스팅이 작동하는 원리를 이해하는것은 필수적입니다. 이 두가지 컨셉은 직관적이면서도 이해하기가 쉽지 않습니다. 거기에는 미묘한 차이가 있으며, 자바스크립트 프로젝트에서 성공하기 위해서는 반드시 이해해야 합니다.</p>
+<h3 id="변수-범위-Variable-Scope"><a href="#변수-범위-Variable-Scope" class="headerlink" title="변수 범위 (Variable Scope)"></a>변수 범위 (Variable Scope)</h3><p>변수 범위는 변수가 존재하는 컨텍스트입니다. 이것은 어디에서 변수에 접근할 수 있는지, 그 컨텍스트에서 변수에 접근할 수 있는지를 명시적으로 나타납니다.</p>
+<p>변수는 지역 범위(local scope)와 전역 범위(global scope) 둘 중 하나를 가집니다.</p>
+<h4 id="지역-변수-함수-수준-범위"><a href="#지역-변수-함수-수준-범위" class="headerlink" title="지역 변수 (함수 수준 범위)"></a>지역 변수 (함수 수준 범위)</h4><p>대부분의 프로그래밍 언어와 달리, 자바스크립트는 블럭-수준(block-level)의 범위를 가지고 있지 않습니다. 대신, 자바스크립트는 함수-수준(function-level)의 범위를 가집니다. 함수내에 정의된 변수는 지역 범위를 가지며, 해당 함수와 내부 함수에서만 접근이 가능합니다. 내부 함수에서 외부 함수의 변수 접근에 관한 더 자세한 내용은 클로저(Closure)를 설명한 글을 참조하시기 바랍니다.</p>
+<p><em>함수-수준 범위의 예제</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">var</span> name = <span class="string">"Jack"</span>; <span class="comment">// 지역 변수; showName()함수에서만 접근가능.</span></div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Richard : 전역 변수</span></div></pre></td></tr></table></figure></p>
+<p><em>잘못된 예제. (블럭-수준 범위로 오해할 경우)</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</div><div class="line"><span class="comment">// 아래의 if문은 name변수에 대한 지역-범위를 생성하지 않습니다.</span></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     name = <span class="string">"Jack"</span>;</div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 전역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 여전히 전역변수이며 if문에서 변경되었습니다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Jack</span></div></pre></td></tr></table></figure></p>
+<p><em>지역변수를 선언하지 않는다면 문제를 일으킬 가능성이 높아집니다.</em></p>
+<p>항상 지역변수를 사용하기 이전에 선언하도록 하십시오. JSHint를 사용하면 코드의 문법 오류나 스타일을 체크할 수 있습니다. 다음은 지역변수를 선언하지 않음으로 인해 문제가 발생한 경우입니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 지역변수를 var키워드로 선언하지 않았을 경우, 그것은 전역-범위(global-scope)가 됩니다.</span></div><div class="line"><span class="keyword">var</span> name = <span class="string">"Michael Jackson"</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showCelebrityName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(name);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showOrdinaryPersonName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     name = <span class="string">"Johnny Evers"</span>;</div><div class="line">     <span class="built_in">console</span>.log(name);</div><div class="line">&#125;</div><div class="line">showCelebrityName(); <span class="comment">// Michael Jackson</span></div><div class="line"></div><div class="line"><span class="comment">// name 은 지역변수가 아닙니다. 이것은 전역변수 name을 변경해 버립니다.</span></div><div class="line">showOrdinaryPersonName(); <span class="comment">// Johnny Evers</span></div><div class="line"></div><div class="line"><span class="comment">// 이제 전역변수 name은 Johny Evers입니다. 더이상, 셀럽의 이름은 없습니다. -.-;;</span></div><div class="line">showCelebrityName(); <span class="comment">// Johnny Evers</span></div><div class="line"></div><div class="line"><span class="comment">// 해결책은 지역변수 선언시 var 키워드를 사용하는 것입니다.</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showOrdinaryPersonName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">var</span> name = <span class="string">"Johnny Evers"</span>; <span class="comment">// 이제 name은 항상 지역변수이며, 전역변수를 덮어쓰지 않습니다.</span></div><div class="line">     <span class="built_in">console</span>.log(name);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><em>지역번수는 함수내에서 전역번수보다 높은 우선순위를 가집니다.</em></p>
+<p>만약, 같은 이름의 전역변수와 지역변수가 존재할 경우 이 변수를 함수내에서 사용한다면, 지역변수가 우선권을 갖게 됩니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Paul"</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">users</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">var</span> name = <span class="string">"Jack"</span>;</div><div class="line">     <span class="built_in">console</span>.log(name);</div><div class="line">&#125;</div><div class="line">users(); <span class="comment">// Jack</span></div></pre></td></tr></table></figure></p>
+<h4 id="전역-변수"><a href="#전역-변수" class="headerlink" title="전역 변수"></a>전역 변수</h4><p>함수의 외부에서 선언된 모든 변수는 전역 범위(global scope)를 가집니다. 브라우저에서, 전역 컨텍스트(또는 scope)는 window 객체를 가리킵니다.</p>
+<p>그러므로, 전역변수는 전체 어플리케이션에서 사용이 가능합니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 전역변수는 아래와 같이 선언될 수 있습니다.</span></div><div class="line"><span class="keyword">var</span> myName = <span class="string">"Richard"</span>;</div><div class="line"><span class="comment">// 또는</span></div><div class="line">firstName = <span class="string">"Richard"</span>;</div><div class="line"><span class="comment">// 또는</span></div><div class="line"><span class="keyword">var</span> name;</div><div class="line">name;</div></pre></td></tr></table></figure></p>
+<p>모든, 전역 변수는 window객체와 연결됩니다. 그러므로, 아래와 같이 window객체를 통해 모든 전역 변수에 접근이 가능합니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.myName); <span class="comment">// Richard</span></div><div class="line"><span class="comment">// 또는</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">"myName"</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">"firstName"</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// true</span></div></pre></td></tr></table></figure></p>
+<p>만약, 변수가 최초 선언 없이(var 키워드를 사용하여) 초기화 되었다면, 이 변수는 자동으로 전역 컨텍스트에 추가됩니다:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showAge</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="comment">// age는 전역 변수입니다.</span></div><div class="line">     age = <span class="number">90</span>;</div><div class="line">     <span class="built_in">console</span>.log(age);</div><div class="line">&#125;</div><div class="line">showAge(); <span class="comment">// 90</span></div><div class="line"><span class="comment">// age는 전역 변수이므로, 이런식으로도 호출될 수 있습니다.</span></div><div class="line"><span class="built_in">console</span>.log(age); <span class="comment">// 90</span></div></pre></td></tr></table></figure></p>
+<p>아래의 firtName은 둘다 전역 범위입니다. 두번째, firstName은 {} 블럭으로 쌓여있지만, 자바 스크립트는 블럭단위 범위를 지원하지 않는다는 것을 기억하기 바랍니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> firstName = <span class="string">"Richard"</span>;</div><div class="line">&#123;</div><div class="line">     <span class="keyword">var</span> firstName = <span class="string">"Bob"</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(firstName); <span class="comment">// Bob</span></div></pre></td></tr></table></figure></p>
+<p>다른 예제:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">1</span>; i&lt;=<span class="number">10</span>; i++) &#123;</div><div class="line">     <span class="built_in">console</span>.log(i); <span class="comment">// 1~10까지 출력</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 변수 i는 전역 변수입니다. 그러므로, 아래 함수 호출시 i는 for문에서 실행된 후 마지막 값을 가르키게 됩니다.</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">aNumber</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(i);</div><div class="line">&#125;</div><div class="line"></div><div class="line">aNumber(); <span class="comment">// 11</span></div></pre></td></tr></table></figure></p>
+<p><em>setTimeout 변수는 전역 범위에서 실행됩니다.</em></p>
+<p>setTimeout 안에서 선언된 모든 함수는 전역 범위에서 실행됩니다. 다음 예제를 주의해서 보십시오.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// setTimeout 함수내에서 사용된 "this"객체는 myObj가 아니라, window객체를 참조합니다.</span></div><div class="line"><span class="keyword">var</span> highValue = <span class="number">200</span>;</div><div class="line"><span class="keyword">var</span> constantVal = <span class="number">2</span>;</div><div class="line"><span class="keyword">var</span> myObj = &#123;</div><div class="line">     <span class="attr">highValue</span>: <span class="number">20</span>,</div><div class="line">     <span class="attr">constantVal</span>: <span class="number">5</span>,</div><div class="line">     <span class="attr">calculateIt</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">          setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">               <span class="built_in">console</span>.log(<span class="keyword">this</span>.constantVal * <span class="keyword">this</span>.highValue);</div><div class="line">          &#125;, <span class="number">2000</span>);</div><div class="line">     &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 전역변수인 highValue와 constantVal을 사용하여 계산됩니다. 200*2.</span></div><div class="line">myObj.calculateIt(); <span class="comment">//400</span></div></pre></td></tr></table></figure>
+<p><em>전역 범위를 오염시키지 마십시오</em></p>
+<p>자바스크립트 전문가가 되려면, 가급적 전역 범위에 변수를 생성하는것을 피하도록 해야 합니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 다음 두 변수는 전역 범위에 있습니다.</span></div><div class="line"><span class="keyword">var</span> firstName, lastName;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fullName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"Full Name : "</span> + firstName + <span class="string">" "</span> + lastName);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>다음은, 개선된 코드로서 전역범위를 덜 오염시킵니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 함수내에 선언함으로서 이것은 지역변수 입니다.</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fullName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">var</span> firstName = <span class="string">"Michael"</span>, lastName = <span class="string">"Jackson"</span>;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"Full Name : "</span> + firstName + <span class="string">" "</span> + lastName);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>위의, 예제에서 fullName() 함수 역시 전역 범위에 있습니다.</p>
+<h3 id="변수-호이스팅-Variable-Hoisting"><a href="#변수-호이스팅-Variable-Hoisting" class="headerlink" title="변수 호이스팅(Variable Hoisting)"></a>변수 호이스팅(Variable Hoisting)</h3><p>모든 변수선언은 호이스트 됩니다. 호이스트란, 변수의 정의가 그 범위에 따라 선언과 할당으로 분리되는 것을 의미합니다. 즉, 변수가 함수내에서 정의되었을 경우 선언이 함수의 최상위로, 함수 바깥에서 정의되었을 경우는 전역 컨텍스트의 최상위로 변경됩니다.</p>
+<p>변수의 선언이 초기화나 할당시에 발생하는것이 아니라, 최상위로 호이스트 된다는 것을 명심해야 합니다. 다음 코드를 주목하십시오.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"First Name : "</span> + name);</div><div class="line">     <span class="keyword">var</span> name = <span class="string">"Ford"</span>;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"Last Name : "</span> + name);</div><div class="line">&#125;</div><div class="line">showName();</div><div class="line"><span class="comment">// First Name : undefined</span></div><div class="line"><span class="comment">// Last Name : Ford</span></div><div class="line"><span class="comment">// First Name이 undefined인 이유는 지역변수 name이 호이스트 되었기 때문입니다.</span></div></pre></td></tr></table></figure></p>
+<p>이 코드는 자바스크립트 엔진에 의해 다음과 같이 해석됩니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">var</span> name; <span class="comment">// name 변수는 호이스트 되었습니다. 할당은 이후에 발생하기 때문에, 이 시점에 name의 값은 undefined 입니다.</span></div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"First name : "</span> + name); <span class="comment">// First Name : undefined</span></div><div class="line">     name = <span class="string">"Ford"</span>; <span class="comment">// name에 값이 할당 되었습니다.</span></div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"Last Name : "</span> + name); <span class="comment">// Last Name : Ford</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>호이스트 되었을때, 함수 선언은 변수선언을 덮어 씁니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 다음 두 변수와 함수는 myName으로 이름이 같습니다.</span></div><div class="line"><span class="keyword">var</span> myName; <span class="comment">// string</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">myName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"Rich"</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 함수 선언은 변수명을 덮어 씁니다.</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> myName); <span class="comment">// function</span></div></pre></td></tr></table></figure></p>
+<p>하지만, 변수에 값이 할당될 경우에는 반대로 변수가 함수선언을 덮어 씁니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myName = <span class="string">"Richard"</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">myName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"Rich"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> myName); <span class="comment">//string</span></div></pre></td></tr></table></figure>
+<p>“strict mode”에서 최초의 선언없이 변수에 값을 할당하려 한다면 오류가 발생합니다. 변수에 값을 할당 하려 할때는 항상 미리 선언하는 습관을 들이는것이 좋습니다.</p>
+<blockquote>
+<p>이 글은 javascriptissexy.com의 허락을 받아 번역 하였습니다. 상업적인 목적이 아니라면 얼마든지 퍼가셔도 좋습니다. 단, 원문과 번역의 차이가 다소 있을 수 있으므로 번역글과 함께 아래 원문 사이트 주소도 항상 첨부해 주시기 바랍니다. 그외 오역이나 개선될 문장이 있다면 트위터 멘션이나 댓글, 이메일등 어떤 경로로든 알려주시면 바로 잡도록 하겠습니다.</p>
+</blockquote>
+<p><a href="http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/" target="_blank" rel="external">Javascript variable scope and hoisting explained</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/12/10/understand-javascript-closure/" itemprop="url">
                   자바스크립트 클로저 쉽게 이해하기
                 </a>
@@ -575,7 +730,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
