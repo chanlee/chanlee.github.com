@@ -250,6 +250,152 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/29/events-with-commanding/" itemprop="url">
+                  Xamarin.Forms 데이터 바인딩 3/3
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-10-29T13:29:19+09:00" content="2016-10-29">
+              2016-10-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Xamarin/" itemprop="url" rel="index">
+                    <span itemprop="name">Xamarin</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/29/events-with-commanding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/29/events-with-commanding/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>이전 시리즈에서 <a href="http://chanlee.github.io/2016/10/27/introduction-to-data-binding/">기본적인 데이터 바인딩</a>을 이용하여 Xamarin.Forms 어플리케이션을 개발할때 최소한의 노력으로 앱의 데이터와 UI가 동기화 할 수 있다는것을 확인하였다. 다음에는, 좀 더 <a href="http://chanlee.github.io/2016/10/27/advanced-data-binding/">진보된 바인딩 시나리오</a>에 따라 소스와 타깃객체 사이에 값을 전달시 변환하는 방법도 보았다.<br>이번 글에서는, Xamarin.Forms의 커맨딩이라는 기능을 소개할것이다. 이것은 뷰모델에 직접 메소드 호출을 하여 데이터 바인딩이 이루어지도록 해준다.</p>
+<h2 id="커맨딩-Commanding-소개"><a href="#커맨딩-Commanding-소개" class="headerlink" title="커맨딩(Commanding) 소개"></a>커맨딩(Commanding) 소개</h2><p>기존의 메소드 호출 방법은 일반적으로 버튼객체에 Clicked 이벤트 핸들러나 TapGestureRecognizer의 Tapped 이벤트 핸들러로부터 메소드를 실행하는 형태였다. 하지만, 커맨딩을 이용하면 다음의 UI객체들로 부터 뷰모델에 직접 메소드 호출을 하여 데이터를 바인딩할 수 있다.</p>
+<ul>
+<li>Button</li>
+<li>MenuItem</li>
+<li>ToolbarItem</li>
+<li>TextCell</li>
+<li>ImageCell</li>
+<li>ListView</li>
+<li>TapGestureRecognizer</li>
+</ul>
+<p>커맨딩을 지원하기 위해서, 주요 클래스들에 두개의 퍼블릭 속성이 정의되어있다.</p>
+<ul>
+<li>ICommand (System.Window.Input.ICommand)</li>
+<li>CommandParameter (object)</li>
+</ul>
+<h2 id="커맨드-구현"><a href="#커맨드-구현" class="headerlink" title="커맨드 구현"></a>커맨드 구현</h2><p>커맨딩을 구현하기 위해서, 뷰모델은 하나 이상의 ICommand를 정의하여야 한다. ICommand 인터페이스는 두개의 메소드와 하나의 이벤트로 구성되어 있다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> interface ICommand</div><div class="line">&#123;</div><div class="line">   <span class="function"><span class="keyword">void</span> <span class="title">Execute</span><span class="params">(object arg)</span></span>;</div><div class="line">   <span class="function"><span class="keyword">bool</span> <span class="title">CanExecute</span><span class="params">(object arg)</span></span>;</div><div class="line">   event EventHandler CanExecuteChanged;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Xamarin.Forms에서 제공되는 Command와 Command<t>는 ICommand 인터페이스의 구현체이다. “T”는 Execute와 CanExecute의 인자 타입이다. 추가로, 이 클래스들은 ChangeCanExecute 메소드를 포함하고 있다. 이 메소드는 커멘드 객체로 부터 CanExecuteChanged 이벤트를 발생시킨다.<br>뷰모델 내부의, ICommand타입의 커맨드 객체는 Command 또는 Command<t> 타입의 생성자와 Action 콜백 객체를 필요로 한다. 이 Action은 Button이 ICommand.Execute 메소드를 호출할때 불리워진다. CanExecute 메소드는 선택적인 생성자 인자로서, bool값을 리턴하는 함수 형태를 취한다.<br>다음은, 제곱근을 계산하는 <a href="https://github.com/davidbritch/xamarin-forms/tree/master/Commanding" target="_blank" rel="external">예제</a>의 뷰모델 코드 일부이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> DemoViewModel : INotifyPropertyChanged</div><div class="line">&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">int</span> Number &#123; get; <span class="built_in">set</span>; &#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">double</span> SquareRootResult &#123; get; <span class="keyword">private</span> <span class="built_in">set</span>; &#125;</div><div class="line">	<span class="keyword">public</span> ICommand SquareRootCommand &#123; get; <span class="keyword">private</span> <span class="built_in">set</span>; &#125;</div><div class="line">    ...</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DemoViewModel</span> <span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		Number = <span class="number">25</span>;</div><div class="line">		SquareRootCommand = <span class="keyword">new</span> Command (CalculateSquareRoot);</div><div class="line">        ...</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">CalculateSquareRoot</span> <span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		SquareRootResult = Math.Sqrt (Number);</div><div class="line">		OnPropertyChanged (<span class="string">"SquareRootResult"</span>);			</div><div class="line">	&#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></t></t></p>
+<p>SquareRootCommand는 Button의 Command속성으로서 CalculateSqureRoot라는 Action을 콜백으로 가진 바인딩 속성이다. 예제 XAML을 통해 이 뷰모델이 이떻게 사용되는지 보자.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Demo 1 - Command"</span> <span class="attr">FontAttributes</span>=<span class="string">"Bold"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Orientation</span>=<span class="string">"Horizontal"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Enter number:"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Entry</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding Number, Mode=TwoWay&#125;"</span> <span class="attr">WidthRequest</span>=<span class="string">"50"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">Text</span>=<span class="string">"Calculate Square Root"</span> <span class="attr">Command</span>=<span class="string">"&#123;Binding SquareRootCommand&#125;"</span> <span class="attr">HorizontalOptions</span>=<span class="string">"Center"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Orientation</span>=<span class="string">"Horizontal"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Square root ="</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding SquareRootResult&#125;"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>입력값은 Number와 양방향으로 바인딩되고, 버튼을 클릭하면 입력값에 따라 SquareRootCommand가 실행되어 SquareRootResult가 Label에 Text속성으로 적용된다.<br><img src="https://blog.xamarin.com/wp-content/uploads/2016/01/commanding-demo1.png" alt="실행결과"></p>
+<h2 id="커맨드에-파라미터-전달하기"><a href="#커맨드에-파라미터-전달하기" class="headerlink" title="커맨드에 파라미터 전달하기"></a>커맨드에 파라미터 전달하기</h2><p>Command<t> 클래스에 인자의 타입을 지정해 ICommand.Execute에 인자를 전달할 수 있다. 아래 코드는 제곱근을 계산할 입력값을 커맨드 인자로 전달하는 이제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> DemoViewModel : INotifyPropertyChanged</div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">double</span> SquareRootWithParameterResult &#123; get; <span class="keyword">private</span> <span class="built_in">set</span>; &#125;</div><div class="line">    <span class="keyword">public</span> ICommand SquareRootWithParameterCommand &#123; get; <span class="keyword">private</span> <span class="built_in">set</span>; &#125;</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DemoViewModel</span> <span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        SquareRootWithParameterCommand = <span class="keyword">new</span> Command&lt;<span class="built_in">string</span>&gt; (CalculateSquareRoot);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">CalculateSquareRoot</span> <span class="params">(<span class="built_in">string</span> value)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">double</span> num = Convert.ToDouble (value);</div><div class="line">        SquareRootWithParameterResult = Math.Sqrt (num);</div><div class="line">        OnPropertyChanged (<span class="string">"SquareRootWithParameterResult"</span>);            </div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></t></p>
+<p>Button의 ICommand 속성에 SquareRootWithParameterCommand가 바운드 되어있다. 이 속성은 Command<string> 타입으로 CalcualteSqureRoot 메소드에 string value 를 인자로 전달할 수 있다. 다음 코드는 이것을 사용한 XAML 소스 이다.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Demo 2 - Command with Parameter"</span> <span class="attr">FontAttributes</span>=<span class="string">"Bold"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Orientation</span>=<span class="string">"Horizontal"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Enter number:"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Entry</span> <span class="attr">x:Name</span>=<span class="string">"entry"</span> <span class="attr">Text</span>=<span class="string">"100"</span> <span class="attr">WidthRequest</span>=<span class="string">"50"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">Text</span>=<span class="string">"Calculate Square Root"</span></span></div><div class="line">        <span class="attr">Command</span>=<span class="string">"&#123;Binding SquareRootWithParameterCommand&#125;"</span></div><div class="line">        <span class="attr">CommandParameter</span>=<span class="string">"&#123;Binding Source=&#123;x:Reference entry&#125;, Path=Text&#125;"</span> <span class="attr">HorizontalOptions</span>=<span class="string">"Center"</span> /&gt;</div><div class="line"><span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Orientation</span>=<span class="string">"Horizontal"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Square root ="</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding SquareRootWithParameterResult&#125;"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div></pre></td></tr></table></figure></string></p>
+<p>이전의 소스와 차이점은 Button의 CommandParameter이다. 인자로, entry의 Text속성이 인자의 값으로 바인딩 되었음을 볼 수 있다.</p>
+<h2 id="비동기-메소드-호출"><a href="#비동기-메소드-호출" class="headerlink" title="비동기 메소드 호출"></a>비동기 메소드 호출</h2><p>커맨드는 Action콜백에 async와 await 키워드를 사용해 비동기 메소드 호출도 지원한다. 콜백은 Task를 리턴하므로 반드시 기다려야 한다는것을 의미한다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> DemoViewModel : INotifyPropertyChanged</div><div class="line">&#123;</div><div class="line">    ...</div><div class="line">    <span class="keyword">bool</span> canDownload = <span class="literal">true</span>;</div><div class="line">    <span class="built_in">string</span> simulatedDownloadResult;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="built_in">string</span> SimulatedDownloadResult &#123;</div><div class="line">        get &#123; <span class="keyword">return</span> simulatedDownloadResult; &#125;</div><div class="line">        <span class="keyword">private</span> <span class="built_in">set</span> &#123;</div><div class="line">            <span class="keyword">if</span> (simulatedDownloadResult != value) &#123;</div><div class="line">                simulatedDownloadResult = value;</div><div class="line">                OnPropertyChanged (<span class="string">"SimulatedDownloadResult"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> ICommand SimulateDownloadCommand &#123; get; <span class="keyword">private</span> <span class="built_in">set</span>; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DemoViewModel</span> <span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        ...</div><div class="line">        SimulateDownloadCommand =</div><div class="line">            <span class="keyword">new</span> Command (async () =&gt; await SimulateDownloadAsync (), () =&gt; canDownload);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">async Task <span class="title">SimulateDownloadAsync</span> <span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        CanInitiateNewDownload (<span class="literal">false</span>);</div><div class="line">        SimulatedDownloadResult = <span class="built_in">string</span>.Empty;</div><div class="line">        await Task.Run (() =&gt; SimulateDownload ());</div><div class="line">        SimulatedDownloadResult = <span class="string">"Simulated download complete"</span>;</div><div class="line">        CanInitiateNewDownload (<span class="literal">true</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">CanInitiateNewDownload</span> <span class="params">(<span class="keyword">bool</span> value)</span></span></div><div class="line">    &#123;</div><div class="line">        canDownload = value;</div><div class="line">        ((Command)SimulateDownloadCommand).ChangeCanExecute ();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SimulateDownload</span> <span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// Simulate a 5 second pause</span></div><div class="line">        var endTime = DateTime.Now.AddSeconds (<span class="number">5</span>);</div><div class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (DateTime.Now &gt;= endTime) &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>SimulateDownloadCommand는 버튼의 Command속성에 바운드 되었다. XAML코드는 아래와 같이 선언되어 있다.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Demo 3 - Async Command with CanExecute"</span> <span class="attr">FontAttributes</span>=<span class="string">"Bold"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">Text</span>=<span class="string">"Simulate 5 Second Download"</span> <span class="attr">HorizontalOptions</span>=<span class="string">"Center"</span></span></div><div class="line">        <span class="attr">Command</span>=<span class="string">"&#123;Binding SimulateDownloadCommand&#125;"</span> /&gt;</div><div class="line"><span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Orientation</span>=<span class="string">"Horizontal"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Result: "</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding SimulatedDownloadResult&#125;"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>버튼이 클릭되면 SimualteDownloadAsync 메소드가 실행되고 5초동안 버튼은 비활성화 되었다가 다시 활성화가 된다. 이것은 ICommand.CanExecute 메소드가 SimulateDownloadCommand 생성자의 두번째 인자로 설정되었기 때문이다. 버튼은 CanExecute를 먼저 체크한다. 만일, false라면 버튼은 비활성화되고 Execute는 호출되지 않는다. 또한, 버튼은 ICommand.CanExecuteChanged 이벤트를 처리한다. 만일, 뷰모델에서 Command.CanExecuteChange 메소드가 호출되어 CanExecuteChanged 이벤트가 발생한다면 버튼은 CanExecute 함수를 메소드를 다시 체크하여 버튼의 활성화 및 Execute 메소드의 실행가능 여부를 재평가하게 된다.<br><img src="https://blog.xamarin.com/wp-content/uploads/2016/01/commanding-demo3.png" alt="비동기 커맨드 예제"><br>이 예제에서 다운로딩이 별도의 쓰레드에서 진행되는 도중에도 UI객체와 교류가 가능함에 주목하도록 하자.</p>
+<h2 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h2><p>커맨딩 기능을 이용한 데이터 바인딩은 뷰 모델 구현이 좀 복잡해 보일 수 있으나,컴포넌트의 재활용 측면에서 MVVM에 매우 적합한 코딩패턴이다. 또한, 실제 코딩시 비동기 호출이 많이 사용되는데 이 부분 또한 깔끔하게 처리할 수 있을 뿐만 아니라 데이터 모델과 바인딩 처리가 한곳에서 이루어 짐으로써 코드의 유지 관리 측면에서도 유리하다.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/27/advanced-data-binding/" itemprop="url">
                   Xamarin.Forms 데이터 바인딩 2/3
                 </a>
@@ -320,7 +466,7 @@
       
         
           
-            <h1 id="데이터-바인딩-팁"><a href="#데이터-바인딩-팁" class="headerlink" title="데이터 바인딩 팁"></a>데이터 바인딩 팁</h1><p>이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다.</p>
+            <h2 id="데이터-바인딩-팁"><a href="#데이터-바인딩-팁" class="headerlink" title="데이터 바인딩 팁"></a>데이터 바인딩 팁</h2><p>이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다.</p>
 <h2 id="컨트롤간의-바인딩"><a href="#컨트롤간의-바인딩" class="headerlink" title="컨트롤간의 바인딩"></a>컨트롤간의 바인딩</h2><p>데이터 바인딩은 UI와 데이터 모델간의 동기화가 일반적이지만, 동일 페이지의 두 속성간에도 연결될 수 있다. 이것은, 타깃객체의 BindingContext를 x:Reference마크업을 이용해 설정함으로서 간단히 이루어 진다. 다음 코드는, <a href="https://github.com/davidbritch/xamarin-forms/tree/master/AdvancedDataBinding" target="_blank" rel="external">예제 어플리케이션</a>의 XAML코드 이다.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ContentPage</span> <span class="attr">xmlns</span>=<span class="string">"http://xamarin.com/schemas/2014/forms"</span> <span class="attr">xmlns:x</span>=<span class="string">"http://schemas.microsoft.com/winfx/2009/xaml"</span> <span class="attr">x:Class</span>=<span class="string">"AdvancedDataBinding.RotationPage"</span> <span class="attr">Title</span>=<span class="string">"Rotation"</span> <span class="attr">Icon</span>=<span class="string">"xaml.png"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Padding</span>=<span class="string">"0,20,0,0"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Advanced Data Binding Demo"</span> <span class="attr">FontAttributes</span>=<span class="string">"Bold"</span> <span class="attr">HorizontalOptions</span>=<span class="string">"Center"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Slider</span> <span class="attr">x:Name</span>=<span class="string">"slider"</span> <span class="attr">Maximum</span>=<span class="string">"360"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Image</span> <span class="attr">Source</span>=<span class="string">"waterfront.jpg"</span> <span class="attr">BindingContext</span>=<span class="string">"&#123;x:Reference slider&#125;"</span></span></div><div class="line">               <span class="attr">Rotation</span>=<span class="string">"&#123;Binding Value&#125;"</span> <span class="attr">VerticalOptions</span>=<span class="string">"CenterAndExpand"</span> /&gt;</div><div class="line">		<span class="tag">&lt;<span class="name">Label</span> <span class="attr">BindingContext</span>=<span class="string">"&#123;x:Reference slider&#125;"</span> <span class="attr">HorizontalOptions</span>=<span class="string">"Center"</span></span></div><div class="line">               <span class="attr">Text</span>=<span class="string">"&#123;Binding Value, StringFormat='Rotation angle: &#123;0:F0&#125; degrees'&#125;"</span> /&gt;</div><div class="line">	<span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ContentPage</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>Slider 컴포넌트의 이름을 “slider”로 설정하였다. 그리고, 그다음에 Image, Label 컴포넌트에 각각 BindnigContext가 “x:Reference”마크업을 이용해 “slider”로 설정되었다. 이후, Image의 Rotation속성과 Label의 Text속성에 Slider의 Value값이 사용된 것을 볼 수 있다.<br><img src="https://blog.xamarin.com/wp-content/uploads/2016/01/rotation.png" alt="데모화면"><br>(Label의 Text속성에 StringFormat사용시 쌍따옴표를 사용하지 않고 홑따옴표를 사용하여 중괄호 바깥의 쌍따움표와 중첩되지 않도록 처리한 부분에 주의하자.)</p>
 <h2 id="변환기"><a href="#변환기" class="headerlink" title="변환기"></a>변환기</h2><p>앞서 예제에서 Label에 Text속성에서 StringFormat을 사용하여 Value를 포매팅한것을 보았다. 이것은, 말그대로 형식화(Formatting)한 것이지 값에 대한 변환이라고 보긴 어렵다. 즉, 타입의 변환은 별도의 변환기를 거쳐야 한다는 것이다. 이것은 IValueConverter 인터페이스를 구현하는 클래스로 가능하다. 이 인터페이스는 Convert와 ConvertBack 메소드의 구현을 필요로 한다.<br>다음 코드는 <a href="https://github.com/davidbritch/xamarin-forms/tree/master/AdvancedDataBinding" target="_blank" rel="external">예제 어플리케이션</a>에서 사용된, IntToBooleanConverter 코드 이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> IntToBooleanConverter : IValueConverter</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> object <span class="title">Convert</span> <span class="params">(object value, Type targetType, object parameter, CultureInfo culture)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> minimumLength = System.Convert.ToInt32 (parameter);</div><div class="line">		<span class="keyword">return</span> (<span class="keyword">int</span>)value &gt;= minimumLength;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> object <span class="title">ConvertBack</span> <span class="params">(object value, Type targetType, object parameter, CultureInfo culture)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 타깃에서 소스로의 전달이 없으므로 구현하지 않음.</span></div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException ();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -461,7 +607,7 @@
       
         
           
-            <h1 id="데이터-바인딩-소개"><a href="#데이터-바인딩-소개" class="headerlink" title="데이터 바인딩 소개"></a>데이터 바인딩 소개</h1><p>데이터 바인딩은 자동으로 유저 인터페이스와 데이터를 동기화 시켜주는 기술이다. 이것은 앱이 UI를 표현하고 데이터와 상호 작용하는것을 단순하게 해준다.</p>
+            <h2 id="데이터-바인딩-소개"><a href="#데이터-바인딩-소개" class="headerlink" title="데이터 바인딩 소개"></a>데이터 바인딩 소개</h2><p>데이터 바인딩은 자동으로 유저 인터페이스와 데이터를 동기화 시켜주는 기술이다. 이것은 앱이 UI를 표현하고 데이터와 상호 작용하는것을 단순하게 해준다.</p>
 <h2 id="데이터-바인딩-기초"><a href="#데이터-바인딩-기초" class="headerlink" title="데이터 바인딩 기초"></a>데이터 바인딩 기초</h2><p>데이터 바인딩은 두개의 객체를 연결한다. 하나는 소스, 다른 한쪽은 타깃이 된다. 소스객체는 데이터를 제공하고 타깃객체는 소비(표현)한다. 예를들어 <a href="https://developer.xamarin.com/api/type/Xamarin.Forms.Label/" target="_blank" rel="external">Label</a>의 Text속성은 소스객체의 문자열 속성과 바인드된다.<br><img src="https://blog.xamarin.com/wp-content/uploads/2016/01/data-binding@2x1.png" alt="바인딩 개념도"></p>
 <p>이런한 데이터 바인딩의 가장 큰 장점은 뷰와 데이터간의 동기화에 관해 신경쓰지 않아도 된다는 것이다. 소스객체에 변화가 생기면 바인딩 프레임워크에 의해 자동으로 타깃객체에 반영되고, 그 반대도 마챦가지 이다.</p>
 <p>데이터 바인딩을 하기 위해서는:</p>
@@ -1470,144 +1616,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/03/anatomy-of-a-riot-framework-part-5/" itemprop="url">
-                  Riot 프레임워크 알아보기. (5/6) Event Emitter(Observable)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">작성일</span>
-            <time itemprop="dateCreated" datetime="2016-08-03T01:16:39+09:00" content="2016-08-03">
-              2016-08-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">Javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/03/anatomy-of-a-riot-framework-part-5/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/03/anatomy-of-a-riot-framework-part-5/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="https://avatars2.githubusercontent.com/u/2904740?v=3&amp;s=400" alt="emitter"></p>
-<h2 id="Observer-Observable"><a href="#Observer-Observable" class="headerlink" title="Observer? Observable!"></a>Observer? Observable!</h2><p>Riot은 기본적으로 커스텀 태그, 이벤트 시스템(Observable), 라우터의 세가지를 제공한다. 이 세가지는 클라이언트 웹어플리케이션을 개발하는데 있어 필수사항이라고 볼 수 있다. 이 요소들은 주로 다음과 같은 목적을 갖고 있다.</p>
-<ol>
-<li>커스텀 태그는 사용자 인터페이스를 위해</li>
-<li>이벤트는 모듈화를 위해</li>
-<li>라우터는 URL과 뒤로가기 버튼 기능을 위해</li>
-</ol>
-<p>앞서 시리즈에서는 커스텀 태그에 대해 알아보았으니, 오늘은 Observable에 대해 설명할 생각이다.</p>
-<p>Observable은 이벤트를 주고 받기위한 일반적인 수단으로써, 종속적이거나 강하게 결합된 방식없이 모듈화할 수 있도록 돕는다. 이러한 방식은 큰 프로젝트를 다 작고 단순하게 나누고, 프로젝트의 다른 부분에 영향을 주지않고 모듈을 추가, 삭제, 수정하는 작업이 가능하도록 해준다.</p>
-<p>주된 사용패턴으로 어플리케이션의 하나의 코어와 여러개의 확장으로 나누는 것이다. 코어는 어떤 사건이 발생했을때 언제든지 이벤트를 발생시킨다. 사건이라함은 아이템이 추가되거나, 삭제되거나 또는 서버로 부터 무언가를 로딩되는등의 일들을 의미한다.</p>
-<p>이러한 환경에서 코어는 각 확장 모듈들에 대해 알지 못한다. 단지, 확장모듈들이 코어를 바라볼 뿐이므로 코어와 다른 확장모듈에 영향을 주지않고 모듈의 추가, 수정, 삭제가 가능하다. 이러한 방식을 “약한 결합(loose coupling)”이라고 부른다.</p>
-<p>결국, 확장모듈을 쉽게 개발하기 위해서는 코어와 이벤트를 잘 설계하고 유지해야만 한다.</p>
-<h2 id="riot-observable-el"><a href="#riot-observable-el" class="headerlink" title="riot.observable(el)"></a>riot.observable(el)</h2><p>특정 객체가 observable을 지원하도록 만들거나 observable 인스턴스를 만들어 리턴을 하든, Riot에서 Observable 객체를 만들고 사용하는것은 매우 간단하다. <a href="http://riotjs.com/api/observable/" target="_blank" rel="external">Riot 문서의 예제</a>에 있는 샘플 부터 보겠다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// Make Car instances observable</span></div><div class="line">  riot.observable(<span class="keyword">this</span>)</div><div class="line"></div><div class="line">  <span class="comment">// listen to 'start' event</span></div><div class="line">  <span class="keyword">this</span>.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// engine started</span></div><div class="line">  &#125;)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// make a new Car instance</span></div><div class="line"><span class="keyword">var</span> car = <span class="keyword">new</span> Car()</div><div class="line"></div><div class="line"><span class="comment">// trigger 'start' event</span></div><div class="line">car.trigger(<span class="string">'start'</span>)</div></pre></td></tr></table></figure></p>
-<p>이렇게 car인스턴스를 observable하게 만들수도 있고</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> el = riot.observable(&#123;&#125;)</div><div class="line">el.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// engine started</span></div><div class="line">&#125;)</div><div class="line">el.trigger(<span class="string">'start'</span>)</div></pre></td></tr></table></figure>
-<p>이렇게 빈객체를 가지고도 observable 인스턴스를 손쉽게 만들 수 있다. 이 둘의 차이점은 없다. “.on(…)” 이벤트 핸들러가 포함되어 있나, 아니냐의 차이뿐이다. 물론, 경우에 따라 편리한 방법대로 사용하면 된다.</p>
-<p>이벤트 핸들러는 이벤트와 함께 원하는 파라미터를 콜백 인자로 받을 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// listen to 'start' event and expect extra arguments</span></div><div class="line">el.on(<span class="string">'start'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">engine_details, is_rainy_day</span>) </span>&#123;</div><div class="line"></div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// trigger start event with extra parameters</span></div><div class="line">el.trigger(<span class="string">'start'</span>, &#123; <span class="attr">fuel</span>: <span class="number">89</span> &#125;, <span class="literal">true</span>)</div></pre></td></tr></table></figure></p>
-<p>engine_details는 { fuel: 89 }가 되고, is_rainy_day는 true이다.</p>
-<p>이벤트명은 간단히 “.”표기법을 이용해 네임스페이스를 구분할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// listen to start and start.honda events</span></div><div class="line">el.on(<span class="string">'start.honda'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// trigger all start events (including start.honda)</span></div><div class="line">el.trigger(<span class="string">'start'</span>)</div><div class="line"></div><div class="line"><span class="comment">// trigger only start.honda events</span></div><div class="line">el.trigger(<span class="string">'start.honda'</span>)</div><div class="line"></div><div class="line"><span class="comment">// remove only honda start events</span></div><div class="line">el.off(<span class="string">'start.honda'</span>)</div><div class="line"></div><div class="line"><span class="comment">// remove all start events (including start.honda)</span></div><div class="line">el.off(<span class="string">'start'</span>)</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1653,7 +1661,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>

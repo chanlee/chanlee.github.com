@@ -250,6 +250,155 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/11/understand-javascript-iife/" itemprop="url">
+                  Javascript IIFE 이해하기
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2014-01-11T16:44:07+09:00" content="2014-01-11">
+              2014-01-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/11/understand-javascript-iife/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/11/understand-javascript-iife/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>IIFE(Immediately Invoked Function Expressions: “Iffy”라고 발음)는 즉시 호출 함수 표현식의 줄임말입니다.</p>
+<p><img src="/assets/iife.jpg" alt="iife"></p>
+<p>기본적인 형태는 다음과 같습니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// Do fun stuff</span></div><div class="line">    &#125;</div><div class="line">)()</div></pre></td></tr></table></figure></p>
+<p>이것은 즉시 호출되는 익명 함수 표현식 입니다. 이것은 자바스크립트에서 때에 따라 중요하게 사용될 수 있습니다.</p>
+<h3 id="함수-선언-Declaration-과-표현-Expression"><a href="#함수-선언-Declaration-과-표현-Expression" class="headerlink" title="함수 선언(Declaration)과 표현(Expression)"></a>함수 선언(Declaration)과 표현(Expression)</h3><p>IIFE를 설명하기 전에 함수의 선언(Function Declaration)과 함수의 표현(Function Expression)의 차이점에 대해 이해할 필요가 있습니다. <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope?redirectlocale=en-US&amp;redirectslug=JavaScript%2FReference%2FFunctions_and_function_scope#Defining_functions" target="_blank" rel="external">Mozilla Developer Site의 함수</a>에 대한 설명을 보면 함수 표현식은 선언과 동일한 문법을 가지고 단지 표현식에서는 함수명이 생략될 수 있다고만 기술하고 있습니다. 틀린말은 아니지만 사실 이 보다 좀 더 뚜렷한 형태와 동작의 차이점을 가지고 있습니다.</p>
+<p>함수 선언(declaration)은 미리 자바 스크립트의 실행 컨텍스트(execution context)에 로딩 되어 있으므로 언제든지 호출할 수 있지만, 표현식(Expression)은 인터프리터가 해당 라인에 도달 하였을때만 실행이 됩니다.</p>
+<p>즉, 함수 선언(declaration)을 조건(conditionally)에 따라 할당(assignment)하거나, 생성, 또는 괄호 연산자로 그루핑(grouping)하여 표현식으로 나타낼 수 있습니다. 다음 소스는 함수 정의(선언과 표현)의 차이를 간단히 보여주고 있습니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">foo(); <span class="comment">// success!</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'foo'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(); <span class="comment">// "foo" is not defined.</span></div><div class="line"><span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'foo'</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">alert(foo); <span class="comment">// "foo" is not defined.</span></div><div class="line">(<span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params"></span>) </span>&#123;&#125;);</div><div class="line">alert(foo); <span class="comment">// "foo" is not defined.</span></div></pre></td></tr></table></figure></p>
+<p>IIFE를 설명하기 위한 function declaration과 function expression의 설명은 이정도만 하겠습니다.</p>
+<h4 id="즉시-호출-함수-표현식은-어떻게-작동하는가"><a href="#즉시-호출-함수-표현식은-어떻게-작동하는가" class="headerlink" title="즉시 호출 함수 표현식은 어떻게 작동하는가?"></a>즉시 호출 함수 표현식은 어떻게 작동하는가?</h4><ul>
+<li>괄호쌍이 익명의 함수를 감싸서 함수 선언(declaration)을 함수 표현식(expression)으로 표현될 수 있습니다. 그러므로, 단순한 익명의 함수를 global 스코프에 선언하지 않고 어디서든 익명의 함수 표현식을 가질 수 있습니다.</li>
+<li><p>따라서, 아래와 같은 표현식이 가능합니다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 괄호 사용 안함</span></div><div class="line">x = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"><span class="comment">// 괄호 사용</span></div><div class="line">(x = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;);</div><div class="line"><span class="comment">// 변수 x에는 함수의 값이 할당됩니다. 괄호로 둘러쌓인 함수는 익명의 함수 표현식이 됩니다.</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>이와 유사하게 이름을 부여하고, 즉시 호출된 함수 표현식으로 생성할 수 도 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(showName = function (name) &#123;</div><div class="line">  console.log(name || &quot;No Name&quot;)</div><div class="line">  &#125;</div><div class="line">) (); // No Name</div><div class="line">showName(&quot;Rich&quot;); // Rich</div><div class="line">showName(); // No Name</div></pre></td></tr></table></figure>
+</li>
+<li><p>showName 함수는 선언과 동시에 실행이 되며, 이름이 있으므로 나중에 호출 할수도 있습니다.</p>
+</li>
+<li>하지만, 익명의 표현식은 나중에 다시 호출할 수 없습니다. 참조할 방법이 없기 때문입니다.</li>
+<li>익명의 함수를 괄호안에(group context) 위치시킬 경우, 전체 그룹을 평가(evaluate)하고 값을 리턴합니다. 결국, 리턴값은 익명 함수 자신입니다.</li>
+<li>마지막 두개의 괄호는 JS컴파일러에게 이 익명 함수를 바로 호출하라고 말합니다. 이것을 IIFE라고 부릅니다.</li>
+</ul>
+<h4 id="언제-IIFE를-사용하는가"><a href="#언제-IIFE를-사용하는가" class="headerlink" title="언제 IIFE를 사용하는가?"></a>언제 IIFE를 사용하는가?</h4><p><em>젼역 영역(Global Scope)를 오염 시키지 않기 위해서</em></p>
+<p>IIFE를 사용하는 주된 이유는 변수를 전역(global scope)으로 선언하는 것을 피하기 위해서 입니다. 많은 JavaScript 라이브러리와 전문가들이 이 기법을 사용합니다. jQuery plugin개발자들 사이에서 특히 인기가 많습니다. JS어플리케이션의 Top-Level - main.js 또는 app.js와 같은 - 에서도 IIFE를 사용할 수 있습니다. 아래 코드는 지역 변수를 익명 함수로 위치시켜 외부와의 충돌을 방지할 수 있습니다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">// All the code is wrapped in the IIFE</span></div><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> firstName = “Richard”;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">init</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        doStuff (firstName);</div><div class="line">        <span class="comment">// code to start the application</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doStuff</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Do stuff here</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doMoreStuff</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Do more stuff here</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">// Start the application</span></div><div class="line">    init ();</div><div class="line">&#125;) ();</div></pre></td></tr></table></figure></p>
+<p>필요한 경우 마지막 괄호안에 외부 객체나 변수를 넣어 익명의 함수에 전달할 수 도 있습니다.</p>
+<h5 id="조건문과-함께-사용하기"><a href="#조건문과-함께-사용하기" class="headerlink" title="조건문과 함께 사용하기"></a>조건문과 함께 사용하기</h5><p>잘 알려지지 않았지만, 복잡한 로직을 다룰때 조건에 따라 함수정의를 달리 하여 설정하고 호출 할 수도 있습니다. 이 기법은 때론 유용할 수도 있겠으나, 대채로 사용하지 않길 바랍니다. 프로그램의 전반적인 가독성을 떨어트리고 버그를 양산할 수 있습니다. 꼭 사용해야 한다면 들여쓰기를 충분히 하여 코드를 읽기 쉽도록 유지하시기 바랍니다.</p>
+<h5 id="클로저에서-값의-중복-현상-해결"><a href="#클로저에서-값의-중복-현상-해결" class="headerlink" title="클로저에서 값의 중복 현상 해결"></a>클로저에서 값의 중복 현상 해결</h5><p><a href="http://chanlee.github.io/2013/12/10/understand-javascript-closure/">자바스크립트 클로저 쉽게 이해하기</a> 에서 다루었던것 처럼, 순환문내에서 클로저 사용시 IIFE 기법을 사용해 참조에 의한 클로저의 오작동을 해결할 수 있습니다.</p>
+<p>IIFE기법은 이제 많은 JS프레임워크들이나 오픈소스에서 쉽게 찾아볼 수 있습니다. JS코딩을 하면서 아직 이 기법에 대해 잘 모르거나 쓰고 있지만, 어떻게 작동하고 왜 사용하는지 모르고 있다면 이 글이 이해를 돕는데 조금이나마 도움이 되었길 바랍니다.</p>
+<p>더 자세한 정보는 아래 참고 사이트의 글들을 참고 하시기 바랍니다.</p>
+<p><a href="http://javascriptissexy.com/12-simple-yet-powerful-javascript-tips/" target="_blank" rel="external">12 Simple (Yet Powerful) JavaScript Tips</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope?redirectlocale=en-US&amp;redirectslug=JavaScript%2FReference%2FFunctions_and_function_scope#Defining_functions" target="_blank" rel="external">Functions and function scope</a><br><a href="http://dmitrysoshnikov.com/ecmascript/chapter-5-functions/#question-about-surrounding-parentheses" target="_blank" rel="external">ECMA-262-3 in details</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/12/10/javascript-variable-scope-and-hoisting/" itemprop="url">
                   자바스크립트의 변수범위와 호이스팅
                 </a>
@@ -730,7 +879,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
