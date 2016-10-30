@@ -250,6 +250,145 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/30/dependency-service-introduction/" itemprop="url">
+                  DependencyService를 이용한 네이티브 접근
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-10-30T11:34:38+09:00" content="2016-10-30">
+              2016-10-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Xamarin/" itemprop="url" rel="index">
+                    <span itemprop="name">Xamarin</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/30/dependency-service-introduction/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/30/dependency-service-introduction/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p><a href="https://developer.xamarin.com/api/type/Xamarin.Forms.DependencyService/" target="_blank" rel="external">DependencyService</a>는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다.</p>
+<h2 id="DependencyService의-작동-원리"><a href="#DependencyService의-작동-원리" class="headerlink" title="DependencyService의 작동 원리"></a>DependencyService의 작동 원리</h2><p>DependencyService를 사용하기 위해서는 크게 세가지 컴포넌트가 필요하다.</p>
+<ul>
+<li>인터페이스 : 필요한 기능이 공유코드에 인터페이스로 정의된다.</li>
+<li>플랫폼 구현체 : 각 플랫폼에 대한 인터페이스의 구현체 클래스.</li>
+<li>등록(Registration) : 각 플랫폼 구현체는 메타데이터 속성을 통해 DependencyService에 등록 되어야만 한다. 이 과정은 DependencyService가 구현체를 찾고 런타임에 인터페이스에 해당 구현체를 공급할 수 있도록 해준다.</li>
+<li>DependencyService 호출 : 공유코드는 인터페이스의 구현체를 찾기위해 명시적으로 DependencyService를 호출할 필요가 있다.</li>
+</ul>
+<p>이 과정을 간단히 도식화 하면 아래와 같다.</p>
+<p><img src="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/overview_diagram.png" alt="DependencyService 개념도"></p>
+<h2 id="인터페이스"><a href="#인터페이스" class="headerlink" title="인터페이스"></a>인터페이스</h2><p>인터페이스는 사용하고자 하는 플랫폼 고유의 기능을 정의한다. 만일, 개발하고자 하는 모듈이 다른 프로젝트와 공유될 수 있는 컴포넌트이거나 Nuget 패키지 형태라면 고려되지 않은 네이티브 플랫폼에서 런타임 오류가 발생 할 수 있으므로 주의해야 한다. 아래의 예제코드는 텍스트를 읽어주는 기능에 대한 인터페이스이다. 하지만, 각 플랫폼의 구현체는 별도로 제공하거나 남겨두어야 한다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> interface ITextToSpeech &#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Speak</span> <span class="params">( <span class="built_in">string</span> text )</span></span>; <span class="comment">//note that interface members are public by default</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="플랫폼에서의-구현"><a href="#플랫폼에서의-구현" class="headerlink" title="플랫폼에서의 구현"></a>플랫폼에서의 구현</h2><p>인테페이스가 정의되면 프로젝트의 각 플랫폼 프로젝트에서 구현이 수반되어야 한다. 아래 예제코드는 ITextToSpeech 인터페이스에 대한 윈도우폰 플랫폼의 구현에 대한 예제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> TextToSpeech.WinPhone</div><div class="line">&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">class</span> TextToSpeechImplementation : ITextToSpeech</div><div class="line">  &#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="title">TextToSpeechImplementation</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">public</span> async <span class="keyword">void</span> <span class="title">Speak</span><span class="params">(<span class="built_in">string</span> text)</span></span></div><div class="line">      &#123;</div><div class="line">          SpeechSynthesizer synth = <span class="keyword">new</span> SpeechSynthesizer();</div><div class="line">          await synth.SpeakTextAsync(text);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>모든 네이티브 구현체는 반드시 인자가 없는 생성자를 포함하여야 한다. 이것은, DependencyService가 이 구현체를 인스턴스화 하기 위해 필요하다.</p>
+<h2 id="등록"><a href="#등록" class="headerlink" title="등록"></a>등록</h2><p>인터페이스에 대한 구현체는 DependencyService가 찾을 수 있도록 메타데이터와 함께 등록되어야 한다. 아래 코드는 윈도우폰을 위한 구현체의 등록 예제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> TextToSpeech.WinPhone;</div><div class="line"></div><div class="line">[assembly: Xamarin.Forms.Dependency (typeof (TextToSpeechImplementation))]</div><div class="line"><span class="keyword">namespace</span> TextToSpeech.WinPhone &#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">class</span> TextToSpeechImplementation : ITextToSpeech</div><div class="line">  &#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="title">TextToSpeechImplementation</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">public</span> async <span class="keyword">void</span> <span class="title">Speak</span><span class="params">(<span class="built_in">string</span> text)</span></span></div><div class="line">      &#123;</div><div class="line">          SpeechSynthesizer synth = <span class="keyword">new</span> SpeechSynthesizer();</div><div class="line">          await synth.SpeakTextAsync(text);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>이 코드에서 등록이 클래스 레벨이 아닌 네임스페이스 레벨에서 이루어지는것에 주의해야 한다.</p>
+<h2 id="DependencyService-호출"><a href="#DependencyService-호출" class="headerlink" title="DependencyService 호출"></a>DependencyService 호출</h2><p>공통 인터페이스와 플랫폼 고유의 구현체가 DependencyService에 등록되었다면 아래 예제 코드와 같이 호출하여 사용할 수 있다.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DependencyService.Get&lt;ITextToSpeech&gt;().Speak(<span class="string">"Hello from Xamarin Forms"</span>);</div></pre></td></tr></table></figure>
+<h2 id="예제소스-구조"><a href="#예제소스-구조" class="headerlink" title="예제소스 구조"></a>예제소스 구조</h2><p><a href="https://developer.xamarin.com/samples/UsingDependencyService/" target="_blank" rel="external">예제코드</a>는 iOS와 Android 구현체를 포함 하고 있으며 아래 그림과 같이 구성되어 있다.</p>
+<p><img src="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/solution.png" alt="예제소스 구조"></p>
+<p>원본출처 : <a href="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/" target="_blank" rel="external">https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/29/events-with-commanding/" itemprop="url">
                   Xamarin.Forms 데이터 바인딩 3/3
                 </a>
@@ -1473,150 +1612,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/10/anatomy-of-a-riot-framework-part-6/" itemprop="url">
-                  Riot 프레임워크 알아보기. (6/6) Router
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">작성일</span>
-            <time itemprop="dateCreated" datetime="2016-08-10T23:18:45+09:00" content="2016-08-10">
-              2016-08-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">Javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/10/anatomy-of-a-riot-framework-part-6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/10/anatomy-of-a-riot-framework-part-6/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="http://jennavuong.ghost.io/content/images/2016/03/Screen-Shot-2016-03-13-at-11-24-57-PM.png" alt="frame"></p>
-<h2 id="기본"><a href="#기본" class="headerlink" title="기본"></a>기본</h2><p>Riot은 라우팅 기능을 포함하고 있다. 우선 간단한 예제를 살펴보자.<br>먼저 index.html 은 아래와 같다.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">navigation</span>&gt;</span><span class="tag">&lt;/<span class="name">navigation</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>다음은 app.js 이다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">'navigation.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'home.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'about.tag'</span></div><div class="line"><span class="keyword">import</span> <span class="string">'contact.tag'</span></div><div class="line"></div><div class="line"><span class="comment">// mount navigation tag</span></div><div class="line">riot.mount(<span class="string">'navigation'</span>)</div><div class="line"></div><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">action</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (action) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'about'</span>:</div><div class="line">            <span class="keyword">return</span> riot.mount(<span class="string">'#main'</span>, <span class="string">'about'</span>)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">case</span> <span class="string">'contact'</span>:</div><div class="line">            <span class="keyword">return</span> riot.mount(<span class="string">'#main'</span>, <span class="string">'contact'</span>)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            riot.mount(<span class="string">'#main'</span>, <span class="string">'home'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">rout.route.start(<span class="literal">true</span>)</div></pre></td></tr></table></figure></p>
-<blockquote>
-<blockquote>
-<p>&lt;navigation&gt;&lt;/navigation&gt; 태그는 ‘/home’, ‘/about’, ‘/contact’ 링크를 포함하고 있다고 가정. 각, 링크를 클릭하여 메뉴를 이동하면 브라우저 주소창의 URL이 변경될것이다.</p>
-</blockquote>
-</blockquote>
-<p>기본 URL파서는 path부분을 콜백함수의 인자로 받는다. ‘/home’의 경우 ‘action’은 ‘home’이 된다.<br>만일, route를 아래와 같이 정의하고 ‘/users/1234/edit’ 와 같이 URL을 호출한다면 어떻게 될까?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">collection, id, action</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<blockquote>
-<blockquote>
-<p>collection : users<br>id : 1234<br>action : edit</p>
-</blockquote>
-</blockquote>
-<p>와 같이 인자를 받게 된다. 유의할 점은 riot router는 자동으로 실행되지 않기 때문에 반드시 riot.route.start()를 해줘야만 작동한다.(v2.3이후) 이것은, riot과 함께 다른 router도 사용할 수 있음을 의미한다.</p>
-<h2 id="필터"><a href="#필터" class="headerlink" title="필터"></a>필터</h2><p>다른 라우터들 처럼 URL의 앞부분 또는 일부를 고정된 형태로 필터링 할 수 있다. 다음과 같이 정의할 경우 항상 ‘/fruit’에 매칭된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">roit.route(<span class="string">'/fruit'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>와일드카드(*)또한 지원되므로 다음과 같이 정의할수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="string">'/fruit/*'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<blockquote>
-<blockquote>
-<p>/fruit/apple 을 호출할 경우 name = apple 이 된다.</p>
-</blockquote>
-</blockquote>
-<h2 id="활용"><a href="#활용" class="headerlink" title="활용"></a>활용</h2><p>이것은 Riot Router의 기본 URL파서의 행동으로서 URL파서를 커스터마이징 하여 다르게 작동할 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">riot.route.parser(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> raw = path.slice(<span class="number">2</span>).split(<span class="string">'?'</span>),</div><div class="line">      uri = raw[<span class="number">0</span>].split(<span class="string">'/'</span>),</div><div class="line">      qs = raw[<span class="number">1</span>],</div><div class="line">      params = &#123;&#125;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (qs) &#123;</div><div class="line">    qs.split(<span class="string">'&amp;'</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> c = v.split(<span class="string">'='</span>)</div><div class="line">      params[c[<span class="number">0</span>]] = c[<span class="number">1</span>]</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  uri.push(params)</div><div class="line">  <span class="keyword">return</span> uri</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>/users/edit?id=1234를 호출할 경우<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">riot.route(<span class="function"><span class="keyword">function</span>(<span class="params">target, action, params</span>) </span>&#123;</div><div class="line">    <span class="comment">// target = users</span></div><div class="line">    <span class="comment">// action = edit</span></div><div class="line">    <span class="comment">// params = &#123; id: '1234' &#125;</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>추가적인 API 사용법은 <a href="http://riotjs.com/api/route/" target="_blank" rel="external">Route API</a>에서 자세히 볼 수 있다.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1662,7 +1657,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>

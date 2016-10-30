@@ -1,0 +1,683 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Xamarin,Xamarin.Forms," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다.
+DependencyService의">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DependencyService를 이용한 네이티브 접근">
+<meta property="og:url" content="http://chanlee.github.io/2016/10/30/dependency-service-introduction/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다.
+DependencyService의">
+<meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/overview_diagram.png">
+<meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/solution.png">
+<meta property="og:updated_time" content="2016-10-30T03:58:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DependencyService를 이용한 네이티브 접근">
+<meta name="twitter:description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다.
+DependencyService의">
+<meta name="twitter:image" content="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/overview_diagram.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/10/30/dependency-service-introduction/"/>
+
+
+  <title> DependencyService를 이용한 네이티브 접근 | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                DependencyService를 이용한 네이티브 접근
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-10-30T11:34:38+09:00" content="2016-10-30">
+              2016-10-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Xamarin/" itemprop="url" rel="index">
+                    <span itemprop="name">Xamarin</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/30/dependency-service-introduction/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/30/dependency-service-introduction/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p><a href="https://developer.xamarin.com/api/type/Xamarin.Forms.DependencyService/" target="_blank" rel="external">DependencyService</a>는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다.</p>
+<h2 id="DependencyService의-작동-원리"><a href="#DependencyService의-작동-원리" class="headerlink" title="DependencyService의 작동 원리"></a>DependencyService의 작동 원리</h2><p>DependencyService를 사용하기 위해서는 크게 세가지 컴포넌트가 필요하다.</p>
+<ul>
+<li>인터페이스 : 필요한 기능이 공유코드에 인터페이스로 정의된다.</li>
+<li>플랫폼 구현체 : 각 플랫폼에 대한 인터페이스의 구현체 클래스.</li>
+<li>등록(Registration) : 각 플랫폼 구현체는 메타데이터 속성을 통해 DependencyService에 등록 되어야만 한다. 이 과정은 DependencyService가 구현체를 찾고 런타임에 인터페이스에 해당 구현체를 공급할 수 있도록 해준다.</li>
+<li>DependencyService 호출 : 공유코드는 인터페이스의 구현체를 찾기위해 명시적으로 DependencyService를 호출할 필요가 있다.</li>
+</ul>
+<p>이 과정을 간단히 도식화 하면 아래와 같다.</p>
+<p><img src="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/overview_diagram.png" alt="DependencyService 개념도"></p>
+<h2 id="인터페이스"><a href="#인터페이스" class="headerlink" title="인터페이스"></a>인터페이스</h2><p>인터페이스는 사용하고자 하는 플랫폼 고유의 기능을 정의한다. 만일, 개발하고자 하는 모듈이 다른 프로젝트와 공유될 수 있는 컴포넌트이거나 Nuget 패키지 형태라면 고려되지 않은 네이티브 플랫폼에서 런타임 오류가 발생 할 수 있으므로 주의해야 한다. 아래의 예제코드는 텍스트를 읽어주는 기능에 대한 인터페이스이다. 하지만, 각 플랫폼의 구현체는 별도로 제공하거나 남겨두어야 한다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> interface ITextToSpeech &#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Speak</span> <span class="params">( <span class="built_in">string</span> text )</span></span>; <span class="comment">//note that interface members are public by default</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="플랫폼에서의-구현"><a href="#플랫폼에서의-구현" class="headerlink" title="플랫폼에서의 구현"></a>플랫폼에서의 구현</h2><p>인테페이스가 정의되면 프로젝트의 각 플랫폼 프로젝트에서 구현이 수반되어야 한다. 아래 예제코드는 ITextToSpeech 인터페이스에 대한 윈도우폰 플랫폼의 구현에 대한 예제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> TextToSpeech.WinPhone</div><div class="line">&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">class</span> TextToSpeechImplementation : ITextToSpeech</div><div class="line">  &#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="title">TextToSpeechImplementation</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">public</span> async <span class="keyword">void</span> <span class="title">Speak</span><span class="params">(<span class="built_in">string</span> text)</span></span></div><div class="line">      &#123;</div><div class="line">          SpeechSynthesizer synth = <span class="keyword">new</span> SpeechSynthesizer();</div><div class="line">          await synth.SpeakTextAsync(text);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>모든 네이티브 구현체는 반드시 인자가 없는 생성자를 포함하여야 한다. 이것은, DependencyService가 이 구현체를 인스턴스화 하기 위해 필요하다.</p>
+<h2 id="등록"><a href="#등록" class="headerlink" title="등록"></a>등록</h2><p>인터페이스에 대한 구현체는 DependencyService가 찾을 수 있도록 메타데이터와 함께 등록되어야 한다. 아래 코드는 윈도우폰을 위한 구현체의 등록 예제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> TextToSpeech.WinPhone;</div><div class="line"></div><div class="line">[assembly: Xamarin.Forms.Dependency (typeof (TextToSpeechImplementation))]</div><div class="line"><span class="keyword">namespace</span> TextToSpeech.WinPhone &#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">class</span> TextToSpeechImplementation : ITextToSpeech</div><div class="line">  &#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="title">TextToSpeechImplementation</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">public</span> async <span class="keyword">void</span> <span class="title">Speak</span><span class="params">(<span class="built_in">string</span> text)</span></span></div><div class="line">      &#123;</div><div class="line">          SpeechSynthesizer synth = <span class="keyword">new</span> SpeechSynthesizer();</div><div class="line">          await synth.SpeakTextAsync(text);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>이 코드에서 등록이 클래스 레벨이 아닌 네임스페이스 레벨에서 이루어지는것에 주의해야 한다.</p>
+<h2 id="DependencyService-호출"><a href="#DependencyService-호출" class="headerlink" title="DependencyService 호출"></a>DependencyService 호출</h2><p>공통 인터페이스와 플랫폼 고유의 구현체가 DependencyService에 등록되었다면 아래 예제 코드와 같이 호출하여 사용할 수 있다.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DependencyService.Get&lt;ITextToSpeech&gt;().Speak(<span class="string">"Hello from Xamarin Forms"</span>);</div></pre></td></tr></table></figure>
+<h2 id="예제소스-구조"><a href="#예제소스-구조" class="headerlink" title="예제소스 구조"></a>예제소스 구조</h2><p><a href="https://developer.xamarin.com/samples/UsingDependencyService/" target="_blank" rel="external">예제코드</a>는 iOS와 Android 구현체를 포함 하고 있으며 아래 그림과 같이 구성되어 있다.</p>
+<p><img src="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/solution.png" alt="예제소스 구조"></p>
+<p>원본출처 : <a href="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/" target="_blank" rel="external">https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xamarin/" rel="tag">#Xamarin</a>
+          
+            <a href="/tags/Xamarin-Forms/" rel="tag">#Xamarin.Forms</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/29/events-with-commanding/" rel="next" title="Xamarin.Forms 데이터 바인딩 3/3">
+                <i class="fa fa-chevron-left"></i> Xamarin.Forms 데이터 바인딩 3/3
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#개요"><span class="nav-number">1.</span> <span class="nav-text">개요</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DependencyService의-작동-원리"><span class="nav-number">2.</span> <span class="nav-text">DependencyService의 작동 원리</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#인터페이스"><span class="nav-number">3.</span> <span class="nav-text">인터페이스</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#플랫폼에서의-구현"><span class="nav-number">4.</span> <span class="nav-text">플랫폼에서의 구현</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#등록"><span class="nav-number">5.</span> <span class="nav-text">등록</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DependencyService-호출"><span class="nav-number">6.</span> <span class="nav-text">DependencyService 호출</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#예제소스-구조"><span class="nav-number">7.</span> <span class="nav-text">예제소스 구조</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/10/30/dependency-service-introduction/';
+      var disqus_title = "DependencyService를 이용한 네이티브 접근";
+      var disqus_url = 'http://chanlee.github.io/2016/10/30/dependency-service-introduction/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
