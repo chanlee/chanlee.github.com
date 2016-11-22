@@ -250,6 +250,142 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/14/hello-es6-world-part-1/" itemprop="url">
+                  안녕 ES6. (1/4) 변수와 화살표 함수, 파라미터.
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-08-14T18:07:29+09:00" content="2016-08-14">
+              2016-08-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/14/hello-es6-world-part-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/14/hello-es6-world-part-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="let과-const"><a href="#let과-const" class="headerlink" title="let과 const"></a>let과 const</h2><p>let은 많은 부분에서 var를 대채할 것으로 기대된다. let은 var와 달리 변수의 스코프를 블록 또는 표현식 단위로 제한한다. <a href="http://chanlee.github.io/2013/12/10/javascript-variable-scope-and-hoisting/">자바스크립트의 변수범위와 호이스팅</a>에서 설명했던것과 완전 반대로 작동한다.</p>
+<p><em>잘못된 예제. (블럭-수준 범위로 오해할 경우)</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</div><div class="line"><span class="comment">// 아래의 if문은 name변수에 대한 지역-범위를 생성하지 않습니다.</span></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     name = <span class="string">"Jack"</span>;</div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 전역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 여전히 전역변수이며 if문에서 변경되었습니다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Jack</span></div></pre></td></tr></table></figure></p>
+<p>ES5에서 변수의 범위를 이렇게 설명했었다. var로 선언된 변수는 함수내에서 전역범위를 가지므로 위와 같이 작동한다. 하지만, if문내의 name을 let으로 선언할 경우는 바깥의 name과 내부의 name은 다른 스코프를 가지게 된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     <span class="keyword">let</span> name = <span class="string">"Jack"</span>; <span class="comment">// name은 if문의 지역범위를 가진다.</span></div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 지역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 if문에서 변경되지 않았다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Richard</span></div></pre></td></tr></table></figure></p>
+<p>만일, 다음과 같이 let의 위치가 바뀌면 어떻게 될까?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> name = <span class="string">"Richard"</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (name) &#123;</div><div class="line">     name = <span class="string">"Jack"</span>; <span class="comment">// name은 함수의 지역범위를 가진다.</span></div><div class="line">     <span class="built_in">console</span>.log(name); <span class="comment">// Jack : 전역 변수</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// name은 if문에서 변경되었다.</span></div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">// Jack</span></div></pre></td></tr></table></figure></p>
+<p>이 경우에 let은 var와 동일하게 사용된다. name이 블록 스코프를 가지기 위해서는 if문 내에서 선언되어야 한다.</p>
+<p>const는 상수처럼 작동(Immutable)한다. 가급적, 상수 선언은 대문자로 쓰도록 하는게 좋겠다. 또한, 함수선언과 같은 경우에 var보다 const를 사용하는 편이 낫다. 즉, let과 const를 적절히 쓰면 메모리도 아끼고, 디버깅도 좀 더 수월해진다.</p>
+<p>앞길이 구만리인데 고작 let, const 로 한페이지를 채워버렸다. 하지만, 사소한것도 확실히 알고 넘어가야 한다. 버그는 늘 사소한데서 생겨나고 그런게 찾기는 드럽게 힘들기 마련이다.(T.T)</p>
+<h2 id="화살표-함수와-this"><a href="#화살표-함수와-this" class="headerlink" title="화살표 함수와 this"></a>화살표 함수와 this</h2><p>ES5에서 가장 헷갈리는것이 바로 this의 범위이다. 클로저가 생성한 컨텍스트로 인해 this가 this가 아닌 상황이 발생하여 “that = this, self = this”와 같은 패턴을 사용해야만 했다.</p>
+<p><img src="http://moduscreate.com/wp-content/uploads/2016/05/ES6-arrow-functions-react-native-4.jpg" alt="Arrow vs. Prototype"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> self = <span class="keyword">this</span></div><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  self.sendData()</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>또는 “.bind(this)”를 사용해 this를 현재 컨텍스트와 수동으로 바인딩하기도 했었다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.sendData()</div><div class="line">&#125;.bind(<span class="keyword">this</span>))</div></pre></td></tr></table></figure></p>
+<p>화살표 함수를 사용하면 이러한 번거로움을 해소할 수 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'.btn'</span>).click(<span class="function">(<span class="params">event</span>) =&gt;</span>&#123;</div><div class="line">  <span class="keyword">this</span>.sendData()</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>화살표 함수는 함수 표현식을 간략하게 표기하도록도 해주지만 this의 범위를 함수를 감싸는 코드와 동일하게 유지해줌으로써 기존의 클로저로 인한 번거로움을 많이 해소해 준다.</p>
+<h2 id="파라미터"><a href="#파라미터" class="headerlink" title="파라미터"></a>파라미터</h2><p>ES5에서 arguments를 대신해 “…”식을 지원한다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> myFunc = <span class="function">(<span class="params">...params</span>) =&gt;</span> &#123;</div><div class="line">     <span class="built_in">console</span>.log(params.length + <span class="string">' argument(s)'</span>);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// execute it</span></div><div class="line">myFunc(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</div><div class="line"><span class="comment">// 3 arguments;</span></div></pre></td></tr></table></figure></p>
+<p>params는 자바스크립트에 내장된 arguments와 같다. 즉, 기존 코드라면 “params.length”는 “arguments.length”와 동일하다. 나은점은, “arguments”가 아닌 “params”와 같이 이름을 붙일수 있다는것과 믹스인형태로 사용할 수 있다는 점이다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> drink = <span class="function"><span class="keyword">function</span>(<span class="params">requiredParam , ...maybe</span>) </span>&#123;</div><div class="line">      <span class="comment">//</span></div><div class="line"> &#125;</div><div class="line"> drink(<span class="string">'coffee'</span>);</div><div class="line"> drink(<span class="string">'coffee'</span> , <span class="string">'sugar'</span>);</div><div class="line"> drink(<span class="string">'coffee'</span> , <span class="string">'sugar'</span> , <span class="string">'milk'</span>);</div></pre></td></tr></table></figure></p>
+<p>또한, 원하는 파라미터에 기본값을 줄 수도 있다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> drink = <span class="function">(<span class="params">typeOfDrink = <span class="string">'coffee'</span> , ...maybe</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">const</span> eat = <span class="function">(<span class="params">food , todo=<span class="string">'wash hand'</span> </span>) =&gt;</span> &#123;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>위외 같은 코드를 ES5에서는 통상 아래와 같은 패턴으로 코딩을 하게된다.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> drink = <span class="function"><span class="keyword">function</span>(<span class="params">typeOfDrink</span>) </span>&#123;</div><div class="line">      typeOfDrink = typeOfDrink || <span class="string">'coffee'</span>;</div><div class="line">      <span class="keyword">if</span> (<span class="built_in">arguments</span>.length &gt; <span class="number">2</span>) &#123;</div><div class="line">          <span class="comment">// ... loop whatever</span></div><div class="line">      &#125;</div><div class="line"> &#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="and"><a href="#and" class="headerlink" title="and"></a>and</h2><p>꼭 필요하다 싶은것들만 묶어서 한편으로 간단하게 쓰려고 했는데 주절주절 쓰다보니 길어졌다. 아직 클래스도 남았고, 제너레이터, Map/Set, 디스터럭처링등 다룰게 많아서 또 시리즈로 가야겠다. See ya!</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/10/anatomy-of-a-riot-framework-part-6/" itemprop="url">
                   Riot 프레임워크 알아보기. (6/6) Router
                 </a>
@@ -1017,9 +1153,9 @@
 <p>Riot은 사실 React에 많은 영향을 받아, React의 Light 버전 처럼 느껴진다. 또한, Polymer의 장점도 반영되었다. 전반적인 코드는 마치 “Javascript vs. Coffescript”를 보는것 처럼 간결하다.</p>
 <p>바로 코디를 통해 Riot에 대해 살펴보겠다.</p>
 <h2 id="커스텀-태크"><a href="#커스텀-태크" class="headerlink" title="커스텀 태크"></a>커스텀 태크</h2><p>모든 브라우저에서 Polymer처럼 커스텀 태그를 쓸 수 있다. 하지만, 컴포넌트의 생김새는 React와 유사하다.</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">todo</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Markup --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123; opts.title &#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">each</span>=<span class="string">&#123;</span> <span class="attr">item</span> <span class="attr">in</span> <span class="attr">items</span> &#125;&gt;</span>&#123; item &#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">onsubmit</span>=<span class="string">&#123;</span> <span class="attr">add</span> &#125;&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">input</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>Add #&#123; items.length + 1 &#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Style --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line">        h3 &#123;</div><div class="line">            font-size: 14px;</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Logic --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">        <span class="keyword">this</span>.items = []</div><div class="line"></div><div class="line">        add(e) &#123;</div><div class="line">            <span class="keyword">var</span> input = e.target[<span class="number">0</span>]</div><div class="line">            <span class="keyword">this</span>.items.push(input.value)</div><div class="line">            input.value = <span class="string">''</span></div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">todo</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">todo</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Markup --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123; opts.title &#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">each</span>=<span class="string">&#123;</span> <span class="attr">item</span> <span class="attr">in</span> <span class="attr">items</span> &#125;&gt;</span>&#123; item &#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">onsubmit</span>=<span class="string">&#123;</span> <span class="attr">add</span> &#125;&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">input</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>Add #&#123; items.length + 1 &#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Style --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line">        h3 &#123;</div><div class="line">            font-size: 14px;</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Logic --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">        this.items = []</div><div class="line"></div><div class="line">        add(e) &#123;</div><div class="line">            var input = e.target[0]</div><div class="line">            this.items.push(input.value)</div><div class="line">            input.value = ''</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">todo</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>별다른 해석이 없어도 위 컴포넌트의 기능을 이해하는데 별 어려움은 없을 것으로 보인다. 이 태그는 페이지에서 아래와 같이 사용될 수 있다.</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">todo</span>&gt;</span><span class="tag">&lt;/<span class="name">todo</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">riot.mount(<span class="string">'todo'</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">todo</span>&gt;</span><span class="tag">&lt;/<span class="name">todo</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">riot.mount('todo')</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>React를 보신분들은 비슷한점을 많이 느낄것이다. 하지만, Riot은 훨씬 간결한 문법을 제공하고 es6와도 잘 맞는다. 비슷하지만 뭔가 다른다. <a href="http://riotjs.com/compare/" target="_blank" rel="external">riotjs 홈페이지의 React와의 비교</a> 페이지에 따르면 이것은 겉모습뿐만이 아니다.</p>
 <p>Riot은 DOM파싱시에 모든 DOM Node의 Expression을 배열로 참조하고 있다가 변화가 생기는 노드에 대해서만 업데이트를 한다. 그런데, React와 달리 Riot은 HTML구조는 고정된다. 즉, div가 label로 변경될 수 없다. Riot은 단지, 참조하고 있는 Expression만 업데이트 하고, 그 하위 노드에 대한 복잡한 교체는 하지 않음으로써 DOM업데이트를 매우 빠르게 처리할 수 있다.</p>
 <h1 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h1><p>Riot은 크게 Custom Tag, Event Observer, Router의 세가지를 기본적인 구성요소로 가지고 있다. 그리고, minimal한 기능을 제공함으로써 혼란을 줄이고 빠르게 개발에 집중할 수 있도록 한다.</p>
@@ -1460,166 +1596,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/14/Introduce-Swift-Optional/" itemprop="url">
-                  스위프트 옵셔널 이해하기
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">작성일</span>
-            <time itemprop="dateCreated" datetime="2015-06-14T01:46:29+09:00" content="2015-06-14">
-              2015-06-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/IOS/" itemprop="url" rel="index">
-                    <span itemprop="name">IOS</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/14/Introduce-Swift-Optional/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/14/Introduce-Swift-Optional/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="옵셔널-개요"><a href="#옵셔널-개요" class="headerlink" title="옵셔널 개요"></a>옵셔널 개요</h3><p>Swift에서 변수를 선언할때는 기본적으로 옵셔널이 아닌(non-optional)값을 지정해야 한다. 다시말해, 변수에는 반드시 nil 이 아닌(non-nil) 값을 할당 해야만 한다. 만일, 옵셔널이 아닌 변수에 nil 을 설정하려 하면 컴파일러는 nil값을 할당 할 수 없다고 오류를 발생시킬 것이다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> message: <span class="type">String</span> = <span class="string">"Swift is awesome!"</span> <span class="comment">// OK</span></div><div class="line">message = <span class="literal">nil</span> <span class="comment">// compile-time error</span></div></pre></td></tr></table></figure>
-<p>클래스에서 속성을 선언할 때에도 마챦가지 이다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Messenger</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> message1: <span class="type">String</span> = <span class="string">"Swift is awesome!"</span> <span class="comment">// OK</span></div><div class="line">    <span class="keyword">var</span> message2: <span class="type">String</span> <span class="comment">// compile-time error</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>하지만, Objective-C 에서는 아래와 같이 nil을 설정해도 에러가 발생하지 않는다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="type">NSString</span> *message = @<span class="string">"Objective-C will never die!"</span>;</div><div class="line">message = <span class="literal">nil</span>;</div></pre></td></tr></table></figure>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Messenger</span> </span>&#123;</div><div class="line">    <span class="type">NSString</span> *message1 = @<span class="string">"Objective will never die!"</span>;</div><div class="line">    <span class="type">NSString</span> *message2;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>하지만, 이것은 스위프트에서 초기값 없이 속성 또는 변수를 선언할수 없다는 것을 의미하지 않는다. 스위프트는 옵셔널 타입을 사용해 값의 부재를 알릴 수 있다. 즉,  “?” 오퍼레이터를 타입선언 뒤에 추가하면 된다. 아래 예를 참고하라.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Messenger</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> message1: <span class="type">String</span> = <span class="string">"Swift is awesome!"</span> <span class="comment">// OK</span></div><div class="line">    <span class="keyword">var</span> message2: <span class="type">String</span>? <span class="comment">// OK</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="왜-옵셔널-Optionals-인가"><a href="#왜-옵셔널-Optionals-인가" class="headerlink" title="왜 옵셔널(Optionals) 인가?"></a>왜 옵셔널(Optionals) 인가?</h3><p>스위프트는 애플의 주장대로 타입-세이프한 언어라는것을 보여주는 사례중 하나이다. 앞서본 예제와 같이 옵셔널은 런타임시에 발생할 수 있는 에러들을 컴파일시에 체크할 수 있도록 한다. 옵셔널의 장점을 더 잘 이해할 수 있도록 아래의 Objective-C 메소드를 살펴 보자.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="type">NSString</span> *)findStockCode:(<span class="type">NSString</span> *)company &#123;</div><div class="line">    <span class="keyword">if</span> ([company isEqualToString:@<span class="string">"Apple"</span>]) &#123;</div><div class="line">        <span class="keyword">return</span> @<span class="string">"AAPL"</span>;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([company isEqualToString:@<span class="string">"Google"</span>]) &#123;</div><div class="line">        <span class="keyword">return</span> @<span class="string">"GOOG"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>findStockCode 메소드는 Apple과 Google의 주식코드를 리턴하고, 그 외의 경우에는 nil을 리턴한다. 이 메소드는 아래와 같이 호출될 수 있다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="type">NSString</span> *stockCode = [<span class="keyword">self</span> findStockCode:@<span class="string">"Facebook"</span>]; <span class="comment">// nil is returned</span></div><div class="line"><span class="type">NSString</span> *text = @<span class="string">"Stock Code - "</span>;</div><div class="line"><span class="type">NSString</span> *message = [text stringByAppendingString:stockCode]; <span class="comment">// runtime error</span></div><div class="line"><span class="type">NSLog</span>(@<span class="string">"%@"</span>, message);</div></pre></td></tr></table></figure>
-<p>이 코드는 문제없이 컴파일이 되겠지만 실행했을때는 런타임 오류를 발생하게 된다. 이 코드를 스위프트로 작성하면 아래와 같이 되며, 컴파일시에 오류를 발견할 수 있게 된다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">findStockCode</span><span class="params">(company: String)</span></span> -&gt; <span class="type">String</span>? &#123;</div><div class="line">   <span class="keyword">if</span> (company == <span class="string">"Apple"</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="string">"AAPL"</span></div><div class="line">   &#125; <span class="keyword">else</span> <span class="keyword">if</span> (company == <span class="string">"Google"</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="string">"GOOG"</span></div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> stockCode:<span class="type">String</span>? = findStockCode(<span class="string">"Facebook"</span>)</div><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">let</span> message = text + stockCode  <span class="comment">// compile-time error</span></div><div class="line"><span class="built_in">println</span>(message)</div></pre></td></tr></table></figure>
-<p>stockCode는 문자열 또는 nil값일 수 있다. 옵셔널 문자열인 String?은 업랩(Unwrapped)되지 않았으므로, 이것을 수정할 수 있도록 에러를 발생한다. 이렇게 컴파일시에 nil 체크를 수행함으로써 잠재적인 에러를 탐지할 수 있다는것이 옵셔널의 장점이다.</p>
-<p><img src="/assets/nullpointer-cartoon.jpg" alt="null pointer exception"></p>
-<h3 id="옵셔널-꺼내기-Unwrapping-Optionals"><a href="#옵셔널-꺼내기-Unwrapping-Optionals" class="headerlink" title="옵셔널 꺼내기(Unwrapping Optionals)"></a>옵셔널 꺼내기(Unwrapping Optionals)</h3><p>위의 코드가 컴파일 될 수 있도록 하려면 아래와 같이 수정하면 된다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> stockCode:<span class="type">String</span>? = findStockCode(<span class="string">"Facebook"</span>)</div><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">if</span> stockCode &#123;</div><div class="line">    <span class="keyword">let</span> message = text + stockCode!</div><div class="line">    <span class="built_in">println</span>(message)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>스위프트에서 느낌표는 강제 언래핑(Unwrapping)을 할때 사용된다. if문으로 stockCode에 값이 있다는것을 확인했으므로, 위와 같이 옵셔널 변수에 !를 붙여 값을 꺼낼 수 있다.</p>
-<p>하지만, 아래와 같이 stockCode에 대해 nil-체크를 하지 않고 Unwrapping을 하게되면 런타임 오류를 만나게 될것이다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> stockCode:<span class="type">String</span>? = findStockCode(<span class="string">"Facebook"</span>)</div><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">let</span> message = text + stockCode!  <span class="comment">// runtime error</span></div></pre></td></tr></table></figure>
-<h3 id="옵셔널-바인딩"><a href="#옵셔널-바인딩" class="headerlink" title="옵셔널 바인딩"></a>옵셔널 바인딩</h3><p>강제 언래핑(Forced Unwrapping)은 다른 언어에서 null-체크를 하는것과 그리 다르지 않다. 또한, 잠재적으로 런타임 오류를 발생시킬 수 있다. 옵셔널 바인딩은 옵셔널이 값을 가지고 있는지 아닌지를 체크하고, 값이 있을 경우 그것을 꺼내어 임시로 특정 상수(또는 변수)에 값을 보관하는 방법을 말한다.</p>
-<p>예제보다 이것을 더 쉽게 설명할 수 없으므로, 바로 앞에 사용했던 코드를 옵셔널 바인딩을 적용하여 변경해 보겠다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> stockCode:<span class="type">String</span>? = findStockCode(<span class="string">"Facebook"</span>)</div><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> tempStockCode = stockCode &#123;</div><div class="line">    <span class="keyword">let</span> message = text + tempStockCode</div><div class="line">    <span class="built_in">println</span>(message)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>“if let”(또는 if var 도 사용 가능) 구문은 두가지 의미를 내포하고 있다. 쉽게말해, “만일 stockCode가 값을 가지고 있다면, 이것을 꺼내서 (1)tempStockCode에 값을 대입하고, (2) 조건문 블록을 실행하라” 는 것을 의미 한다. 그렇지 않다면 조건문은 실행되지 않는다.<br>tempStockCode는 새로운 상수이므로 끝에 느낌표(!)를 사용할 필요가 없다.</p>
-<p>위 코드는 아래와 같이 좀 더 축약 하여 코딩할 수 있다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> text = <span class="string">"Stock Code - "</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">var</span> stockCode = findStockCode(<span class="string">"Apple"</span>) &#123;</div><div class="line">    <span class="keyword">let</span> message = text + stockCode</div><div class="line">    <span class="built_in">println</span>(message)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>이 코드에서 stockCode 는 옵셔널이 아니란점에 주목하기 바란다.</p>
-<h3 id="옵셔널-체이닝"><a href="#옵셔널-체이닝" class="headerlink" title="옵셔널 체이닝"></a>옵셔널 체이닝</h3><p>옵셔널 체이닝을 설명하기 전에 이전의 예제 소스를 아래와 같이 수정하겠다. 우리는 code와 price라는 옵셔널 속성을 가진 Stock 이라는 클래스를 새로 만들고, findStockCode 함수는 문자열 대신 Stock클래스를 리턴 하도록 수정할 것이다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stock</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> code: <span class="type">String</span>?</div><div class="line">    <span class="keyword">var</span> price: <span class="type">Double</span>?</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">findStockCode</span><span class="params">(company: String)</span></span> -&gt; <span class="type">Stock</span>? &#123;</div><div class="line">    <span class="keyword">if</span> (company == <span class="string">"Apple"</span>) &#123;</div><div class="line">        <span class="keyword">let</span> aapl: <span class="type">Stock</span> = <span class="type">Stock</span>()</div><div class="line">        aapl.code = <span class="string">"AAPL"</span></div><div class="line">        aapl.price = <span class="number">90.32</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> aapl</div><div class="line"></div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (company == <span class="string">"Google"</span>) &#123;</div><div class="line">        <span class="keyword">let</span> goog: <span class="type">Stock</span> = <span class="type">Stock</span>()</div><div class="line">        goog.code = <span class="string">"GOOG"</span></div><div class="line">        goog.price = <span class="number">556.36</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> goog</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>아래 코드는 주식코드를 찾고, 100주를 사는데 필요한 금액을 출력한다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> stock = findStockCode(<span class="string">"Apple"</span>) &#123;</div><div class="line">    <span class="keyword">if</span> <span class="keyword">let</span> sharePrice = stock.price &#123;</div><div class="line">        <span class="keyword">let</span> totalCost = sharePrice * <span class="number">100</span></div><div class="line">        <span class="built_in">println</span>(totalCost)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>findStockCode()의 반환값은 옵셔널이므로, 옵셔널 바인등을 사용해 nul-체크를 하고 stock의 price 역시 옵셔널 이므로 다시 한번 if let~ 문을 사용하였다.</p>
-<p>위 코드는 에러를 발생시키지 않지만, 중첩된 “if set” 문을 사용하는 대신 옵셔널 체이닝을 사용해 더 간단히 할 수 있다. 옵셔널 체인은 “?.” 오퍼레이터를 사용해 다수의 옵셔널을 체인으로 묶을 수 있다. 아래 코드는 옵셔널 체인을 사용해 수정한 코드이다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> sharePrice = findStockCode(<span class="string">"Apple"</span>)?.price &#123;</div><div class="line">    <span class="keyword">let</span> totalCost = sharePrice * <span class="number">100</span></div><div class="line">    <span class="built_in">println</span>(totalCost)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>이제 코드가 더욱 간결해 졌다. 옵셔널 체인에 관한 더 다양한 예제는 애플의 <a href="https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_312" target="_blank" rel="external">스위프트 가이드</a> 문서에서 찾을 수 있다.</p>
-<h3 id="스위프트와-오브젝티브-C의-상호-운용성"><a href="#스위프트와-오브젝티브-C의-상호-운용성" class="headerlink" title="스위프트와 오브젝티브-C의 상호 운용성"></a>스위프트와 오브젝티브-C의 상호 운용성</h3><p>스위프트는 Objective-C의 API들과 잘 상호 작용하도록 설계되었다. UIKit이나 다른 프레임워크의 API들과 상호작용이 필요한 부분에서도 쉽게 옵셔널들을 만날 수 있다. 다음 코드는 테이블뷰를 구현할때 마주칠수 있는 옵셔널의 예이다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">numberOfSectionsInTableView</span><span class="params">(tableView: UITableView?)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">     <span class="comment">// Return the number of sections.</span></div><div class="line">     <span class="keyword">return</span> <span class="number">1</span></div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView?, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">     <span class="comment">// Return the number of rows in the section.</span></div><div class="line">     <span class="keyword">return</span> recipes.<span class="built_in">count</span></div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!)</span></span> -&gt; <span class="type">UITableViewCell</span>! &#123;</div><div class="line">     <span class="keyword">let</span> cell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"Cell"</span>, forIndexPath: indexPath) <span class="keyword">as</span> <span class="type">UITableViewCell</span></div><div class="line"></div><div class="line">     cell.textLabel.text = recipes[indexPath.row]</div><div class="line"></div><div class="line">     <span class="keyword">return</span> cell</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<p>ps. 원문중 번역이 생략되거나 축약한 부분도 있습니다.<br>더 자세한 부분은 아래의 원문과 애플의 스위프트 공식 문서를 참고하시기 바랍니다.</p>
-<p><a href="http://www.appcoda.com/beginners-guide-optionals-swift/" target="_blank" rel="external">원문 : A Beginner’s Guide to Optionals in Swift</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1665,7 +1641,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
@@ -1682,7 +1658,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">태그</span>
               </a>
             </div>

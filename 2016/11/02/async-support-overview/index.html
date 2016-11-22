@@ -1,0 +1,698 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Xamarin,C#," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="C# 5.0부터는 비동기 오퍼레이션을 위한 두개의 키워드 async와 await가 추가되었다. 이 키워드를 이용하여 간단한 코드로 Task 병렬 라이브러리를 이용해 네트워크 억세스와 같이 별도의 쓰레드에서 비교적 긴시간이 걸리는 작업에 대한 결과를 쉽게 얻을 수 있다.
+개요이 문서는 Xamarin.iOS와 Xamarin.Android를 기준으로 간단한 예제">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C# 5.0 비동기 프로그래밍 개요">
+<meta property="og:url" content="http://chanlee.github.io/2016/11/02/async-support-overview/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="C# 5.0부터는 비동기 오퍼레이션을 위한 두개의 키워드 async와 await가 추가되었다. 이 키워드를 이용하여 간단한 코드로 Task 병렬 라이브러리를 이용해 네트워크 억세스와 같이 별도의 쓰레드에서 비교적 긴시간이 걸리는 작업에 대한 결과를 쉽게 얻을 수 있다.
+개요이 문서는 Xamarin.iOS와 Xamarin.Android를 기준으로 간단한 예제">
+<meta property="og:image" content="https://developer.xamarin.com/guides/cross-platform/advanced/async_support_overview/Images/AsyncAwait_427x368.png">
+<meta property="og:updated_time" content="2016-11-22T15:36:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C# 5.0 비동기 프로그래밍 개요">
+<meta name="twitter:description" content="C# 5.0부터는 비동기 오퍼레이션을 위한 두개의 키워드 async와 await가 추가되었다. 이 키워드를 이용하여 간단한 코드로 Task 병렬 라이브러리를 이용해 네트워크 억세스와 같이 별도의 쓰레드에서 비교적 긴시간이 걸리는 작업에 대한 결과를 쉽게 얻을 수 있다.
+개요이 문서는 Xamarin.iOS와 Xamarin.Android를 기준으로 간단한 예제">
+<meta name="twitter:image" content="https://developer.xamarin.com/guides/cross-platform/advanced/async_support_overview/Images/AsyncAwait_427x368.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/11/02/async-support-overview/"/>
+
+
+  <title> C# 5.0 비동기 프로그래밍 개요 | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                C# 5.0 비동기 프로그래밍 개요
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-11-02T23:13:49+09:00" content="2016-11-02">
+              2016-11-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Xamarin/" itemprop="url" rel="index">
+                    <span itemprop="name">Xamarin</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/02/async-support-overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/02/async-support-overview/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>C# 5.0부터는 비동기 오퍼레이션을 위한 두개의 키워드 async와 await가 추가되었다. 이 키워드를 이용하여 간단한 코드로 Task 병렬 라이브러리를 이용해 네트워크 억세스와 같이 별도의 쓰레드에서 비교적 긴시간이 걸리는 작업에 대한 결과를 쉽게 얻을 수 있다.</p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p>이 문서는 Xamarin.iOS와 Xamarin.Android를 기준으로 간단한 예제를 구현하고 있으며, 좀 더 상세한 정보는 MSDN문서 <a href="http://msdn.microsoft.com/en-us/library/vstudio/hh191443.aspx" target="_blank" rel="external">Async와 Await를 이용한 비동기 프로그래밍</a>를 참고하기 바란다.<br>샘플 어플리케이션은 메인 쓰레드에 대한 간섭(Blocking)없이 간단한 비동기 웹요청을 보내고 그 결과값을 UI에 반영하는 과정을 보여준다.<br><img src="https://developer.xamarin.com/guides/cross-platform/advanced/async_support_overview/Images/AsyncAwait_427x368.png" alt="결과화면"></p>
+<p>C# 5.0은 Mono 3.0 이상을 요구하며, Xamarin.iOS 6.4, Xamarin.Android 4.8 이상에 포함되어 있다. 최신 버전의 Xamarin Studio로 업그래이드 하면 사용이 가능하다.</p>
+<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><p>async 키워드는 메소드 정의시에 사용된다. 람다 또는 익명 메소드에도 사용될 수 있다. 이것은 해당 메소드가 비동기 코드를 포함하고 있다는것을 의미한다. 즉, 호출자의 쓰레드를 블록킹하지 않도록 한다는것을 의미한다. 그러므로, async 메소드는 반드시 하나 이상의 await 구문 또는 표현식을 포함하여야 한다. 만일, await 구문이 없다면 컴파일러 경고가 발생하며 심각한 에러가 발생하지는 않는다.</p>
+<h3 id="반환값"><a href="#반환값" class="headerlink" title="반환값"></a>반환값</h3><p>async 메소드는 Task, Task<tresult> 또는 void 타입을 리턴한다.</tresult></p>
+<ul>
+<li>메소드가 어떤 값도 리턴하지 않는다면 Task형을 리턴 하도록 한다.</li>
+<li>값을 리턴할 필요가 있다면 Task<tresult>형을 리턴 하도록 한다. TResult는 타입명이다.</tresult></li>
+<li>void 리턴 타입은 주로 이벤트 핸들러의 경우에 사용된다. 이 코드는 결과를 기다리지 않는다.</li>
+</ul>
+<h2 id="await"><a href="#await" class="headerlink" title="await"></a>await</h2><p>await 오퍼레이터는 해당 작업을 비동기로 구분한다. 이 지점에 메소드의 실행이 멈추고 작업이 끝나기를 기다리게 된다. await의 사용은 호출 쓰레드까지 멈추게 하지 않고 제어권을 호출자에게 넘긴다. 일반적으로 호출자는 UI 쓰레드인 경우가 많으며 태스크를 기다리는 동안에도 사용자 인터페이스는 블록킹이 되지 않도록 해준다. 작업이 종료되면, 메소드는 다시 원래 지점으로 돌아와 실행을 계속한다. await는 try-catch-finally 구문에서 try 블록 내에서만 사용이 가능하며 catch나 finally 블록에서는 사용될 수 없다. await에 대한 더 상세한 정보는 <a href="http://msdn.microsoft.com/en-us/library/vstudio/hh156528.aspx" target="_blank" rel="external">await on MSDN</a>를 참고하라.</p>
+<h2 id="취소"><a href="#취소" class="headerlink" title="취소"></a>취소</h2><p>완료하는데 오랜 시간이 걸리는 비동기 메소드는 취소(cancellation)를 지원해야 한다. 일반적으로, 취소는 다음과 같은 순서로 실행된다.</p>
+<ol>
+<li>CancellationTokenSource 객체를 생성한다.</li>
+<li>CancellationTokenSource.Token 인스턴스가 취소 가능한 비동기 메소드로 전달된다.</li>
+<li>CancellationTokenSource.Cancel 메소드를 호출하여 취소를 요청한다.</li>
+</ol>
+<p>취소에 대한 상세한 정보는, MSDN의 <a href="http://msdn.microsoft.com/en-us/library/vstudio/jj155761.aspx" target="_blank" rel="external">how to cancel an asynchronous task</a> 문서를 참고하라.</p>
+<h2 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h2><p><a href="https://developer.xamarin.com/samples/mobile/AsyncAwait/" target="_blank" rel="external">예제소스</a>를 통해 async 와 await 의 모바일에서 실사용 예를 살펴보자.</p>
+<h3 id="async-메소드-작성"><a href="#async-메소드-작성" class="headerlink" title="async 메소드 작성"></a>async 메소드 작성</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> async Task&lt;<span class="keyword">int</span>&gt; DownloadHomepage()</div><div class="line">&#123;</div><div class="line">    var httpClient = <span class="keyword">new</span> HttpClient(); <span class="comment">// Xamarin supports HttpClient!</span></div><div class="line"></div><div class="line">    Task&lt;<span class="built_in">string</span>&gt; contentsTask = httpClient.GetStringAsync(<span class="string">"http://xamarin.com"</span>); <span class="comment">// async method!</span></div><div class="line"></div><div class="line">    <span class="comment">// await! control returns to the caller and the task continues to run on another thread</span></div><div class="line">    <span class="built_in">string</span> contents = await contentsTask;</div><div class="line"></div><div class="line">    ResultEditText.Text += <span class="string">"DownloadHomepage method continues after async call. . . . .\n"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// After contentTask completes, you can calculate the length of the string.</span></div><div class="line">    <span class="keyword">int</span> exampleInt = contents.Length;</div><div class="line"></div><div class="line">    ResultEditText.Text += <span class="string">"Downloaded the html and found out the length.\n\n\n"</span>;</div><div class="line"></div><div class="line">    ResultEditText.Text += contents; <span class="comment">// just dump the entire HTML</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> exampleInt; <span class="comment">// Task&lt;TResult&gt; returns an object of type TResult, in this case int</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>이 메소드 선언은 async 키워드를 포함한다.</li>
+<li>반환 타입은 Task&lt;int&gt;이다. 즉, 호출자는 정수값을 받을 수 있다.</li>
+<li>리턴 구문은 return exampleInt; 이다.</li>
+</ul>
+<h3 id="async-메소드-호출-1"><a href="#async-메소드-호출-1" class="headerlink" title="async 메소드 호출 1"></a>async 메소드 호출 1</h3><p>다음 코드는 안드로이드 샘플 소스에서 발췌한 버튼 클릭에 대한 이벤트 핸들러 이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">GetButton.Click += async (sender, e) =&gt; &#123;</div><div class="line"></div><div class="line">    Task&lt;<span class="keyword">int</span>&gt; sizeTask = DownloadHomepage();</div><div class="line"></div><div class="line">    ResultTextView.Text = <span class="string">"loading..."</span>;</div><div class="line">    ResultEditText.Text = <span class="string">"loading...\n"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// await! control returns to the caller</span></div><div class="line">    var intResult = await sizeTask;</div><div class="line"></div><div class="line">    <span class="comment">// when the Task&lt;int&gt; returns, the value is available and we can display on the UI</span></div><div class="line">    ResultTextView.Text = <span class="string">"Length: "</span> + intResult ;</div><div class="line">    <span class="comment">// "returns" void, since it's an event handler</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>익명의 딜리게이트는 이벤트 핸들러에 비동이 메소드임을 나타내는 async 키워드를 사용할 수 있다.</li>
+<li>DownloadHomepage 는 비동기 메소드로서 Task를 리턴하고, 이것을 sizeTask 변수에 저장한다.</li>
+<li>sizeTask에 대한 await코드는 메소드가 실제로 정체되는 구간으로 제어가 호출자로 돌아가는 부분이다. 이것은 비동기 작업이 현재 쓰레드로 돌아왔을때 다시 재개된다.</li>
+<li>Task가 앞부분에 선언되었다고 해서 메소드가 정체되지 않는다. 반면, Task는 await 키워드가 노출된 부분부터 실행이 정체된다.</li>
+<li>비동기 작업이 완료되었을뗘 , intResult값이 할당되고 원래 쓰레드로 돌아온다.</li>
+</ul>
+<h3 id="async-메소드-호출-2"><a href="#async-메소드-호출-2" class="headerlink" title="async 메소드 호출 2"></a>async 메소드 호출 2</h3> <figure class="highlight plain"><figcaption><span>+= HandleTouchUpInside</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">async void HandleTouchUpInside (object sender, EventArgs e)</div><div class="line">&#123;</div><div class="line">    ResultLabel.Text = &quot;loading...&quot;;</div><div class="line">    ResultTextView.Text = &quot;loading...\n&quot;;</div><div class="line"></div><div class="line">    // await! control returns to the caller</div><div class="line">    var intResult = await DownloadHomepage();</div><div class="line"></div><div class="line">    // when the Task&lt;int&gt; returns, the value is available and we can display on the UI</div><div class="line">    ResultLabel.Text = &quot;Length: &quot; + intResult ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>TODO: summary</p>
+<p>출처 : <a href="https://developer.xamarin.com/guides/cross-platform/advanced/async_support_overview/" target="_blank" rel="external">https://developer.xamarin.com/guides/cross-platform/advanced/async_support_overview/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xamarin/" rel="tag">#Xamarin</a>
+          
+            <a href="/tags/C/" rel="tag">#C#</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/30/dependency-service-introduction/" rel="next" title="DependencyService를 이용한 네이티브 접근">
+                <i class="fa fa-chevron-left"></i> DependencyService를 이용한 네이티브 접근
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#개요"><span class="nav-number">1.</span> <span class="nav-text">개요</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async"><span class="nav-number">2.</span> <span class="nav-text">async</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#반환값"><span class="nav-number">2.1.</span> <span class="nav-text">반환값</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#await"><span class="nav-number">3.</span> <span class="nav-text">await</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#취소"><span class="nav-number">4.</span> <span class="nav-text">취소</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#예제"><span class="nav-number">5.</span> <span class="nav-text">예제</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#async-메소드-작성"><span class="nav-number">5.1.</span> <span class="nav-text">async 메소드 작성</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async-메소드-호출-1"><span class="nav-number">5.2.</span> <span class="nav-text">async 메소드 호출 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async-메소드-호출-2"><span class="nav-number">5.3.</span> <span class="nav-text">async 메소드 호출 2</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/11/02/async-support-overview/';
+      var disqus_title = "C# 5.0 비동기 프로그래밍 개요";
+      var disqus_url = 'http://chanlee.github.io/2016/11/02/async-support-overview/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
