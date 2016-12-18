@@ -1,0 +1,712 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Xamarin,Xamarin.Forms,User Interface," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Grid는 뷰를 행과 열의 관점에서 정렬한다. 행과 열은 비율적 또는 절대적인 크기가 될 수 있다. Grid는 전통적인 테이블형식의 데이터를 다루기 위한것과 혼돈하지 마라. Grid는 순수하게 컨텐츠의 레이아웃을 다루는 목적으로 존재한다.
+목적Grid는 뷰를 격자형태로 정렬하는데 사용될 수 있다.
+
+계산기 앱의 버튼 정렬
+버튼이나 아이콘을 iOS 또는 An">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Layout 기본 (1) - Grid">
+<meta property="og:url" content="http://chanlee.github.io/2016/11/27/xamarin-forms-layout-basic-1/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="Grid는 뷰를 행과 열의 관점에서 정렬한다. 행과 열은 비율적 또는 절대적인 크기가 될 수 있다. Grid는 전통적인 테이블형식의 데이터를 다루기 위한것과 혼돈하지 마라. Grid는 순수하게 컨텐츠의 레이아웃을 다루는 목적으로 존재한다.
+목적Grid는 뷰를 격자형태로 정렬하는데 사용될 수 있다.
+
+계산기 앱의 버튼 정렬
+버튼이나 아이콘을 iOS 또는 An">
+<meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/Images/Layouts-sml.png">
+<meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/Images/label_grid.png">
+<meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/Images/calculator.png">
+<meta property="og:updated_time" content="2016-11-27T14:41:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Layout 기본 (1) - Grid">
+<meta name="twitter:description" content="Grid는 뷰를 행과 열의 관점에서 정렬한다. 행과 열은 비율적 또는 절대적인 크기가 될 수 있다. Grid는 전통적인 테이블형식의 데이터를 다루기 위한것과 혼돈하지 마라. Grid는 순수하게 컨텐츠의 레이아웃을 다루는 목적으로 존재한다.
+목적Grid는 뷰를 격자형태로 정렬하는데 사용될 수 있다.
+
+계산기 앱의 버튼 정렬
+버튼이나 아이콘을 iOS 또는 An">
+<meta name="twitter:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/Images/Layouts-sml.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/11/27/xamarin-forms-layout-basic-1/"/>
+
+
+  <title> Layout 기본 (1) - Grid | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Layout 기본 (1) - Grid
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-11-27T15:18:02+09:00" content="2016-11-27">
+              2016-11-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Xamarin/" itemprop="url" rel="index">
+                    <span itemprop="name">Xamarin</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/27/xamarin-forms-layout-basic-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/27/xamarin-forms-layout-basic-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://developer.xamarin.com/api/type/Xamarin.Forms.Grid/" target="_blank" rel="external">Grid</a>는 뷰를 행과 열의 관점에서 정렬한다. 행과 열은 비율적 또는 절대적인 크기가 될 수 있다. Grid는 전통적인 테이블형식의 데이터를 다루기 위한것과 혼돈하지 마라. Grid는 순수하게 컨텐츠의 레이아웃을 다루는 목적으로 존재한다.<br><img src="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/Images/Layouts-sml.png" alt="Grid Layout"></p>
+<h2 id="목적"><a href="#목적" class="headerlink" title="목적"></a>목적</h2><p>Grid는 뷰를 격자형태로 정렬하는데 사용될 수 있다.</p>
+<ul>
+<li>계산기 앱의 버튼 정렬</li>
+<li>버튼이나 아이콘을 iOS 또는 Android의 홈스크린과 같이 배치</li>
+<li>일차원적인 공간에 동일한 크기의 뷰를 나열 (툴바와 같은 형태)</li>
+</ul>
+<h2 id="사용법"><a href="#사용법" class="headerlink" title="사용법"></a>사용법</h2><p>테이블과 달리, Grid는 행과 열의 크기나 갯수가 컨텐츠에 의해 결정되지 않는다. 대신, Grid는 RowDefinitions와 ColumnDefinitions 컬렉션을 가진다. 이 정의들은 몇개의 행과 열이 놓여질지에 관한 정보를 가지고 있다. 뷰요소는 특정 행과 열의 번호에 기반해 정해진 곳에 추가된다.</p>
+<h3 id="행과-열"><a href="#행과-열" class="headerlink" title="행과 열"></a>행과 열</h3><p>RowDefinitions은 Height속성을 갖고, ColumnDefinition은 Width라는 속성을 가진다. 높이와 너비는 다음의 선택값을 가질 수 있다.</p>
+<ul>
+<li>Auto - 행 또는 열에 컨텐츠의 크기에 따라 크기가 자동으로 정해진다. <a href="https://developer.xamarin.com/api/type/Xamarin.Forms.GridUnitType/" target="_blank" rel="external">GridUnitType.Auto</a> 또는 Auto 를 사용한다.</li>
+<li>비례항(<em>) - 크기를 남은 공간의 비율에 따라 정한다. GridUnitType.Star 또는 “#</em>“ 과 같이 XAML에서 사용할 수 있다. “#”은 원하는 배율의 숫자로 치환된다. “*”로만 사용되었을 경우에는 가능한 공간만큼 채워진다.</li>
+<li>절대값 - 정해진 높이나 너비값으로 크기가 정해진다. GridUnitType.Absolute 또는 특정 숫자값을 사용한다.</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>주의: Xamarin.Forms 에서 너비의 기본값은 Auto이다. 이 크기는 자식 컴포넌트의 크기에 따라 결정된다는것을 의미한다. Microsoft 플랫폼의 XAML 구현체에서는 이와 달리 “*”가 기본값이다. 이것은, 사용가능한 공간을 모두 채운다.</p>
+</blockquote>
+</blockquote>
+<p>예를들어, 어떤 앱이 세개의 행과 두개의 컬럼으로 구성된다고 가정하자. 마지막 행은 정확히 200px의 높이를 가지고, 맨윗줄은 가운데행 보다 두배 높다. 마지막으로, 맨왼쪽 열은 컨텐츠의 폭만큼 너비를 차지하고 오른쪽은 나머지 공간을 차지한다고 했을때 XAML을 아래와 같이 작성할 수 있다.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Grid</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Grid.RowDefinitions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">RowDefinition</span> <span class="attr">Height</span>=<span class="string">"2*"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">RowDefinition</span> <span class="attr">Height</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">RowDefinition</span> <span class="attr">Height</span>=<span class="string">"200"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Grid.RowDefinitions</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Grid.ColumnDefinitions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ColumnDefinition</span> <span class="attr">Width</span>=<span class="string">"Auto"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ColumnDefinition</span> <span class="attr">Width</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Grid.ColumnDefinitions</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Grid</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>C# 에서는 아래와 같다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var grid = <span class="keyword">new</span> Grid();</div><div class="line">grid.RowDefinitions.Add (<span class="keyword">new</span> RowDefinition &#123; Height = <span class="keyword">new</span> GridLength(<span class="number">2</span>, GridUnitType.Star) &#125;);</div><div class="line">grid.RowDefinitions.Add (<span class="keyword">new</span> RowDefinition &#123; Height = <span class="keyword">new</span> GridLength (<span class="number">1</span>, GridUnitType.Star) &#125;);</div><div class="line">grid.RowDefinitions.Add (<span class="keyword">new</span> RowDefinition &#123; Height = <span class="keyword">new</span> GridLength(<span class="number">200</span>)&#125;);</div><div class="line">grid.ColumnDefinitions.Add (<span class="keyword">new</span> ColumnDefinition&#123; Width = <span class="keyword">new</span> GridLength (<span class="number">200</span>) &#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="뷰를-Grid에-삽입하기"><a href="#뷰를-Grid에-삽입하기" class="headerlink" title="뷰를 Grid에 삽입하기"></a>뷰를 Grid에 삽입하기</h3><p>뷰를 Grid에 추가하려면, 뷰를 Grid의 자식으로서 어떤 행과 열에 속할지를 명시하여 추가하면 된다. XAML에서는 Grid.Row와 Grid.Column 을 Zero-base로 추가한다. 즉, 4x4격자의 경우 좌상단 셀의 경우 (0,0)이 되고 우하단 셀은 (3,3)이 된다는것을 의미한다.<br>아래 Grid의 경우 코드를 보자.<br><img src="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/Images/label_grid.png" alt="4x4 Grid"></p>
+<p>XAML 코드<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Grid</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Grid.RowDefinitions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">RowDefinition</span> <span class="attr">Height</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">RowDefinition</span> <span class="attr">Height</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Grid.RowDefinitions</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Grid.ColumnDefinitions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ColumnDefinition</span> <span class="attr">Width</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ColumnDefinition</span> <span class="attr">Width</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Grid.ColumnDefinitions</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Top Left"</span> <span class="attr">Grid.Row</span>=<span class="string">"0"</span> <span class="attr">Grid.Column</span>=<span class="string">"0"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Top Right"</span> <span class="attr">Grid.Row</span>=<span class="string">"0"</span> <span class="attr">Grid.Column</span>=<span class="string">"1"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Bottom Left"</span> <span class="attr">Grid.Row</span>=<span class="string">"1"</span> <span class="attr">Grid.Column</span>=<span class="string">"0"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Bottom Right"</span> <span class="attr">Grid.Row</span>=<span class="string">"1"</span> <span class="attr">Grid.Column</span>=<span class="string">"1"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Grid</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>C# 코드<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var grid = <span class="keyword">new</span> Grid();</div><div class="line">grid.RowDefinitions.Add(<span class="keyword">new</span> RowDefinition &#123; Height = <span class="keyword">new</span> GridLength(<span class="number">1</span>, GridUnitType.Star)&#125;);</div><div class="line">grid.RowDefinitions.Add(<span class="keyword">new</span> RowDefinition &#123; Height = <span class="keyword">new</span> GridLength(<span class="number">1</span>, GridUnitType.Star)&#125;);</div><div class="line">grid.ColumnDefinitions.Add(<span class="keyword">new</span> ColumnDefinition &#123; Width = <span class="keyword">new</span> GridLength(<span class="number">1</span>, GridUnitType.Star)&#125;);</div><div class="line">grid.ColumnDefinitions.Add(<span class="keyword">new</span> ColumnDefinition &#123; Width = <span class="keyword">new</span> GridLength(<span class="number">1</span>, GridUnitType.Star)&#125;);</div><div class="line">var topLeft = <span class="keyword">new</span> Label &#123; Text = <span class="string">"Top Left"</span> &#125;;</div><div class="line">var topRight = <span class="keyword">new</span> Label &#123; Text = <span class="string">"Top Right"</span> &#125;;</div><div class="line">var bottomLeft = <span class="keyword">new</span> Label &#123; Text = <span class="string">"Bottom Left"</span> &#125;;</div><div class="line">var bottomRight = <span class="keyword">new</span> Label &#123; Text = <span class="string">"Bottom Right"</span> &#125;;</div><div class="line">grid.Children.Add(topLeft, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">grid.Children.Add(topRight, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">grid.Children.Add(bottomLeft, <span class="number">1</span>, <span class="number">0</span>);</div><div class="line">grid.Children.Add(bottomRight, <span class="number">1</span>, <span class="number">1</span>);</div></pre></td></tr></table></figure></p>
+<p>위 코드는 네개의 레이블을 동일한 크기를 가지는 두개의 컬럼과 행으로 이루어진 격자에 위치시킨다. GridUnitType.Star 이기 때문에 각 레이블은 가능한 공간 만큼 늘어난다.</p>
+<h3 id="공백"><a href="#공백" class="headerlink" title="공백"></a>공백</h3><p>Grid는 행과 열사이의 공백을 제어할 수 있는 속성을 갖고 있다.</p>
+<ul>
+<li>ColumnSpacing - 열사이의 공백</li>
+<li>RowSpacing - 행사이의 공백</li>
+</ul>
+<p>다음 코드는 한행에 두개의 열로 구성되어 있으며, 컬럼사이의 간격은 5px을 할당하였다.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Grid</span> <span class="attr">ColumnSpacing</span>=<span class="string">"5"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">Grid.ColumnDefinitions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ColumnDefinitions</span> <span class="attr">Width</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ColumnDefinitions</span> <span class="attr">Width</span>=<span class="string">"*"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">Grid.ColumnDefinitions</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Grid</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>C# 코드<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var grid = <span class="keyword">new</span> Grid &#123; ColumnSpacing = <span class="number">5</span> &#125;;</div><div class="line">grid.ColumnDefnitions.Add(<span class="keyword">new</span> ColumnDefinition &#123; Width = <span class="keyword">new</span> GridLength (<span class="number">1</span>, GridUnitType.Star)&#125;);</div><div class="line">grid.ColumnDefnitions.Add(<span class="keyword">new</span> ColumnDefinition &#123; Width = <span class="keyword">new</span> GridLength (<span class="number">1</span>, GridUnitType.Star)&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="Spans"><a href="#Spans" class="headerlink" title="Spans"></a>Spans</h3><p>Grid를 사용하다보면, 어떤 요소의 경우 한칸 이상의 행이나 열을 차지할 필요가 생길때가 있다. 아래의 계산기 앱을 보자.<br><img src="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/Images/calculator.png" alt="CalcApp Grid"></p>
+<p>“0”버튼이 두개의 컬럼을 사용하고 있다. 이것은 ColumnSpan 속성을 사용하면 된다. 이 속성은 몇개의 컬럼을 차지할지를 정한다.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">Text</span> = <span class="string">"0"</span> <span class="attr">Grid.Row</span>=<span class="string">"4"</span> <span class="attr">Grid.Column</span>=<span class="string">"0"</span> <span class="attr">Grid.ColumnSpan</span>=<span class="string">"2"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>C# 코드<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Button zeroButton = <span class="keyword">new</span> Button &#123; Text = <span class="string">"0"</span> &#125;;</div><div class="line">controlGrid.Children.Add (zeroButton, <span class="number">0</span>, <span class="number">4</span>);</div><div class="line">Grid.SetColumnSpan (zeroButton, <span class="number">2</span>);</div></pre></td></tr></table></figure></p>
+<p>RowSpan도 동일한 방법으로 적용할 수 있다.</p>
+<p>출처 : <a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/" target="_blank" rel="external">https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/grid/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xamarin/" rel="tag">#Xamarin</a>
+          
+            <a href="/tags/Xamarin-Forms/" rel="tag">#Xamarin.Forms</a>
+          
+            <a href="/tags/User-Interface/" rel="tag">#User Interface</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/26/xamarin-forms-listview-basic-3/" rel="next" title="ListView 기본 (3)">
+                <i class="fa fa-chevron-left"></i> ListView 기본 (3)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#목적"><span class="nav-number">1.</span> <span class="nav-text">목적</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#사용법"><span class="nav-number">2.</span> <span class="nav-text">사용법</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#행과-열"><span class="nav-number">2.1.</span> <span class="nav-text">행과 열</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#뷰를-Grid에-삽입하기"><span class="nav-number">2.2.</span> <span class="nav-text">뷰를 Grid에 삽입하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#공백"><span class="nav-number">2.3.</span> <span class="nav-text">공백</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spans"><span class="nav-number">2.4.</span> <span class="nav-text">Spans</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/11/27/xamarin-forms-layout-basic-1/';
+      var disqus_title = "Layout 기본 (1) - Grid";
+      var disqus_url = 'http://chanlee.github.io/2016/11/27/xamarin-forms-layout-basic-1/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

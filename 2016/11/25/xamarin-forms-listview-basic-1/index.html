@@ -1,0 +1,711 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Xamarin,Xamarin.Forms,User Interface," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.
+
+데이터 소스 - ListView에 사용될 데이터.
+셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징.
+목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등.
+인터랙티브 - 사용자의 행 선택과 새로고침">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ListView 기본 (1)">
+<meta property="og:url" content="http://chanlee.github.io/2016/11/25/xamarin-forms-listview-basic-1/index.html">
+<meta property="og:site_name" content="Programming Note">
+<meta property="og:description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.
+
+데이터 소스 - ListView에 사용될 데이터.
+셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징.
+목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등.
+인터랙티브 - 사용자의 행 선택과 새로고침">
+<meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/grouping_depth.png">
+<meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/image_cell_default.png">
+<meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/context_default.png">
+<meta property="og:updated_time" content="2016-11-26T04:03:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ListView 기본 (1)">
+<meta name="twitter:description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.
+
+데이터 소스 - ListView에 사용될 데이터.
+셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징.
+목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등.
+인터랙티브 - 사용자의 행 선택과 새로고침">
+<meta name="twitter:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/grouping_depth.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '작성자'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chanlee.github.io/2016/11/25/xamarin-forms-listview-basic-1/"/>
+
+
+  <title> ListView 기본 (1) | Programming Note </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="ko">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46034286-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Programming Note</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">chanlee blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            홈
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            카테고리
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            아카이브
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            태그
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ListView 기본 (1)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">작성일</span>
+            <time itemprop="dateCreated" datetime="2016-11-25T21:17:12+09:00" content="2016-11-25">
+              2016-11-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Xamarin/" itemprop="url" rel="index">
+                    <span itemprop="name">Xamarin</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/25/xamarin-forms-listview-basic-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/25/xamarin-forms-listview-basic-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.</p>
+<ol>
+<li><a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/data-and-databinding/" target="_blank" rel="external">데이터 소스</a> - ListView에 사용될 데이터.</li>
+<li><a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/customizing-cell-appearance/" target="_blank" rel="external">셀 표현</a> - 기본셀 또는 사용자가 생성한 셀의 커스터마이징.</li>
+<li><a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/customizing-list-appearance/" target="_blank" rel="external">목록 표현</a> - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등.</li>
+<li><a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/interactivity/" target="_blank" rel="external">인터랙티브</a> - 사용자의 행 선택과 새로고침, 컨텍스트 메뉴 행동에 대한 처리</li>
+</ol>
+<h2 id="사용예"><a href="#사용예" class="headerlink" title="사용예"></a>사용예</h2><p>항상 UI control은 목적에 맞게 적절히 사용되어져야 한다. ListView는 스크롤이 필요한 데이터 목록이 필요한 어떤곳에서든 사용될 수 있으며, 컨텍스트 액션과 데이터 바이딩을 지원한다. ListView는 <a href="http://developer.xamarin.com/guides/xamarin-forms/working-with/tableview/" target="_blank" rel="external">TableView</a>와 구분되어 사용되어야 한다. iOS의 설정앱에 보여지는 목록과 같이 보여줄 데이터가 미리 정해져 있을 경우에는 ListView보다 TableView가 더 적합하다.<br>또한, ListView는 동질의 반복되는 데이터를 표현하는데 적합하다. 그것은, ListView가 행에 대해 한가지 셀타입만 지원하기 때문이다. 반면, TableView는 여러가지 셀타입을 지원하므로, 혼합된 형태의 뷰가 필요하다뎐 TableView가 더 적합하다.</p>
+<h2 id="컴포넌트"><a href="#컴포넌트" class="headerlink" title="컴포넌트"></a>컴포넌트</h2><p>ListView는 각 플랫폼의 네이티브가 가진 기능들을 거의 다 가지고 있다.</p>
+<ul>
+<li>헤더와 푸터 - 목록의 시작과 끝지점에 데이터 소스와는 별개로 텍스트 또는 특정뷰를 바인딩 할 수 있다.</li>
+<li><p>그룹 - 데이터를 그룹화하여 표현할 수 있다. 일반적으로, 데이터와 바인딩 된다.<br><img src="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/grouping_depth.png" alt="ListView 1"></p>
+</li>
+<li><p>셀 - ListView의 데이터는 셀의 형태로 표현된다. 각 셀은 하나의 행 데이터와 대응된다. 기본적으로 제공되는 셀을 사용할 수도 있고 사용자가 만들수도 있다. 셀은 XAML 또는 코드로 정의될 수 있다.</p>
+<ul>
+<li>기본셀 - 내장된 셀들로서 TextCell, ImageCell과 같은 것이 있다. 기본적으로, 각 플랫폼의 네이티브 컨트롤과 대응되어 좋은 성능을 보여준다.</li>
+<li>TextCell - 텍스트 문자열을 보여준다. 옵션으로 상세 텍스트를 제공할 수 있다. 상세 텍스트는 두번째 라인에 작은 폰트와 강조된 색상으로 표현된다.</li>
+<li>ImageCell - 이미지와 텍스트. 왼쪽의 이미지와 오른쪽에 TextCell의 형태로 표현된다.</li>
+<li>사용자 정의 셀 - 사용자가 보여주고 싶은 형태로 셀을 꾸밀 수 있다. 노래 목록에 앨범과 가수의 정보등을 함께 표현하는등의 뷰를 만들 수 있다.<br><img src="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/image_cell_default.png" alt="Cell 1"></li>
+</ul>
+</li>
+</ul>
+<h2 id="기능"><a href="#기능" class="headerlink" title="기능"></a>기능</h2><p>ListView 는 다양한 사용자 인터랙션 경험을 지원한다.</p>
+<ul>
+<li><a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/interactivity/#Pull_to_Refresh" target="_blank" rel="external">Pull-to-Refresh</a> - 각 플랫폼별로 목록 새로고침을 지원</li>
+<li><a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/interactivity/#Context_Actions" target="_blank" rel="external">Context Action</a> - 목록의 각 행(아이템)에 대한 네이티트 액션을 지원한다. 예를들어, iOS 에서의 밀기 액션(Swipe-to-action) 이다 Android, 윈도우폰의 길게 누름과 같은 액션(long-tap)이 있다.</li>
+<li><a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/interactivity/#Selection_Taps" target="_blank" rel="external">Selection</a> - 각 행을 탭하였을때 선택 또는 선택 해제에 대한 액션을 수행할 수 있다.<br><img src="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/context_default.png" alt="Functionality 1"></li>
+</ul>
+<p>ListView의 인터랙티브에 대한 더 자세한 사항은 <a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/interactivity/" target="_blank" rel="external">Actions &amp; Interactivity with ListView</a>를 참고하라.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xamarin/" rel="tag">#Xamarin</a>
+          
+            <a href="/tags/Xamarin-Forms/" rel="tag">#Xamarin.Forms</a>
+          
+            <a href="/tags/User-Interface/" rel="tag">#User Interface</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/02/async-support-overview/" rel="next" title="C# 5.0 비동기 프로그래밍 개요">
+                <i class="fa fa-chevron-left"></i> C# 5.0 비동기 프로그래밍 개요
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/26/xamarin-forms-listview-basic-2/" rel="prev" title="ListView 기본 (2)">
+                ListView 기본 (2) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            목차
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            흝어보기
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/chanlee.jpeg"
+               alt="chanlee" />
+          <p class="site-author-name" itemprop="name">chanlee</p>
+          <p class="site-description motion-element" itemprop="description">Computing and Programming issues</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">포스트</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">카테고리</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">태그</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chanlee" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://twitter.com/chanlee" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#사용예"><span class="nav-number">1.</span> <span class="nav-text">사용예</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#컴포넌트"><span class="nav-number">2.</span> <span class="nav-text">컴포넌트</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#기능"><span class="nav-number">3.</span> <span class="nav-text">기능</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chanlee</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'programmingnoteblog';
+      var disqus_identifier = '2016/11/25/xamarin-forms-listview-basic-1/';
+      var disqus_title = "ListView 기본 (1)";
+      var disqus_url = 'http://chanlee.github.io/2016/11/25/xamarin-forms-listview-basic-1/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
