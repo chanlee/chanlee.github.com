@@ -84,33 +84,20 @@
 
 
 
-<meta name="description" content="ListView에 데이터를 바인딩 하는 과정은 크게 두가지가 있다.
-
-아이템 소스 설정 - 간단한 리스트 또는 배열을 이용
-데이터 바인딩 - ListView와 모델간의 관계를 설정. 여기에서 MVVM패턴을 다룬다.
-
-아이템 소스ListView 는 ItemSource 속성을 사용해 데이터를 생성할 수 있다. 이 속성은 IEnumerable을 구현하는 어떤 컬">
+<meta name="description" content="ListView에 데이터를 바인딩 하는 과정은 크게 두가지가 있다.  아이템 소스 설정 - 간단한 리스트 또는 배열을 이용 데이터 바인딩 - ListView와 모델간의 관계를 설정. 여기에서 MVVM패턴을 다룬다.  아이템 소스ListView 는 ItemSource 속성을 사용해 데이터를 생성할 수 있다. 이 속성은 IEnumerable을 구현하는 어떤 컬">
+<meta name="keywords" content="Xamarin,Xamarin.Forms,User Interface">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ListView 기본 (2)">
 <meta property="og:url" content="http://chanlee.github.io/2016/11/26/xamarin-forms-listview-basic-2/index.html">
 <meta property="og:site_name" content="Programming Note">
-<meta property="og:description" content="ListView에 데이터를 바인딩 하는 과정은 크게 두가지가 있다.
-
-아이템 소스 설정 - 간단한 리스트 또는 배열을 이용
-데이터 바인딩 - ListView와 모델간의 관계를 설정. 여기에서 MVVM패턴을 다룬다.
-
-아이템 소스ListView 는 ItemSource 속성을 사용해 데이터를 생성할 수 있다. 이 속성은 IEnumerable을 구현하는 어떤 컬">
+<meta property="og:description" content="ListView에 데이터를 바인딩 하는 과정은 크게 두가지가 있다.  아이템 소스 설정 - 간단한 리스트 또는 배열을 이용 데이터 바인딩 - ListView와 모델간의 관계를 설정. 여기에서 MVVM패턴을 다룬다.  아이템 소스ListView 는 ItemSource 속성을 사용해 데이터를 생성할 수 있다. 이 속성은 IEnumerable을 구현하는 어떤 컬">
+<meta property="og:locale" content="ko">
 <meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/data-and-databinding/Images/ItemsSource_simple.png">
 <meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/data-and-databinding/Images/bound_data.png">
 <meta property="og:updated_time" content="2016-11-26T04:53:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ListView 기본 (2)">
-<meta name="twitter:description" content="ListView에 데이터를 바인딩 하는 과정은 크게 두가지가 있다.
-
-아이템 소스 설정 - 간단한 리스트 또는 배열을 이용
-데이터 바인딩 - ListView와 모델간의 관계를 설정. 여기에서 MVVM패턴을 다룬다.
-
-아이템 소스ListView 는 ItemSource 속성을 사용해 데이터를 생성할 수 있다. 이 속성은 IEnumerable을 구현하는 어떤 컬">
+<meta name="twitter:description" content="ListView에 데이터를 바인딩 하는 과정은 크게 두가지가 있다.  아이템 소스 설정 - 간단한 리스트 또는 배열을 이용 데이터 바인딩 - ListView와 모델간의 관계를 설정. 여기에서 MVVM패턴을 다룬다.  아이템 소스ListView 는 ItemSource 속성을 사용해 데이터를 생성할 수 있다. 이 속성은 IEnumerable을 구현하는 어떤 컬">
 <meta name="twitter:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/data-and-databinding/Images/ItemsSource_simple.png">
 
 
@@ -342,7 +329,7 @@
 <p>기본적으로, ListView는 ToString을 호출하고 그 결과를 TextCell에 표현한다. 셀의 커스터마이징에 관해서는 <a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/customizing-cell-appearance/" target="_blank" rel="external">Cell Appearance</a>를 참고하라.<br>하지만, 이 방법은 기반인 문자열 배열이 이미 ItemSource에 이미 보내졌기 때문에 변경사항이 반영되지 않는다. 만일, ListView에 이러한 변경이나 추가, 삭제가 자동으로 업데이트 되길 원한다면 <a href="http://developer.xamarin.com/api/type/System.Collections.ObjectModel.ObservableCollection%3CT%3E/" target="_blank" rel="external">ObservableCollection</a>을 사용해야 한다. 이것은 System.Collections.ObjectModel에 정의되어 있다. 이것은 List와 비슷하지만, 컬렉션의 변화를 ListView에 알려줄 수 있다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ObservableCollection&lt;Employees&gt; employeeList = <span class="keyword">new</span> ObservableCollection&lt;Employess&gt;();</div><div class="line">listView.ItemsSource = employeeList;</div><div class="line"></div><div class="line"><span class="comment">//Mr. Mono will be added to the ListView because it uses an ObservableCollection</span></div><div class="line">employeeList.Add(<span class="keyword">new</span> Employee()&#123; DisplayName=<span class="string">"Mr. Mono"</span>&#125;);</div></pre></td></tr></table></figure></p>
 <h2 id="데이터-바인딩"><a href="#데이터-바인딩" class="headerlink" title="데이터 바인딩"></a>데이터 바인딩</h2><p>데이터 바인등은 사용자 인터페이스의 속성과 ViewModel과 같은 CLR객체의 속성을 연결하는 과정을 말한다. 데이터 바인딩 덕분에 사용자 인터페이스를 갱신하는 많은 귀챦은 작업들이 간편해 질수 있다. <a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/xaml-basics/data_binding_basics/" target="_blank" rel="external">데이터 바인딩의 기초</a>에 관한 글을 참고하라.</p>
 <h3 id="바인딩-셀"><a href="#바인딩-셀" class="headerlink" title="바인딩 셀"></a>바인딩 셀</h3><p>셀의 속성은 ItemSource에 객체의 속성과 바인딩 될 수 있다. 아래 예제는 ListView에 직원들의 목록을 표시하는 예제이다.</p>
-<p>직원 클래스:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> Employee&#123;</div><div class="line">    <span class="keyword">public</span> <span class="built_in">string</span> DisplayName &#123;get; <span class="built_in">set</span>;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>직원 클래스:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span>&#123;</span></div><div class="line">    <span class="keyword">public</span> <span class="built_in">string</span> DisplayName &#123;get; <span class="built_in">set</span>;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>ListView의 ItemsSource에 ObservableCollection<employee> 를 설정한다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ObservableCollection&lt;Employee&gt; employees = <span class="keyword">new</span> ObservableCollection&lt;Employee&gt;();</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">EmployeeListPage</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="comment">//defined in XAML to follow</span></div><div class="line">  EmployeeView.ItemsSource = employees;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></employee></p>
 <p>다음과 같이 샘플 데이터를 생성한다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">EmployeeListPage</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  employees.Add(<span class="keyword">new</span> Employee&#123; DisplayName=<span class="string">"Rob Finnerty"</span>&#125;);</div><div class="line">  employees.Add(<span class="keyword">new</span> Employee&#123; DisplayName=<span class="string">"Bill Wrestler"</span>&#125;);</div><div class="line">  employees.Add(<span class="keyword">new</span> Employee&#123; DisplayName=<span class="string">"Dr. Geri-Beth Hooper"</span>&#125;);</div><div class="line">  employees.Add(<span class="keyword">new</span> Employee&#123; DisplayName=<span class="string">"Dr. Keith Joyce-Purdy"</span>&#125;);</div><div class="line">  employees.Add(<span class="keyword">new</span> Employee&#123; DisplayName=<span class="string">"Sheri Spruce"</span>&#125;);</div><div class="line">  employees.Add(<span class="keyword">new</span> Employee&#123; DisplayName=<span class="string">"Burt Indybrick"</span>&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>다음은 ListView를 바인딩하는 XAML 이다.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8" ?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">ContentPage</span> <span class="attr">xmlns</span>=<span class="string">"http://xamarin.com/schemas/2014/forms"</span></span></div><div class="line"><span class="attr">xmlns:x</span>=<span class="string">"http://schemas.microsoft.com/winfx/2006/xaml"</span></div><div class="line"><span class="attr">xmlns:constants</span>=<span class="string">"clr-namespace:XamarinFormsSample;assembly=XamarinFormsXamlSample"</span></div><div class="line"><span class="attr">x:Class</span>=<span class="string">"XamarinFormsXamlSample.Views.EmployeeListPage"</span></div><div class="line"><span class="attr">Title</span>=<span class="string">"Employee List"</span>&gt;</div><div class="line">  <span class="tag">&lt;<span class="name">ListView</span> <span class="attr">x:Name</span>=<span class="string">"EmployeeView"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ListView.ItemTemplate</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">DataTemplate</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">TextCell</span> <span class="attr">Text</span>=<span class="string">"&#123;Binding DisplayName&#125;"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">DataTemplate</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">ListView.ItemTemplate</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">ListView</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ContentPage</span>&gt;</span></div></pre></td></tr></table></figure></p>
@@ -469,7 +456,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
@@ -477,7 +464,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">카테고리</span>
               </a>
             </div>
@@ -486,7 +473,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">태그</span>
               </a>
             </div>
@@ -554,7 +541,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

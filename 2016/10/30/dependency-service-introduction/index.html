@@ -84,21 +84,20 @@
 
 
 
-<meta name="description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다.
-DependencyService의">
+<meta name="description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다. DependencyService의">
+<meta name="keywords" content="Xamarin,Xamarin.Forms">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DependencyService를 이용한 네이티브 접근">
 <meta property="og:url" content="http://chanlee.github.io/2016/10/30/dependency-service-introduction/index.html">
 <meta property="og:site_name" content="Programming Note">
-<meta property="og:description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다.
-DependencyService의">
+<meta property="og:description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다. DependencyService의">
+<meta property="og:locale" content="ko">
 <meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/overview_diagram.png">
 <meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/solution.png">
 <meta property="og:updated_time" content="2016-10-30T03:58:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DependencyService를 이용한 네이티브 접근">
-<meta name="twitter:description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다.
-DependencyService의">
+<meta name="twitter:description" content="개요DependencyService는 공유코드에서 플랫폼 고유의 기능을 호출할 수 있도록 해준다. DependencyService는 공유코드에 인터페이스를 정의하고 이것에 대한 실제 구현을 찾아주는 resolver의 역할을 수행함으로써 네이티브 앱이 할수 있는 모든 일은 Xamarin.Forms 앱이 할 수 있도록 해준다. DependencyService의">
 <meta name="twitter:image" content="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/overview_diagram.png">
 
 
@@ -331,9 +330,9 @@ DependencyService의">
 <p>이 과정을 간단히 도식화 하면 아래와 같다.</p>
 <p><img src="https://developer.xamarin.com/guides/xamarin-forms/dependency-service/introduction/Images/overview_diagram.png" alt="DependencyService 개념도"></p>
 <h2 id="인터페이스"><a href="#인터페이스" class="headerlink" title="인터페이스"></a>인터페이스</h2><p>인터페이스는 사용하고자 하는 플랫폼 고유의 기능을 정의한다. 만일, 개발하고자 하는 모듈이 다른 프로젝트와 공유될 수 있는 컴포넌트이거나 Nuget 패키지 형태라면 고려되지 않은 네이티브 플랫폼에서 런타임 오류가 발생 할 수 있으므로 주의해야 한다. 아래의 예제코드는 텍스트를 읽어주는 기능에 대한 인터페이스이다. 하지만, 각 플랫폼의 구현체는 별도로 제공하거나 남겨두어야 한다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> interface ITextToSpeech &#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Speak</span> <span class="params">( <span class="built_in">string</span> text )</span></span>; <span class="comment">//note that interface members are public by default</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="플랫폼에서의-구현"><a href="#플랫폼에서의-구현" class="headerlink" title="플랫폼에서의 구현"></a>플랫폼에서의 구현</h2><p>인테페이스가 정의되면 프로젝트의 각 플랫폼 프로젝트에서 구현이 수반되어야 한다. 아래 예제코드는 ITextToSpeech 인터페이스에 대한 윈도우폰 플랫폼의 구현에 대한 예제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> TextToSpeech.WinPhone</div><div class="line">&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">class</span> TextToSpeechImplementation : ITextToSpeech</div><div class="line">  &#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="title">TextToSpeechImplementation</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">public</span> async <span class="keyword">void</span> <span class="title">Speak</span><span class="params">(<span class="built_in">string</span> text)</span></span></div><div class="line">      &#123;</div><div class="line">          SpeechSynthesizer synth = <span class="keyword">new</span> SpeechSynthesizer();</div><div class="line">          await synth.SpeakTextAsync(text);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="플랫폼에서의-구현"><a href="#플랫폼에서의-구현" class="headerlink" title="플랫폼에서의 구현"></a>플랫폼에서의 구현</h2><p>인테페이스가 정의되면 프로젝트의 각 플랫폼 프로젝트에서 구현이 수반되어야 한다. 아래 예제코드는 ITextToSpeech 인터페이스에 대한 윈도우폰 플랫폼의 구현에 대한 예제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> TextToSpeech.WinPhone</div><div class="line">&#123;</div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextToSpeechImplementation</span> :</span> ITextToSpeech</div><div class="line">  &#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="title">TextToSpeechImplementation</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">public</span> async <span class="keyword">void</span> <span class="title">Speak</span><span class="params">(<span class="built_in">string</span> text)</span></span></div><div class="line">      &#123;</div><div class="line">          SpeechSynthesizer synth = <span class="keyword">new</span> SpeechSynthesizer();</div><div class="line">          await synth.SpeakTextAsync(text);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>모든 네이티브 구현체는 반드시 인자가 없는 생성자를 포함하여야 한다. 이것은, DependencyService가 이 구현체를 인스턴스화 하기 위해 필요하다.</p>
-<h2 id="등록"><a href="#등록" class="headerlink" title="등록"></a>등록</h2><p>인터페이스에 대한 구현체는 DependencyService가 찾을 수 있도록 메타데이터와 함께 등록되어야 한다. 아래 코드는 윈도우폰을 위한 구현체의 등록 예제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> TextToSpeech.WinPhone;</div><div class="line"></div><div class="line">[assembly: Xamarin.Forms.Dependency (typeof (TextToSpeechImplementation))]</div><div class="line"><span class="keyword">namespace</span> TextToSpeech.WinPhone &#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">class</span> TextToSpeechImplementation : ITextToSpeech</div><div class="line">  &#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="title">TextToSpeechImplementation</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">public</span> async <span class="keyword">void</span> <span class="title">Speak</span><span class="params">(<span class="built_in">string</span> text)</span></span></div><div class="line">      &#123;</div><div class="line">          SpeechSynthesizer synth = <span class="keyword">new</span> SpeechSynthesizer();</div><div class="line">          await synth.SpeakTextAsync(text);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="등록"><a href="#등록" class="headerlink" title="등록"></a>등록</h2><p>인터페이스에 대한 구현체는 DependencyService가 찾을 수 있도록 메타데이터와 함께 등록되어야 한다. 아래 코드는 윈도우폰을 위한 구현체의 등록 예제이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> TextToSpeech.WinPhone;</div><div class="line"></div><div class="line">[assembly: Xamarin.Forms.Dependency (typeof (TextToSpeechImplementation))]</div><div class="line"><span class="keyword">namespace</span> TextToSpeech.WinPhone &#123;</div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextToSpeechImplementation</span> :</span> ITextToSpeech</div><div class="line">  &#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="title">TextToSpeechImplementation</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">public</span> async <span class="keyword">void</span> <span class="title">Speak</span><span class="params">(<span class="built_in">string</span> text)</span></span></div><div class="line">      &#123;</div><div class="line">          SpeechSynthesizer synth = <span class="keyword">new</span> SpeechSynthesizer();</div><div class="line">          await synth.SpeakTextAsync(text);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>이 코드에서 등록이 클래스 레벨이 아닌 네임스페이스 레벨에서 이루어지는것에 주의해야 한다.</p>
 <h2 id="DependencyService-호출"><a href="#DependencyService-호출" class="headerlink" title="DependencyService 호출"></a>DependencyService 호출</h2><p>공통 인터페이스와 플랫폼 고유의 구현체가 DependencyService에 등록되었다면 아래 예제 코드와 같이 호출하여 사용할 수 있다.</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DependencyService.Get&lt;ITextToSpeech&gt;().Speak(<span class="string">"Hello from Xamarin Forms"</span>);</div></pre></td></tr></table></figure>
@@ -458,7 +457,7 @@ DependencyService의">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
@@ -466,7 +465,7 @@ DependencyService의">
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">카테고리</span>
               </a>
             </div>
@@ -475,7 +474,7 @@ DependencyService의">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">태그</span>
               </a>
             </div>
@@ -543,7 +542,7 @@ DependencyService의">
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

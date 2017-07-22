@@ -84,22 +84,21 @@
 
 
 
-<meta name="description" content="데이터 바인딩 팁이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다.
-컨트롤간의 바인딩데이터 바인딩은 UI와 데이터 모델간의 동기화가 일반적이지만, 동일 페이지의 두 속성간에도 연결될 수 있다. 이것은, 타깃객체의 BindingContext를 x:Reference마크업을">
+<meta name="description" content="데이터 바인딩 팁이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다. 컨트롤간의 바인딩데이터 바인딩은 UI와 데이터 모델간의 동기화가 일반적이지만, 동일 페이지의 두 속성간에도 연결될 수 있다. 이것은, 타깃객체의 BindingContext를 x:Reference마크업을">
+<meta name="keywords" content="Xamarin,Xamarin.Forms">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Xamarin.Forms 데이터 바인딩 2/3">
+<meta property="og:title" content="Xamarin.Forms 데이터 바인딩 2&#x2F;3">
 <meta property="og:url" content="http://chanlee.github.io/2016/10/27/advanced-data-binding/index.html">
 <meta property="og:site_name" content="Programming Note">
-<meta property="og:description" content="데이터 바인딩 팁이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다.
-컨트롤간의 바인딩데이터 바인딩은 UI와 데이터 모델간의 동기화가 일반적이지만, 동일 페이지의 두 속성간에도 연결될 수 있다. 이것은, 타깃객체의 BindingContext를 x:Reference마크업을">
+<meta property="og:description" content="데이터 바인딩 팁이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다. 컨트롤간의 바인딩데이터 바인딩은 UI와 데이터 모델간의 동기화가 일반적이지만, 동일 페이지의 두 속성간에도 연결될 수 있다. 이것은, 타깃객체의 BindingContext를 x:Reference마크업을">
+<meta property="og:locale" content="ko">
 <meta property="og:image" content="https://blog.xamarin.com/wp-content/uploads/2016/01/rotation.png">
 <meta property="og:image" content="https://blog.xamarin.com/wp-content/uploads/2016/01/converter-pre.png">
 <meta property="og:image" content="https://blog.xamarin.com/wp-content/uploads/2016/01/converter-post.png">
 <meta property="og:updated_time" content="2016-10-29T04:40:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xamarin.Forms 데이터 바인딩 2/3">
-<meta name="twitter:description" content="데이터 바인딩 팁이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다.
-컨트롤간의 바인딩데이터 바인딩은 UI와 데이터 모델간의 동기화가 일반적이지만, 동일 페이지의 두 속성간에도 연결될 수 있다. 이것은, 타깃객체의 BindingContext를 x:Reference마크업을">
+<meta name="twitter:title" content="Xamarin.Forms 데이터 바인딩 2&#x2F;3">
+<meta name="twitter:description" content="데이터 바인딩 팁이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다. 컨트롤간의 바인딩데이터 바인딩은 UI와 데이터 모델간의 동기화가 일반적이지만, 동일 페이지의 두 속성간에도 연결될 수 있다. 이것은, 타깃객체의 BindingContext를 x:Reference마크업을">
 <meta name="twitter:image" content="https://blog.xamarin.com/wp-content/uploads/2016/01/rotation.png">
 
 
@@ -324,7 +323,7 @@
         <h2 id="데이터-바인딩-팁"><a href="#데이터-바인딩-팁" class="headerlink" title="데이터 바인딩 팁"></a>데이터 바인딩 팁</h2><p>이전 글에서, 데이터 바인딩을 실제 프로젝트에서 어떻게 사용하는지 살펴 보았다. 이번 글에서는 좀 더 발전된 시나리오에 대해 다루어 보겠다.</p>
 <h2 id="컨트롤간의-바인딩"><a href="#컨트롤간의-바인딩" class="headerlink" title="컨트롤간의 바인딩"></a>컨트롤간의 바인딩</h2><p>데이터 바인딩은 UI와 데이터 모델간의 동기화가 일반적이지만, 동일 페이지의 두 속성간에도 연결될 수 있다. 이것은, 타깃객체의 BindingContext를 x:Reference마크업을 이용해 설정함으로서 간단히 이루어 진다. 다음 코드는, <a href="https://github.com/davidbritch/xamarin-forms/tree/master/AdvancedDataBinding" target="_blank" rel="external">예제 어플리케이션</a>의 XAML코드 이다.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ContentPage</span> <span class="attr">xmlns</span>=<span class="string">"http://xamarin.com/schemas/2014/forms"</span> <span class="attr">xmlns:x</span>=<span class="string">"http://schemas.microsoft.com/winfx/2009/xaml"</span> <span class="attr">x:Class</span>=<span class="string">"AdvancedDataBinding.RotationPage"</span> <span class="attr">Title</span>=<span class="string">"Rotation"</span> <span class="attr">Icon</span>=<span class="string">"xaml.png"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">StackLayout</span> <span class="attr">Padding</span>=<span class="string">"0,20,0,0"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Label</span> <span class="attr">Text</span>=<span class="string">"Advanced Data Binding Demo"</span> <span class="attr">FontAttributes</span>=<span class="string">"Bold"</span> <span class="attr">HorizontalOptions</span>=<span class="string">"Center"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Slider</span> <span class="attr">x:Name</span>=<span class="string">"slider"</span> <span class="attr">Maximum</span>=<span class="string">"360"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">Image</span> <span class="attr">Source</span>=<span class="string">"waterfront.jpg"</span> <span class="attr">BindingContext</span>=<span class="string">"&#123;x:Reference slider&#125;"</span></span></div><div class="line">               <span class="attr">Rotation</span>=<span class="string">"&#123;Binding Value&#125;"</span> <span class="attr">VerticalOptions</span>=<span class="string">"CenterAndExpand"</span> /&gt;</div><div class="line">		<span class="tag">&lt;<span class="name">Label</span> <span class="attr">BindingContext</span>=<span class="string">"&#123;x:Reference slider&#125;"</span> <span class="attr">HorizontalOptions</span>=<span class="string">"Center"</span></span></div><div class="line">               <span class="attr">Text</span>=<span class="string">"&#123;Binding Value, StringFormat='Rotation angle: &#123;0:F0&#125; degrees'&#125;"</span> /&gt;</div><div class="line">	<span class="tag">&lt;/<span class="name">StackLayout</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ContentPage</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>Slider 컴포넌트의 이름을 “slider”로 설정하였다. 그리고, 그다음에 Image, Label 컴포넌트에 각각 BindnigContext가 “x:Reference”마크업을 이용해 “slider”로 설정되었다. 이후, Image의 Rotation속성과 Label의 Text속성에 Slider의 Value값이 사용된 것을 볼 수 있다.<br><img src="https://blog.xamarin.com/wp-content/uploads/2016/01/rotation.png" alt="데모화면"><br>(Label의 Text속성에 StringFormat사용시 쌍따옴표를 사용하지 않고 홑따옴표를 사용하여 중괄호 바깥의 쌍따움표와 중첩되지 않도록 처리한 부분에 주의하자.)</p>
-<h2 id="변환기"><a href="#변환기" class="headerlink" title="변환기"></a>변환기</h2><p>앞서 예제에서 Label에 Text속성에서 StringFormat을 사용하여 Value를 포매팅한것을 보았다. 이것은, 말그대로 형식화(Formatting)한 것이지 값에 대한 변환이라고 보긴 어렵다. 즉, 타입의 변환은 별도의 변환기를 거쳐야 한다는 것이다. 이것은 IValueConverter 인터페이스를 구현하는 클래스로 가능하다. 이 인터페이스는 Convert와 ConvertBack 메소드의 구현을 필요로 한다.<br>다음 코드는 <a href="https://github.com/davidbritch/xamarin-forms/tree/master/AdvancedDataBinding" target="_blank" rel="external">예제 어플리케이션</a>에서 사용된, IntToBooleanConverter 코드 이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> IntToBooleanConverter : IValueConverter</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> object <span class="title">Convert</span> <span class="params">(object value, Type targetType, object parameter, CultureInfo culture)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> minimumLength = System.Convert.ToInt32 (parameter);</div><div class="line">		<span class="keyword">return</span> (<span class="keyword">int</span>)value &gt;= minimumLength;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> object <span class="title">ConvertBack</span> <span class="params">(object value, Type targetType, object parameter, CultureInfo culture)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 타깃에서 소스로의 전달이 없으므로 구현하지 않음.</span></div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException ();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="변환기"><a href="#변환기" class="headerlink" title="변환기"></a>변환기</h2><p>앞서 예제에서 Label에 Text속성에서 StringFormat을 사용하여 Value를 포매팅한것을 보았다. 이것은, 말그대로 형식화(Formatting)한 것이지 값에 대한 변환이라고 보긴 어렵다. 즉, 타입의 변환은 별도의 변환기를 거쳐야 한다는 것이다. 이것은 IValueConverter 인터페이스를 구현하는 클래스로 가능하다. 이 인터페이스는 Convert와 ConvertBack 메소드의 구현을 필요로 한다.<br>다음 코드는 <a href="https://github.com/davidbritch/xamarin-forms/tree/master/AdvancedDataBinding" target="_blank" rel="external">예제 어플리케이션</a>에서 사용된, IntToBooleanConverter 코드 이다.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IntToBooleanConverter</span> :</span> IValueConverter</div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> object <span class="title">Convert</span> <span class="params">(object value, Type targetType, object parameter, CultureInfo culture)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> minimumLength = System.Convert.ToInt32 (parameter);</div><div class="line">		<span class="keyword">return</span> (<span class="keyword">int</span>)value &gt;= minimumLength;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> object <span class="title">ConvertBack</span> <span class="params">(object value, Type targetType, object parameter, CultureInfo culture)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 타깃에서 소스로의 전달이 없으므로 구현하지 않음.</span></div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException ();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Convert 메소드는 값이 소스객체에서 타깃객체로 전달될때 호출된다. ConvertBack은 반대로 타깃에서 소스객체로 값이 전달될 때 호출된다. TwoWay 또는 OneWayToSource 모드 바인딩시에 해당된다. 두 메소드 모두 소용 목적은 동일하므로 사용된 인자들에 대해 알아보자.</p>
 <ul>
 <li>object value : 소스객체의 값</li>
@@ -461,7 +460,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
@@ -469,7 +468,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">카테고리</span>
               </a>
             </div>
@@ -478,7 +477,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">태그</span>
               </a>
             </div>
@@ -546,7 +545,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

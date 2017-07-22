@@ -84,34 +84,21 @@
 
 
 
-<meta name="description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.
-
-데이터 소스 - ListView에 사용될 데이터.
-셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징.
-목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등.
-인터랙티브 - 사용자의 행 선택과 새로고침">
+<meta name="description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.  데이터 소스 - ListView에 사용될 데이터. 셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징. 목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등. 인터랙티브 - 사용자의 행 선택과 새로고침">
+<meta name="keywords" content="Xamarin,Xamarin.Forms,User Interface">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ListView 기본 (1)">
 <meta property="og:url" content="http://chanlee.github.io/2016/11/25/xamarin-forms-listview-basic-1/index.html">
 <meta property="og:site_name" content="Programming Note">
-<meta property="og:description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.
-
-데이터 소스 - ListView에 사용될 데이터.
-셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징.
-목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등.
-인터랙티브 - 사용자의 행 선택과 새로고침">
+<meta property="og:description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.  데이터 소스 - ListView에 사용될 데이터. 셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징. 목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등. 인터랙티브 - 사용자의 행 선택과 새로고침">
+<meta property="og:locale" content="ko">
 <meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/grouping_depth.png">
 <meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/image_cell_default.png">
 <meta property="og:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/context_default.png">
 <meta property="og:updated_time" content="2016-11-26T04:03:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ListView 기본 (1)">
-<meta name="twitter:description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.
-
-데이터 소스 - ListView에 사용될 데이터.
-셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징.
-목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등.
-인터랙티브 - 사용자의 행 선택과 새로고침">
+<meta name="twitter:description" content="ListView는 데이터의 목록을 표현하는 뷰이다. 이 가이드에서는 LivtView와 관련하여 다음과 같은 주제들을 다룰것이다.  데이터 소스 - ListView에 사용될 데이터. 셀 표현 - 기본셀 또는 사용자가 생성한 셀의 커스터마이징. 목록 표현 - ListView의 헤더와 푸터, 그룹핑과 행의 높이 조절등. 인터랙티브 - 사용자의 행 선택과 새로고침">
 <meta name="twitter:image" content="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/Images/grouping_depth.png">
 
 
@@ -482,7 +469,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
@@ -490,7 +477,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">카테고리</span>
               </a>
             </div>
@@ -499,7 +486,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">태그</span>
               </a>
             </div>
@@ -567,7 +554,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

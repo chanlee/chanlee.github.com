@@ -84,20 +84,19 @@
 
 
 
-<meta name="description" content="한동안 일에 치어서 블로깅에 소흘했는데 그 말인즉 공부를 안했다는 말인것 같다. 최근에 Go를 보고있는데 재미있어서 빠져드는 중이다. 요즘 트렌드인지 동시성(concurrency)에 상당히 강점을 가지면서 문법이 직관적이라 적응기간도 그리 길지 않은것 같다.
-어제는 앱엔진에서 제공하는 도큐먼트를 보고 간단히 guestbook을 따라해 봤는데 템플릿에 대한">
+<meta name="description" content="한동안 일에 치어서 블로깅에 소흘했는데 그 말인즉 공부를 안했다는 말인것 같다. 최근에 Go를 보고있는데 재미있어서 빠져드는 중이다. 요즘 트렌드인지 동시성(concurrency)에 상당히 강점을 가지면서 문법이 직관적이라 적응기간도 그리 길지 않은것 같다. 어제는 앱엔진에서 제공하는 도큐먼트를 보고 간단히 guestbook을 따라해 봤는데 템플릿에 대한">
+<meta name="keywords" content="GoLang,Library">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 패키지 시리즈 1 템플릿 사용하기">
 <meta property="og:url" content="http://chanlee.github.io/2016/04/21/golang-template-package/index.html">
 <meta property="og:site_name" content="Programming Note">
-<meta property="og:description" content="한동안 일에 치어서 블로깅에 소흘했는데 그 말인즉 공부를 안했다는 말인것 같다. 최근에 Go를 보고있는데 재미있어서 빠져드는 중이다. 요즘 트렌드인지 동시성(concurrency)에 상당히 강점을 가지면서 문법이 직관적이라 적응기간도 그리 길지 않은것 같다.
-어제는 앱엔진에서 제공하는 도큐먼트를 보고 간단히 guestbook을 따라해 봤는데 템플릿에 대한">
+<meta property="og:description" content="한동안 일에 치어서 블로깅에 소흘했는데 그 말인즉 공부를 안했다는 말인것 같다. 최근에 Go를 보고있는데 재미있어서 빠져드는 중이다. 요즘 트렌드인지 동시성(concurrency)에 상당히 강점을 가지면서 문법이 직관적이라 적응기간도 그리 길지 않은것 같다. 어제는 앱엔진에서 제공하는 도큐먼트를 보고 간단히 guestbook을 따라해 봤는데 템플릿에 대한">
+<meta property="og:locale" content="ko">
 <meta property="og:image" content="http://i.imgur.com/lb8cQ3g.jpg?1">
 <meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 패키지 시리즈 1 템플릿 사용하기">
-<meta name="twitter:description" content="한동안 일에 치어서 블로깅에 소흘했는데 그 말인즉 공부를 안했다는 말인것 같다. 최근에 Go를 보고있는데 재미있어서 빠져드는 중이다. 요즘 트렌드인지 동시성(concurrency)에 상당히 강점을 가지면서 문법이 직관적이라 적응기간도 그리 길지 않은것 같다.
-어제는 앱엔진에서 제공하는 도큐먼트를 보고 간단히 guestbook을 따라해 봤는데 템플릿에 대한">
+<meta name="twitter:description" content="한동안 일에 치어서 블로깅에 소흘했는데 그 말인즉 공부를 안했다는 말인것 같다. 최근에 Go를 보고있는데 재미있어서 빠져드는 중이다. 요즘 트렌드인지 동시성(concurrency)에 상당히 강점을 가지면서 문법이 직관적이라 적응기간도 그리 길지 않은것 같다. 어제는 앱엔진에서 제공하는 도큐먼트를 보고 간단히 guestbook을 따라해 봤는데 템플릿에 대한">
 <meta name="twitter:image" content="http://i.imgur.com/lb8cQ3g.jpg?1">
 
 
@@ -469,7 +468,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
@@ -477,7 +476,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">카테고리</span>
               </a>
             </div>
@@ -486,7 +485,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">태그</span>
               </a>
             </div>
@@ -554,7 +553,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

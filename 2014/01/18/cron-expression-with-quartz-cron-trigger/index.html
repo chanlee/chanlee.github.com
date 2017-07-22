@@ -84,23 +84,19 @@
 
 
 
-<meta name="description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.
-
-Quartz에서 SimpleTrigger와 CronTri">
+<meta name="description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.  Quartz에서 SimpleTrigger와 CronTri">
+<meta name="keywords" content="Linux,Cron">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Quartz CronTrigger로 알아보는 Cron 표현식">
 <meta property="og:url" content="http://chanlee.github.io/2014/01/18/cron-expression-with-quartz-cron-trigger/index.html">
 <meta property="og:site_name" content="Programming Note">
-<meta property="og:description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.
-
-Quartz에서 SimpleTrigger와 CronTri">
+<meta property="og:description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.  Quartz에서 SimpleTrigger와 CronTri">
+<meta property="og:locale" content="ko">
 <meta property="og:image" content="http://chanlee.github.io/assets/chuleta-crontab1.png">
 <meta property="og:updated_time" content="2016-10-27T12:12:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Quartz CronTrigger로 알아보는 Cron 표현식">
-<meta name="twitter:description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.
-
-Quartz에서 SimpleTrigger와 CronTri">
+<meta name="twitter:description" content="최근에 회사에서 Quartz를 사용할 일이 생겨 Cron 표현식을 정리해 보았습니다. 자주 쓰는편이 아니라 필요할땐 대충 구글링 해서 베껴쓰곤 했었는데, 비록 몇페이 안되지만 정리하고 나니 뿌듯하네요. 표현식은 unix 시스템과도 사용법이 동일하니 관리자 분들도 이해하고 있으면 유용할 것 같습니다.  Quartz에서 SimpleTrigger와 CronTri">
 <meta name="twitter:image" content="http://chanlee.github.io/assets/chuleta-crontab1.png">
 
 
@@ -481,7 +477,7 @@ Quartz에서 SimpleTrigger와 CronTri">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">포스트</span>
             </a>
           </div>
@@ -489,7 +485,7 @@ Quartz에서 SimpleTrigger와 CronTri">
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">카테고리</span>
               </a>
             </div>
@@ -498,7 +494,7 @@ Quartz에서 SimpleTrigger와 CronTri">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">태그</span>
               </a>
             </div>
@@ -566,7 +562,7 @@ Quartz에서 SimpleTrigger와 CronTri">
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
